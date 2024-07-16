@@ -3,13 +3,11 @@
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public DateTime $start_date;
-
     public function calculateDuration(string $date): string
     {
-        $this->start_date = new DateTime($date);
+        $start_date = new DateTime($date);
 
-        $diff = now()->diff($this->start_date);
+        $diff = now()->diff($start_date);
 
         $years = $diff->y;
 
