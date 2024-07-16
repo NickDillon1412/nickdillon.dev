@@ -15,5 +15,8 @@
         "postcss": "^8.4.39",
         "tailwindcss": "^3.4.5",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@marcreichel/alpine-typewriter": "^1.2.0"
     }
 }

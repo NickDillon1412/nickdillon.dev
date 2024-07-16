@@ -14,7 +14,8 @@
         <!-- Sidebar header -->
         <div class="flex items-center justify-center w-full mt-4 mb-10">
             <a aria-current="page"
-                class="absolute flex items-center space-x-1 router-link-active router-link-exact-active" href="/">
+                class="absolute flex items-center space-x-1 router-link-active router-link-exact-active"
+                href="{{ route('portfolio') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="25"
                     height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
                     stroke-linecap="round" stroke-linejoin="round">
