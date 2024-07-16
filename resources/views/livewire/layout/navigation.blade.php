@@ -37,6 +37,8 @@ new class extends Component {
 
             <!-- Settings Dropdown -->
             <div class="flex items-center ms-6">
+                <x-mary-theme-toggle class="btn btn-circle btn-ghost" />
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button

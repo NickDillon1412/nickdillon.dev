@@ -1,5 +1,5 @@
 <x-app-layout>
     <div>
-        @livewire('header')
+        <x-portfolio.header />
     </div>
 </x-app-layout>
