@@ -7,5 +7,7 @@
         @livewire('portfolio.work')
 
         @livewire('portfolio.technologies')
+
+        <x-portfolio.footer />
     </div>
 </x-app-layout>
