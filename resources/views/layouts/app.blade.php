@@ -16,11 +16,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body :class="{ 'sidebar-expanded': sidebarExpanded }" class="antialiased bg-slate-100 text-slate-600 dark:bg-slate-900"
-    x-data="{
-        sidebarOpen: false,
-        sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true'
-    }" x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
+<body :class="{ 'sidebar-expanded': sidebarExpanded }" @class([
+    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900',
+    '!bg-[#18192c] bg-dots text-slate-50' => request()->routeIs('portfolio'),
+]) x-data="{
+    sidebarOpen: false,
+    sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true'
+}"
+    x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
     <script>
         if (localStorage.getItem('sidebar-expanded') == 'true') {
             document.querySelector('body').classList.add('sidebar-expanded');
@@ -30,10 +33,14 @@
     </script>
 
     <div class="flex h-screen overflow-hidden">
-        <x-sidebar />
+        @if (!request()->routeIs('portfolio'))
+            <x-sidebar />
+        @endif
 
         <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-            <livewire:layout.navigation />
+            @if (!request()->routeIs('portfolio'))
+                <livewire:layout.navigation />
+            @endif
 
             <main>
                 {{ $slot }}
