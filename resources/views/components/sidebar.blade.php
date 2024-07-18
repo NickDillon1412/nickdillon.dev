@@ -9,7 +9,7 @@
         :class="sidebarOpen ? 'max-lg:translate-x-0 rounded-tr-2xl' : 'max-lg:-translate-x-64'"
         @click.outside="sidebarOpen = false" @keydown.escape.window="sidebarOpen = false">
         <div class="flex justify-between pr-3 mb-10 sm:px-2">
-            <button class="text-slate-500 lg:hidden hover:text-slate-400" @click.stop="sidebarOpen = !sidebarOpen"
+            <button class="mt-1 text-slate-500 lg:hidden hover:text-slate-400" @click.stop="sidebarOpen = !sidebarOpen"
                 aria-controls="sidebar" :aria-expanded="sidebarOpen">
                 <span class="sr-only">Close sidebar</span>
 
@@ -18,7 +18,7 @@
                 </svg>
             </button>
 
-            <a class="flex items-center justify-center w-full space-x-1 text-slate-700 dark:text-slate-50"
+            <a class="flex items-center justify-center w-full mt-1 space-x-1 text-slate-700 dark:text-slate-50"
                 href="{{ route('portfolio') }}">
                 <x-heroicon-o-home class="w-6 h-6" />
 
