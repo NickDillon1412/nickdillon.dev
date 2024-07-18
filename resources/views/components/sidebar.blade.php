@@ -32,7 +32,10 @@
             <div>
                 <h3 class="pl-3 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500">
                     <span class="hidden w-6 text-center lg:block lg:sidebar-expanded:hidden 2xl:hidden"
-                        aria-hidden="true">•••</span>
+                        aria-hidden="true">
+                        •••
+                    </span>
+
                     <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">Apps</span>
                 </h3>
 
