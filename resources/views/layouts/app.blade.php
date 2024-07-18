@@ -8,20 +8,22 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @livewireStyles
 </head>
 
-<body :class="{ 'sidebar-expanded': sidebarExpanded }" @class([
-    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900',
+<body @class([
+    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter',
     '!bg-[#18192c] bg-dots text-slate-50' => request()->routeIs('portfolio'),
 ]) x-data="{
     sidebarOpen: false,
     sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true'
+}" :class="{
+    'sidebar-expanded': sidebarExpanded
 }"
     x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
     <script>
@@ -32,17 +34,18 @@
         }
     </script>
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex min-h-screen overflow-hidden">
         @if (!request()->routeIs('portfolio'))
-            <x-sidebar />
+            <x-sidebar :variant="$attributes['sidebarVariant']" />
         @endif
 
-        <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+        <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden @if ($attributes['background']) {{ $attributes['background'] }} @endif"
+            x-ref="contentarea">
             @if (!request()->routeIs('portfolio'))
                 <livewire:layout.navigation />
             @endif
 
-            <main>
+            <main class="grow">
                 {{ $slot }}
             </main>
         </div>

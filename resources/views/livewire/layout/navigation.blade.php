@@ -16,7 +16,7 @@ new class extends Component {
 }; ?>
 
 <nav
-    class="sticky top-0 z-30 w-full bg-white border-b lg:rounded-br-3xl border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+    class="sticky top-0 z-30 w-full bg-white border-b lg:rounded-br-2xl border-slate-200 dark:bg-slate-800 dark:border-slate-700/60">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -37,7 +37,8 @@ new class extends Component {
 
             <!-- Settings Dropdown -->
             <div class="flex items-center ms-6">
-                <x-mary-theme-toggle class="btn btn-circle btn-ghost" />
+                <x-mary-theme-toggle
+                    class="btn btn-circle btn-ghost hover:bg-slate-700 text-slate-400 hover:text-slate-200" />
 
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">

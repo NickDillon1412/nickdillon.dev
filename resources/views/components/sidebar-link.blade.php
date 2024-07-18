@@ -1,17 +1,20 @@
 @props(['route'])
 
-<li class="px-1.5 rounded-md last:mb-0 text-slate-700 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400
-@if (request()->routeIs($route)) bg-indigo-50 dark:bg-slate-700 @endif"
-    :class="{ '!px-2': sidebarExpanded }">
-    <a href="{{ route($route) }}" wire:navigate
-        class="inline-flex items-center space-x-2 text-sm font-medium w-full py-1.5
-        @if (request()->routeIs($route)) text-indigo-600 dark:text-indigo-400 @endif">
-        <div
-            class="@if (request()->routeIs($route)) text-indigo-600 dark:text-indigo-400
-            @else text-slate-400 dark:text-slate-500 @endif w-6 h-6">
-            {{ $slot }}
-        </div>
+<li
+    class="pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))]
+    @if (in_array(Request::segment(1), [$route])) {{ 'from-indigo-500/[0.12] dark:from-indigo-500/[0.24] to-indigo-500/[0.04]' }} @endif">
+    <a class="block text-slate-800 dark:text-slate-100 truncate transition @if (!in_array(Request::segment(1), [$route])) {{ 'hover:text-slate-900 dark:hover:text-white' }} @endif"
+        href="{{ route($route) }}">
+        <div class="flex items-center">
+            <div
+                class="@if (in_array(Request::segment(1), [$route])) {{ 'text-indigo-500' }} @else{{ 'text-slate-400 dark:text-slate-500' }} @endif w-5 h-5 -ml-0.5 shrink-0">
+                {{ $slot }}
+            </div>
 
-        <span x-show="sidebarExpanded">{{ Str::title($route) }}</span>
+            <span
+                class="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
+                {{ Str::title($route) }}
+            </span>
+        </div>
     </a>
 </li>

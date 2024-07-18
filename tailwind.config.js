@@ -1,29 +1,24 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-const plugin = require("tailwindcss/plugin")
+import plugin from "tailwindcss/plugin";
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: 'class',
-
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './resources/**/*.js',
+        './resources/js/**/*.js',
     ],
 
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
-        },
-    },
+    darkMode: 'class',
 
     plugins: [
-        require('daisyui'),
-        require("@tailwindcss/forms"),
-        require("@tailwindcss/typography"),
+        forms,
+        typography,
+        daisyui,
+        // add custom variant for expanding sidebar
         plugin(({
             addVariant,
             e
