@@ -22,7 +22,7 @@
                 href="{{ route('portfolio') }}">
                 <x-heroicon-o-home class="w-6 h-6" />
 
-                <span x-show="sidebarExpanded" class="text-xl font-bold">
+                <span x-show="sidebarExpanded || sidebarOpen" class="text-xl font-bold">
                     {{ config('app.name') }}
                 </span>
             </a>
