@@ -24,7 +24,7 @@ new class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col items-center justify-center p-4 mt-24 sm:mt-32 mb-14 text-slate-50">
+<div class="flex flex-col items-center justify-center p-4 mt-24 mb-3 sm:mt-32 text-slate-50">
     <h1 class="w-7/12 mx-auto mb-8 text-3xl font-semibold text-center sm:mb-6">
         A couple of my projects:
     </h1>
@@ -44,7 +44,7 @@ new class extends Component {
                         @foreach ($project['technologies'] as $tech)
                             <ul v-for="tech in project.technologies" class="inline-block pt-3">
                                 <li
-                                    class="px-2 sm:px-2.5 py-0.5 sm:py-[.8px] mr-2 text-[12.5px] sm:text-sm font-semibold text-pink-600 bg-pink-200 rounded-full shadow-xs shadow-pink-200/75">
+                                    class="px-2 sm:px-2.5 py-0.5 sm:py-[.8px] mr-1 text-[12.5px] sm:text-sm font-semibold text-pink-600 bg-pink-200 rounded-full shadow-xs shadow-pink-200/75">
                                     {{ $tech }}
                                 </li>
                             </ul>
@@ -54,4 +54,9 @@ new class extends Component {
             </a>
         @endforeach
     </div>
+
+    <a class="mt-6 font-medium text-pink-400 duration-300 ease-in-out hover:text-pink-500" href="{{ route('apps') }}"
+        wire:navigate>
+        View All <span class="inline"> &rarr;</span>
+    </a>
 </div>

@@ -1,11 +1,12 @@
 <?php
 
+use Carbon\Carbon;
 use Livewire\Volt\Component;
 
 new class extends Component {
     public function calculateDuration(string $date): string
     {
-        $start_date = new DateTime($date);
+        $start_date = Carbon::parse($date);
 
         $diff = now()->diff($start_date);
 
