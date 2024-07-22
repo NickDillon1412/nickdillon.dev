@@ -1,7 +1,7 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold text-gray-800 md:text-3xl dark:text-gray-100">
-            Explore movies & TV shows
+            Explore
         </h1>
 
         <a href="{{ route('movie-vault.my-vault') }}" wire:navigate

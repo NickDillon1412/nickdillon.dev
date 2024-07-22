@@ -28,7 +28,7 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-        <a href="{{ route('movie-vault.explore') }}" wire:navigate>
+        <a href="#" wire:navigate>
             <x-mary-card shadow
                 class="duration-200 ease-in-out border hover:scale-105 text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
                 <div class="-mx-1 -my-3">
