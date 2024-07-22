@@ -55,8 +55,8 @@ new class extends Component {
         @endforeach
     </div>
 
-    <a class="mt-6 font-medium text-pink-400 duration-300 ease-in-out hover:text-pink-500" href="{{ route('apps') }}"
-        wire:navigate>
+    <a class="mt-6 font-medium text-pink-400 duration-300 ease-in-out hover:text-pink-300 hover:scale-110"
+        href="{{ route('apps') }}" wire:navigate>
         View All <span class="inline"> &rarr;</span>
     </a>
 </div>
