@@ -4,7 +4,7 @@
     </div>
 
     <div id="sidebar"
-        class="flex lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-slate-800 p-4 transition-all duration-200 ease-in-out
+        class="flex h-screen lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-slate-800 p-4 transition-all duration-200 ease-in-out
         {{ $variant === 'v2' ? 'border-r border-slate-200 dark:border-slate-700/60' : 'rounded-br-2xl shadow-sm' }}"
         :class="sidebarOpen ? 'max-lg:translate-x-0 rounded-tr-2xl' : 'max-lg:-translate-x-64'"
         @click.outside="sidebarOpen = false" @keydown.escape.window="sidebarOpen = false">
@@ -18,7 +18,7 @@
                 </svg>
             </button>
 
-            <a class="flex items-center justify-center w-full mt-1 space-x-1 text-slate-700 dark:text-slate-50"
+            <a class="flex items-center justify-center w-full mt-1 text-slate-700 dark:text-slate-50"
                 href="{{ route('portfolio') }}">
                 <x-heroicon-o-home class="w-6 h-6" />
 
@@ -40,8 +40,8 @@
                 </h3>
 
                 <ul class="mt-3">
-                    <x-sidebar-link route="dashboard">
-                        <x-heroicon-m-computer-desktop />
+                    <x-sidebar-link title="Movie Vault" route="movie-vault.my-vault">
+                        <x-heroicon-o-film />
                     </x-sidebar-link>
                 </ul>
             </div>
