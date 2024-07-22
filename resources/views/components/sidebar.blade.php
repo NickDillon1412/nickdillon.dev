@@ -4,10 +4,10 @@
     </div>
 
     <div id="sidebar"
-        class="flex h-screen lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:!w-64 shrink-0 bg-white dark:bg-slate-800 p-4 transition-all duration-200 ease-in-out
+        class="flex h-screen lg:!flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:sidebar-expanded:!w-64 shrink-0 bg-white dark:bg-slate-800 p-4 transition-all duration-200 ease-in-out
         {{ $variant === 'v2' ? 'border-r border-slate-200 dark:border-slate-700/60' : 'rounded-br-2xl shadow-sm' }}"
-        :class="sidebarOpen ? 'max-lg:translate-x-0 rounded-tr-2xl' : 'max-lg:-translate-x-64'"
-        @click.outside="sidebarOpen = false" @keydown.escape.window="sidebarOpen = false">
+        :class="sidebarOpen ? 'translate-x-0 rounded-tr-2xl' : '-translate-x-64'" @click.outside="sidebarOpen = false"
+        @keydown.escape.window="sidebarOpen = false">
         <div class="flex justify-between pr-3 mb-10 sm:px-2">
             <button class="mt-1 text-slate-500 lg:hidden hover:text-slate-400" @click.stop="sidebarOpen = !sidebarOpen"
                 aria-controls="sidebar" :aria-expanded="sidebarOpen">
@@ -18,7 +18,7 @@
                 </svg>
             </button>
 
-            <a class="flex items-center justify-center w-full mt-1 text-slate-700 dark:text-slate-50"
+            <a class="flex items-center justify-center w-full mt-1 space-x-1 text-slate-700 dark:text-slate-50"
                 href="{{ route('portfolio') }}">
                 <x-heroicon-o-home class="w-6 h-6" />
 
@@ -31,12 +31,13 @@
         <div class="space-y-8">
             <div>
                 <h3 class="pl-3 text-xs font-semibold uppercase text-slate-400 dark:text-slate-500">
-                    <span class="hidden w-6 text-center lg:block lg:sidebar-expanded:hidden 2xl:hidden"
-                        aria-hidden="true">
+                    <span class="hidden w-6 text-center lg:block lg:sidebar-expanded:hidden" aria-hidden="true">
                         •••
                     </span>
 
-                    <span class="lg:hidden lg:sidebar-expanded:block 2xl:block">Apps</span>
+                    <span class="lg:hidden lg:sidebar-expanded:block 2xl:sidebar-expanded:block">
+                        Apps
+                    </span>
                 </h3>
 
                 <ul class="mt-3">
@@ -47,7 +48,7 @@
             </div>
         </div>
 
-        <div class="justify-end hidden pt-3 mt-auto lg:inline-flex 2xl:hidden">
+        <div class="justify-end hidden pt-3 mt-auto lg:inline-flex">
             <div class="w-12 py-2 pl-4 pr-3">
                 <button
                     class="transition-colors text-slate-400 hover:text-slate-500 dark:text-slate-500 dark:hover:text-slate-400"
