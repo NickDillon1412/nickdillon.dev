@@ -22,7 +22,7 @@ test('users can authenticate using the login screen', function () {
 
     $component
         ->assertHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect(route('apps', absolute: false));
 
     $this->assertAuthenticated();
 });
@@ -41,18 +41,6 @@ test('users can not authenticate with invalid password', function () {
         ->assertNoRedirect();
 
     $this->assertGuest();
-});
-
-test('navigation menu can be rendered', function () {
-    $user = User::factory()->create();
-
-    $this->actingAs($user);
-
-    $response = $this->get('/dashboard');
-
-    $response
-        ->assertOk()
-        ->assertSeeVolt('layout.navigation');
 });
 
 test('users can logout', function () {
