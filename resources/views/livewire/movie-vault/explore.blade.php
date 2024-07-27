@@ -27,31 +27,34 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-        @forelse ($this->searchResults as $result)
-            @isset($result['original_language'])
-                @if ($result['original_language'] === 'en')
+        @forelse ($this->searchResults as $media)
+            @isset($media['original_language'])
+                @if ($media['original_language'] === 'en')
                     <x-mary-card shadow
                         class="border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
                         <div class="-mx-1 -my-3">
                             <h1 class="text-xl font-bold truncate whitespace-nowrap">
-                                {{ $result['original_title'] ?? $result['original_name'] }}
+                                {{ $media['original_title'] ?? $media['original_name'] }}
                             </h1>
 
                             <h3>
                                 Release Date:
-                                {{ Carbon\Carbon::parse($result['release_date'] ?? $result['first_air_date'])->format('M d, Y') }}
+                                {{ Carbon\Carbon::parse($media['release_date'] ?? $media['first_air_date'])->format('M d, Y') }}
                             </h3>
 
-                            <button
-                                class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-                                Add to vault
-                            </button>
+                            <form wire:submit='save(@json($media))'>
+                                <button
+                                    class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50"
+                                    type="submit">
+                                    Add to vault
+                                </button>
+                            </form>
                         </div>
 
                         <x-slot:figure>
                             <img class="h-[300px] w-[375px] object-cover"
-                                src="{{ 'https://image.tmdb.org/t/p/w500/' . $result['poster_path'] ?? $result['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
-                                alt="{{ $result['original_title'] ?? $result['original_name'] }}" />
+                                src="{{ 'https://image.tmdb.org/t/p/w500/' . $media['poster_path'] ?? $media['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
+                                alt="{{ $media['original_title'] ?? $media['original_name'] }}" />
                         </x-slot:figure>
                     </x-mary-card>
                 @endif

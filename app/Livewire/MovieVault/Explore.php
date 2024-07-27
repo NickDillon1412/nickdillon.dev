@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
+use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Computed;
@@ -17,12 +18,56 @@ class Explore extends Component
 
     public array $search_results = [];
 
+    public array $new_media = [];
+
     #[Computed]
     public function searchResults(): array
     {
         return Http::withToken(config('services.movie-api.token'))
             ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
             ->json()['results'];
+    }
+
+    public function save(array $media): void
+    {
+        if (
+            auth()
+                ->user()
+                ->vaults()
+                ->whereVaultId($media['id'])
+                ->exists()
+        ) {
+            $this->dispatch('showAlertPopup', [
+                'status' => 'danger',
+                'message' => ($media['title'] ?: $media['name']).' is already in your vault',
+            ]);
+        } else {
+            $this->new_media = $media['media_type'] === 'movie'
+                ? [
+                    'title' => $media['title'],
+                    'original_title' => $media['original_title'],
+                    'release_date' => $media['release_date'],
+                ]
+                : [
+                    'name' => $media['name'],
+                    'original_name' => $media['original_name'],
+                    'first_air_date' => $media['first_air_date'],
+                ];
+
+            $this->new_media['poster_path'] = $media['poster_path'] ?? $media['backdrop_path'] ?? null;
+            $this->new_media['vault_id'] = $media['id'];
+            $this->new_media['vault_type'] = $media['media_type'];
+            $this->new_media['overview'] = $media['overview'];
+
+            auth()->user()->vaults()->create(
+                VaultData::from($this->new_media)->toArray()
+            );
+
+            $this->dispatch('showAlertPopup', [
+                'status' => 'success',
+                'message' => 'Successfully added to your vault',
+            ]);
+        }
     }
 
     public function render(): View

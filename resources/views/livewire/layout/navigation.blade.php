@@ -74,4 +74,6 @@ new class extends Component {
             </div>
         </div>
     </div>
+
+    @livewire('alert-popup')
 </nav>
