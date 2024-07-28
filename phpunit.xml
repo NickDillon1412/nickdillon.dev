@@ -18,6 +18,15 @@
         <include>
             <directory>app</directory>
         </include>
+
+        <exclude>
+            <directory>app/Models</directory>
+            <directory>app/Providers</directory>
+            <directory>app/View</directory>
+            <file>app/Http/Controllers/Controller.php</file>
+            <directory>app/Livewire/Actions</directory>
+            <directory>app/Livewire/Forms</directory>
+        </exclude>
     </source>
     
     <php>
