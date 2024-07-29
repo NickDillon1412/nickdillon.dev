@@ -2,6 +2,7 @@
 
 use App\Livewire\MovieVault\Explore;
 use App\Livewire\MovieVault\MyVault;
+use App\Livewire\MovieVault\VaultDetails;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'portfolio')->name('portfolio');
@@ -18,6 +19,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('my-vault', MyVault::class)->name('my-vault');
 
             Route::get('explore', Explore::class)->name('explore');
+
+            Route::get('{vault}/details', VaultDetails::class)->name('details');
         });
 });
 

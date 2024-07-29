@@ -31,7 +31,7 @@ it('can update search', function () {
 it('can delete a vault record', function () {
     livewire(MyVault::class)
         ->call('delete', Vault::first())
-        ->assertNoRedirect()
+        ->assertDispatched('showAlertPopup')
         ->assertHasNoErrors();
 
     $this->assertDatabaseCount('vaults', 0);

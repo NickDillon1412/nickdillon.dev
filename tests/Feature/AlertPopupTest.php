@@ -16,3 +16,15 @@ it('can set alerts', function () {
         ->call('showAlertPopup', $alert)
         ->assertSet('alerts', [$alert]);
 });
+
+it('can flash alert to session', function () {
+    session()->flash('alert', [
+        'status' => 'success',
+        'message' => 'Test message',
+    ]);
+
+    $component = livewire(AlertPopup::class)
+        ->assertHasNoErrors();
+
+    $component->assertSessionHas('alert');
+});

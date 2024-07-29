@@ -7,6 +7,7 @@ namespace App\Livewire\MovieVault;
 use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -39,7 +40,11 @@ class Explore extends Component
         ) {
             $this->dispatch('showAlertPopup', [
                 'status' => 'danger',
-                'message' => ($media['title'] ?: $media['name']).' is already in your vault',
+                'message' => (string) new HtmlString(
+                    '<strong>'
+                    .($media['title'] ?? $media['name']).
+                    '</strong> is already in your vault'
+                ),
             ]);
         } else {
             $this->new_media = $media['media_type'] === 'movie'

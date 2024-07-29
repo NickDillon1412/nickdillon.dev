@@ -6,6 +6,7 @@ namespace App\Livewire\MovieVault;
 
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -25,6 +26,15 @@ class MyVault extends Component
     public function delete(Vault $vault): void
     {
         $vault?->delete();
+
+        $this->dispatch('showAlertPopup', [
+            'status' => 'success',
+            'message' => (string) new HtmlString(
+                '<p>Successfully removed <strong>'
+                .($vault->title ?? $vault->name).
+                '</strong> from your vault</p>'
+            ),
+        ]);
     }
 
     public function render(): View

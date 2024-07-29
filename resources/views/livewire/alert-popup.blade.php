@@ -9,30 +9,16 @@
             x-transition:leave="transition ease-out duration-500" x-transition:leave-start="opacity-100 translate-x-0"
             x-transition:leave-end="opacity-0 translate-x-10">
             <div
-                class="inline-flex min-w-80 px-4 py-2 rounded-sm text-sm text-white
-                @switch($alert['status'])
-                    @case('success')
-                        bg-emerald-500
-                        @break
-
-                    @case('info')
-                        bg-indigo-500
-                        @break
-
-                    @case('warning')
-                        bg-amber-500
-                        @break
-
-                    @case('danger')
-                        bg-rose-500
-                        @break
-
-                    @default
-                        bg-indigo-500
-                @endswitch">
+                class="inline-flex px-4 py-3 text-sm bg-white border rounded-lg min-w-80 border-slate-200 text-slate-800">
                 <div class="flex items-start justify-between w-full">
                     <div class="flex">
-                        <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3" viewBox="0 0 16 16">
+                        <svg @class([
+                            'fill-emerald-500' => $alert['status'] === 'success',
+                            'fill-indigo-500' => $alert['status'] === 'info',
+                            'fill-amber-500' => $alert['status'] === 'warning',
+                            'fill-rose-500' => $alert['status'] === 'danger',
+                            'w-4 h-4 shrink-0 fill-emerald-500 mt-[3px] mr-3',
+                        ]) viewBox="0 0 16 16">
                             @switch($alert['status'])
                                 @case('success')
                                     <path
@@ -66,7 +52,7 @@
                         </svg>
 
                         <div class="font-medium">
-                            {{ $alert['message'] }}
+                            {!! $alert['message'] !!}
                         </div>
                     </div>
 
