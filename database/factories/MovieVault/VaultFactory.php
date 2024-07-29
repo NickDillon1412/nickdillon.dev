@@ -30,6 +30,7 @@ class VaultFactory extends Factory
             'poster_path' => '/'.Str::uuid(),
             'release_date' => '2024-07-27',
             'first_air_date' => '',
+            'on_wishlist' => 0,
         ];
     }
 }

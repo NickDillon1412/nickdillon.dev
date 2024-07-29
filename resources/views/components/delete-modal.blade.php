@@ -33,7 +33,8 @@
                     </svg>
 
                     <h3 class="ml-2 text-lg font-semibold">
-                        Remove from vault
+                        Remove from
+                        {{ request()->routeIs('movie-vault.my-vault') ? 'vault' : 'wishlist' }}
                     </h3>
 
                     <button @click="modalOpen=false"
@@ -51,7 +52,9 @@
                         <span class="font-semibold text-red-500">
                             '{{ $title }}'
                         </span>
-                        from your vault?
+                        from your
+                        {{ request()->routeIs('movie-vault.my-vault') ? 'vault' : 'wishlist' }}
+                        ?
                     </p>
                 </div>
 

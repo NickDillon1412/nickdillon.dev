@@ -29,7 +29,7 @@ class Explore extends Component
             ->json()['results'];
     }
 
-    public function save(array $media): void
+    public function save(array $media, ?string $wishlist = null): void
     {
         if (
             auth()
@@ -63,6 +63,7 @@ class Explore extends Component
             $this->new_media['vault_id'] = $media['id'];
             $this->new_media['vault_type'] = $media['media_type'];
             $this->new_media['overview'] = $media['overview'];
+            $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             auth()->user()->vaults()->create(
                 VaultData::from($this->new_media)->toArray()
@@ -70,7 +71,11 @@ class Explore extends Component
 
             $this->dispatch('showAlertPopup', [
                 'status' => 'success',
-                'message' => 'Successfully added to your vault',
+                'message' => $wishlist ? (string) new HtmlString(
+                    '<p>Successfully added <strong>'
+                    .($this->new_media['title'] ?? $this->new_media['name']).
+                    '</strong> to your wishlist</p>'
+                ) : 'Successfully added to your vault',
             ]);
         }
     }

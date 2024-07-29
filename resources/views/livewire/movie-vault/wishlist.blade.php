@@ -1,22 +1,20 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
-            My Vault
+            My Wishlist
         </h1>
 
         <div class="flex items-center space-x-2">
-            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate
-                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-                <x-heroicon-o-star class="w-4 h-4 mr-1 -ml-1" />
-
-                Wishlist
-            </a>
-
             <a href="{{ route('movie-vault.explore') }}" wire:navigate
                 class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
                 <x-heroicon-s-plus-small class="w-5 h-5 mr-0.5 -ml-1" />
 
                 Add to vault
+            </a>
+
+            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
+                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
+                &larr; Back to My Vault
             </a>
         </div>
     </div>
@@ -38,7 +36,7 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-        @forelse ($vault_records as $media)
+        @forelse ($wishlist_records as $media)
             <x-mary-card shadow
                 class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
                 <div class="-mx-1 -my-3">
@@ -58,7 +56,12 @@
                             View all details &rarr;
                         </a>
 
-                        <div class="-mr-1">
+                        <div class="flex items-center -mr-1 space-x-1">
+                            <button wire:click="addToVault({{ $media['id'] }})">
+                                <x-heroicon-s-plus-small
+                                    class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+                            </button>
+
                             <x-delete-modal id="{{ $media['id'] }}" title="{{ $media['title'] ?? $media['name'] }}">
                                 <x-heroicon-o-trash
                                     class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
@@ -88,6 +91,6 @@
     </div>
 
     <div class="pt-4">
-        {{ $vault_records->links() }}
+        {{ $wishlist_records->links() }}
     </div>
 </div>

@@ -12,7 +12,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
-class MyVault extends Component
+class Wishlist extends Component
 {
     use WithPagination;
 
@@ -23,27 +23,27 @@ class MyVault extends Component
         $this->resetPage();
     }
 
-    public function delete(Vault $vault): void
+    public function addToVault(Vault $vault): void
     {
-        $vault?->delete();
+        $vault?->update(['on_wishlist' => 0]);
 
         $this->dispatch('showAlertPopup', [
             'status' => 'success',
             'message' => (string) new HtmlString(
-                '<p>Successfully removed <strong>'
+                '<p>Successfully added <strong>'
                 .($vault->title ?? $vault->name).
-                '</strong> from your vault</p>'
+                '</strong> to your vault</p>'
             ),
         ]);
     }
 
     public function render(): View
     {
-        return view('livewire.movie-vault.my-vault', [
-            'vault_records' => auth()
+        return view('livewire.movie-vault.wishlist', [
+            'wishlist_records' => auth()
                 ->user()
                 ->vaults()
-                ->whereOnWishlist(0)
+                ->whereOnWishlist(1)
                 ->when(strlen($this->search) >= 1, function ($query) {
                     return $query
                         ->whereLike('title', "%$this->search%")
