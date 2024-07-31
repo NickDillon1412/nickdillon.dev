@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\MovieVault\MyVault;
+use App\Livewire\MovieVault\Wishlist;
 use App\Models\MovieVault\Vault;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
@@ -20,7 +20,7 @@ beforeEach(function () {
 });
 
 it('can update search', function () {
-    livewire(MyVault::class)
+    livewire(Wishlist::class)
         ->set('search', 'Suits')
         ->assertHasNoErrors();
 
@@ -28,16 +28,15 @@ it('can update search', function () {
         ->toBeFalse();
 });
 
-it('can delete a vault record', function () {
-    livewire(MyVault::class)
-        ->call('delete', Vault::first())
+it('can add a record to vault', function () {
+    livewire(Wishlist::class)
+        ->call('addToVault', Vault::first())
         ->assertDispatched('showAlertPopup')
-        ->assertHasNoErrors();
-
-    $this->assertDatabaseCount('vaults', 0);
+        ->assertHasNoErrors()
+        ->assertNoRedirect();
 });
 
 test('component can render', function () {
-    livewire(MyVault::class)
+    livewire(Wishlist::class)
         ->assertHasNoErrors();
 });

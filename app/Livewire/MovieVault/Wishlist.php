@@ -6,6 +6,7 @@ namespace App\Livewire\MovieVault;
 
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -25,7 +26,7 @@ class Wishlist extends Component
 
     public function addToVault(Vault $vault): void
     {
-        $vault?->update(['on_wishlist' => 0]);
+        $vault?->update(['on_wishlist' => false]);
 
         $this->dispatch('showAlertPopup', [
             'status' => 'success',
@@ -43,13 +44,14 @@ class Wishlist extends Component
             'wishlist_records' => auth()
                 ->user()
                 ->vaults()
-                ->whereOnWishlist(1)
-                ->when(strlen($this->search) >= 1, function ($query) {
-                    return $query
-                        ->whereLike('title', "%$this->search%")
-                        ->orWhereLike('original_title', "%$this->search%")
-                        ->orWhereLike('name', "%$this->search%")
-                        ->orWhereLike('original_name', "%$this->search%");
+                ->whereOnWishlist(true)
+                ->when(strlen($this->search) >= 1, function (Builder $query): void {
+                    $query->where(function (Builder $query): void {
+                        $query->whereLike('title', "%$this->search%")
+                            ->orWhereLike('original_title', "%$this->search%")
+                            ->orWhereLike('name', "%$this->search%")
+                            ->orWhereLike('original_name', "%$this->search%");
+                    });
                 })
                 ->latest()
                 ->paginate(9),

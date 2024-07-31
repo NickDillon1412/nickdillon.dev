@@ -27,6 +27,13 @@ class Vault extends Model
         'on_wishlist',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'on_wishlist' => 'bool',
+        ];
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

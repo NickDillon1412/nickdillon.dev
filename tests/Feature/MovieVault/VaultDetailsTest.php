@@ -10,13 +10,11 @@ use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
 
 beforeEach(function () {
-    $user = User::factory()
-        ->hasVaults(1)
-        ->create();
-
-    actingAs($user);
-
-    Vault::factory()->create();
+    actingAs(
+        User::factory()
+            ->hasVaults(1)
+            ->create()
+    );
 });
 
 it('can delete a record from vault', function () {
