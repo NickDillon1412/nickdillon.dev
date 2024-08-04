@@ -4,17 +4,18 @@
             {{ $vault->title ?? $vault->name }}
         </h1>
 
-        <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
+        <a href="{{ route($previous_url === '/movie-vault/my-vault' ? 'movie-vault.my-vault' : 'movie-vault.wishlist') }}"
+            wire:navigate
             class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-            &larr; Back to My Vault
+            &larr; Back to My
+            {{ $previous_url === '/movie-vault/my-vault' ? 'Vault' : 'Wishlist' }}
         </a>
     </div>
 
     <div
         class="flex flex-col justify-center w-full mt-4 border rounded-lg sm:mt-8 sm:flex-row border-slate-200 dark:border-slate-600/50">
         <img class="object-cover rounded-lg rounded-b-none sm:rounded-r-none sm:rounded-bl-lg h-96 w-96"
-            src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault['poster_path'] ?? $vault['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
-            alt="{{ $vault['original_title'] ?? $vault['original_name'] }}" />
+            src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}" />
 
         <div
             class="flex flex-col p-4 bg-white rounded-b-lg sm:rounded-r-lg sm:rounded-bl-none sm:flex-row sm:relative dark:bg-slate-800 dark:text-slate-50 text-slate-800">
@@ -51,13 +52,23 @@
             </div>
 
             <div class="pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">
-                <x-delete-modal id="{{ $vault['id'] }}" title="{{ $vault['title'] ?? $vault['name'] }}">
-                    <button
-                        class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium leading-6 text-white whitespace-no-wrap transition duration-300 ease-in-out bg-red-500 border border-red-500 rounded-md shadow-sm hover:border-red-600 hover:bg-red-600"
-                        type="button">
-                        Remove
-                    </button>
-                </x-delete-modal>
+                <x-modal wire:click="delete({{ $vault->id }})" delete>
+                    <x-heroicon-o-trash class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
+
+                    <x-slot:title>
+                        Remove from
+                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}
+                    </x-slot:title>
+
+                    <x-slot:body>
+                        Are you sure you want to remove
+                        <span class="font-semibold text-red-500">
+                            '{{ $vault->title ?? $vault->name }}'
+                        </span>
+                        from your
+                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}?
+                    </x-slot:body>
+                </x-modal>
             </div>
         </div>
     </div>

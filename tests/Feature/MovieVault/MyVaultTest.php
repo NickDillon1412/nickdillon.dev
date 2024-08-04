@@ -28,6 +28,15 @@ it('can update search', function () {
         ->toBeFalse();
 });
 
+it('can add to wishlist', function () {
+    livewire(MyVault::class)
+        ->call('addToWishlist', Vault::first())
+        ->assertDispatched('showAlertPopup')
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseCount('vaults', 1);
+});
+
 it('can delete a vault record', function () {
     livewire(MyVault::class)
         ->call('delete', Vault::first())

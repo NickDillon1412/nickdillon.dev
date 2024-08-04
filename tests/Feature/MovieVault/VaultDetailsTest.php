@@ -21,6 +21,7 @@ it('can delete a record from vault', function () {
     $vault = Vault::first();
 
     livewire(VaultDetails::class, ['vault' => $vault])
+        ->set('previous_url', '/test')
         ->call('delete', $vault)
         ->assertHasNoErrors()
         ->assertRedirect(route('movie-vault.my-vault'));
@@ -28,5 +29,6 @@ it('can delete a record from vault', function () {
 
 test('component can render', function () {
     livewire(VaultDetails::class, ['vault' => Vault::first()])
+        ->set('previous_url', '/test')
         ->assertHasNoErrors();
 });

@@ -7,7 +7,7 @@
         <div class="flex items-center space-x-2">
             <a href="{{ route('movie-vault.wishlist') }}" wire:navigate
                 class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-                <x-heroicon-o-star class="w-4 h-4 mr-1 -ml-1" />
+                <x-heroicon-o-heart class="w-4 h-4 mr-1 -ml-1" />
 
                 Wishlist
             </a>
@@ -58,11 +58,40 @@
                             View all details &rarr;
                         </a>
 
-                        <div class="-mr-1">
-                            <x-delete-modal id="{{ $media['id'] }}" title="{{ $media['title'] ?? $media['name'] }}">
+                        <div class="flex items-center -mr-1 space-x-0.5">
+                            <x-modal wire:click="addToWishlist({{ $media['id'] }})" info>
+                                <x-heroicon-s-plus-small
+                                    class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+
+                                <x-slot:title>
+                                    Add to wishlist
+                                </x-slot:title>
+
+                                <x-slot:body>
+                                    Are you sure you want to add
+                                    <span class="font-semibold text-indigo-500">
+                                        '{{ $media['title'] ?? $media['name'] }}'
+                                    </span>
+                                    to your wishlist?
+                                </x-slot:body>
+                            </x-modal>
+
+                            <x-modal wire:click="delete({{ $media['id'] }})" delete>
                                 <x-heroicon-o-trash
                                     class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
-                            </x-delete-modal>
+
+                                <x-slot:title>
+                                    Remove from vault
+                                </x-slot:title>
+
+                                <x-slot:body>
+                                    Are you sure you want to remove
+                                    <span class="font-semibold text-red-500">
+                                        '{{ $media['title'] ?? $media['name'] }}'
+                                    </span>
+                                    from your vault?
+                                </x-slot:body>
+                            </x-modal>
                         </div>
                     </div>
                 </div>

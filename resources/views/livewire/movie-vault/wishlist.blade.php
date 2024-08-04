@@ -56,24 +56,47 @@
                             View all details &rarr;
                         </a>
 
-                        <div class="flex items-center -mr-1 space-x-1">
-                            <button wire:click="addToVault({{ $media['id'] }})">
+                        <div class="flex items-center -mr-1 space-x-0.5">
+                            <x-modal wire:click="addToVault({{ $media['id'] }})" info>
                                 <x-heroicon-s-plus-small
                                     class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
-                            </button>
 
-                            <x-delete-modal id="{{ $media['id'] }}" title="{{ $media['title'] ?? $media['name'] }}">
+                                <x-slot:title>
+                                    Add to vault
+                                </x-slot:title>
+
+                                <x-slot:body>
+                                    Are you sure you want to add
+                                    <span class="font-semibold text-indigo-500">
+                                        '{{ $media['title'] ?? $media['name'] }}'
+                                    </span>
+                                    to your vault?
+                                </x-slot:body>
+                            </x-modal>
+
+                            <x-modal wire:click="addToVault({{ $media['id'] }})" delete>
                                 <x-heroicon-o-trash
                                     class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
-                            </x-delete-modal>
+
+                                <x-slot:title>
+                                    Remove from wishlist
+                                </x-slot:title>
+
+                                <x-slot:body>
+                                    Are you sure you want to remove
+                                    <span class="font-semibold text-red-500">
+                                        '{{ $media['title'] ?? $media['name'] }}'
+                                    </span>
+                                    from your wishlist?
+                                </x-slot:body>
+                            </x-modal>
                         </div>
                     </div>
                 </div>
 
                 <x-slot:figure>
                     <img class="h-[300px] w-[375px] object-cover"
-                        src="{{ 'https://image.tmdb.org/t/p/w500/' . $media['poster_path'] ?? $media['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
-                        alt="{{ $media['original_title'] ?? $media['original_name'] }}" />
+                        src="{{ 'https://image.tmdb.org/t/p/w500/' . $media['poster_path'] ?? $media['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}" />
                 </x-slot:figure>
             </x-mary-card>
         @empty

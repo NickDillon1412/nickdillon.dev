@@ -6,6 +6,7 @@ namespace App\Livewire\MovieVault;
 
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -21,6 +22,20 @@ class MyVault extends Component
     public function updatedSearch(): void
     {
         $this->resetPage();
+    }
+
+    public function addToWishlist(Vault $vault): void
+    {
+        $vault?->update(['on_wishlist' => true]);
+
+        $this->dispatch('showAlertPopup', [
+            'status' => 'success',
+            'message' => (string) new HtmlString(
+                '<p>Successfully added <strong>'
+                .($vault->title ?? $vault->name).
+                '</strong> to your wishlist</p>'
+            ),
+        ]);
     }
 
     public function delete(Vault $vault): void
@@ -43,13 +58,14 @@ class MyVault extends Component
             'vault_records' => auth()
                 ->user()
                 ->vaults()
-                ->whereOnWishlist(0)
-                ->when(strlen($this->search) >= 1, function ($query) {
-                    return $query
-                        ->whereLike('title', "%$this->search%")
-                        ->orWhereLike('original_title', "%$this->search%")
-                        ->orWhereLike('name', "%$this->search%")
-                        ->orWhereLike('original_name', "%$this->search%");
+                ->whereOnWishlist(false)
+                ->when(strlen($this->search) >= 1, function (Builder $query): void {
+                    $query->where(function (Builder $query): void {
+                        $query->whereLike('title', "%$this->search%")
+                            ->orWhereLike('original_title', "%$this->search%")
+                            ->orWhereLike('name', "%$this->search%")
+                            ->orWhereLike('original_name', "%$this->search%");
+                    });
                 })
                 ->latest()
                 ->paginate(9),

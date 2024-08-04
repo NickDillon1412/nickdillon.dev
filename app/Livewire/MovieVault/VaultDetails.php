@@ -7,6 +7,7 @@ namespace App\Livewire\MovieVault;
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\HtmlString;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -15,6 +16,8 @@ use Livewire\Component;
 class VaultDetails extends Component
 {
     public Vault $vault;
+
+    public ?string $previous_url = '';
 
     public function delete(Vault $vault): void
     {
@@ -36,6 +39,8 @@ class VaultDetails extends Component
 
     public function render(): View
     {
+        $this->previous_url = parse_url(URL::previous(), PHP_URL_PATH);
+
         return view('livewire.movie-vault.vault-details');
     }
 }
