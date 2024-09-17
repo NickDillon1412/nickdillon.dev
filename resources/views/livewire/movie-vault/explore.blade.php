@@ -42,7 +42,7 @@
                                 {{ Carbon\Carbon::parse($media['release_date'] ?? $media['first_air_date'])->format('M d, Y') }}
                             </h3>
 
-                            <div class="flex justify-between space-x-1">
+                            <div class="flex items-center justify-between space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
                                     <button
                                         class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50"
@@ -51,10 +51,11 @@
                                     </button>
                                 </form>
 
-                                <form wire:submit="save(@js($media), 'wishlist')">
-                                    <button type="submit">
-                                        <x-heroicon-s-plus-small
-                                            class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+                                <form wire:submit="save(@js($media), 'wishlist')" class="w-full">
+                                    <button
+                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-100 rounded-md hover:bg-slate-300 text-slate-700"
+                                        type="submit">
+                                        Add to wishlist
                                     </button>
                                 </form>
                             </div>
