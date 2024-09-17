@@ -5,16 +5,18 @@
         </h1>
 
         <div class="flex items-center space-x-2">
+            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
+                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
+                <x-heroicon-o-eye class="w-4 h-4 mr-1 -ml-1" />
+
+                Vault
+            </a>
+
             <a href="{{ route('movie-vault.explore') }}" wire:navigate
                 class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
                 <x-heroicon-s-plus-small class="w-5 h-5 mr-0.5 -ml-1" />
 
                 Add to vault
-            </a>
-
-            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
-                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-                &larr; Back to My Vault
             </a>
         </div>
     </div>
@@ -95,7 +97,7 @@
                 </div>
 
                 <x-slot:figure>
-                    <img class="h-[300px] w-[375px] object-cover"
+                    <img class="h-[300px] w-full object-cover"
                         src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}" />
                 </x-slot:figure>
             </x-mary-card>

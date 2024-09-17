@@ -14,7 +14,7 @@
 
     <div
         class="flex flex-col justify-center w-full mt-4 border rounded-lg sm:mt-8 sm:flex-row border-slate-200 dark:border-slate-600/50">
-        <img class="object-cover rounded-lg rounded-b-none sm:rounded-r-none sm:rounded-bl-lg h-96 w-96"
+        <img class="object-cover w-auto rounded-lg rounded-b-none sm:rounded-r-none sm:rounded-bl-lg h-96"
             src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}" />
 
         <div

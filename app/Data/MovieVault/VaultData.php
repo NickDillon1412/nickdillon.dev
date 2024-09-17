@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Data\MovieVault;
 
 use Livewire\Wireable;
-use Spatie\LaravelData\Concerns\WireableData;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Concerns\WireableData;
 
 class VaultData extends Data implements Wireable
 {

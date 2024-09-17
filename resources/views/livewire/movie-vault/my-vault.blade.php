@@ -97,7 +97,7 @@
                 </div>
 
                 <x-slot:figure>
-                    <img class="h-[300px] w-[375px] object-cover"
+                    <img class="h-[300px] w-full object-cover"
                         src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
                         alt="{{ $vault->original_title ?? $vault->original_name }}" />
                 </x-slot:figure>
