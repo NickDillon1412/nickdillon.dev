@@ -36,12 +36,12 @@ new class extends Component {
                     class="max-w-sm duration-300 ease-in-out bg-white border rounded-lg shadow-2xl border-slate-200 hover:shadow-pink-500 hover:scale-105 hover:-rotate-2">
                     <img class="object-cover w-full h-48 rounded-t-lg sm:h-56" src="{{ asset($project['image']) }}" />
 
-                    <div class="p-5">
+                    <div class="p-4 space-y-1">
                         <h5 class="text-2xl font-bold tracking-tight">
                             {{ $project['title'] }}
                         </h5>
 
-                        <ul class="pt-3">
+                        <ul>
                             @foreach ($project['technologies'] as $tech)
                                 <li
                                     class="inline-block px-2 sm:px-2.5 py-0.5 sm:py-[.8px] mr-1 text-[12.5px] sm:text-sm font-semibold text-pink-600 bg-pink-200 rounded-full shadow-xs shadow-pink-200/75">
