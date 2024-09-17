@@ -38,28 +38,28 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-        @forelse ($vault_records as $media)
+        @forelse ($vault_records as $vault)
             <x-mary-card shadow
                 class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
                 <div class="-mx-1 -my-3">
                     <h1 class="text-xl font-bold truncate whitespace-nowrap">
-                        {{ $media['original_title'] ?? $media['original_name'] }}
+                        {{ $vault->original_title ?? $vault->original_name }}
                     </h1>
 
                     <h3>
-                        {{ $media['release_date'] ? 'Release Date: ' : 'First Air Date: ' }}
+                        {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
 
-                        {{ Carbon\Carbon::parse($media['release_date'] ?? $media['first_air_date'])->format('M d, Y') }}
+                        {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
                     </h3>
 
                     <div class="flex items-center justify-between w-full text-sm">
                         <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
-                            href="{{ route('movie-vault.details', $media->id) }}" wire:navigate>
+                            href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate>
                             View all details &rarr;
                         </a>
 
                         <div class="flex items-center -mr-1 space-x-0.5">
-                            <x-modal wire:click="addToWishlist({{ $media['id'] }})" info>
+                            <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
                                 <x-heroicon-s-plus-small
                                     class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
 
@@ -70,13 +70,13 @@
                                 <x-slot:body>
                                     Are you sure you want to add
                                     <span class="font-semibold text-indigo-500">
-                                        '{{ $media['title'] ?? $media['name'] }}'
+                                        '{{ $vault->title ?? $vault->name }}'
                                     </span>
                                     to your wishlist?
                                 </x-slot:body>
                             </x-modal>
 
-                            <x-modal wire:click="delete({{ $media['id'] }})" delete>
+                            <x-modal wire:click="delete({{ $vault->id }})" delete>
                                 <x-heroicon-o-trash
                                     class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
 
@@ -87,7 +87,7 @@
                                 <x-slot:body>
                                     Are you sure you want to remove
                                     <span class="font-semibold text-red-500">
-                                        '{{ $media['title'] ?? $media['name'] }}'
+                                        '{{ $vault->title ?? $vault->name }}'
                                     </span>
                                     from your vault?
                                 </x-slot:body>
@@ -98,8 +98,8 @@
 
                 <x-slot:figure>
                     <img class="h-[300px] w-[375px] object-cover"
-                        src="{{ 'https://image.tmdb.org/t/p/w500/' . $media['poster_path'] ?? $media['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
-                        alt="{{ $media['original_title'] ?? $media['original_name'] }}" />
+                        src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
+                        alt="{{ $vault->original_title ?? $vault->original_name }}" />
                 </x-slot:figure>
             </x-mary-card>
         @empty

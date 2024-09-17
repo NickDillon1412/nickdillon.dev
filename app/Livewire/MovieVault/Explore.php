@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
+use Livewire\Component;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Computed;
+use Illuminate\Support\HtmlString;
 use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\HtmlString;
-use Livewire\Attributes\Computed;
-use Livewire\Attributes\Layout;
-use Livewire\Component;
 
 #[Layout('layouts.app')]
 class Explore extends Component
@@ -33,17 +33,17 @@ class Explore extends Component
     {
         if (
             auth()
-                ->user()
-                ->vaults()
-                ->whereVaultId($media['id'])
-                ->exists()
+            ->user()
+            ->vaults()
+            ->whereVaultId($media['id'])
+            ->exists()
         ) {
             $this->dispatch('showAlertPopup', [
                 'status' => 'danger',
                 'message' => (string) new HtmlString(
                     '<strong>'
-                    .($media['title'] ?? $media['name']).
-                    '</strong> is already in your vault'
+                        . ($media['title'] ?? $media['name']) .
+                        '</strong> is already in your vault'
                 ),
             ]);
         } else {
@@ -73,8 +73,8 @@ class Explore extends Component
                 'status' => 'success',
                 'message' => $wishlist ? (string) new HtmlString(
                     '<p>Successfully added <strong>'
-                    .($this->new_media['title'] ?? $this->new_media['name']).
-                    '</strong> to your wishlist</p>'
+                        . ($this->new_media['title'] ?? $this->new_media['name']) .
+                        '</strong> to your wishlist</p>'
                 ) : 'Successfully added to your vault',
             ]);
         }

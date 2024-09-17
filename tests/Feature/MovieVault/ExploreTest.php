@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Livewire\MovieVault\Explore;
 use App\Models\User;
+use App\Livewire\MovieVault\Explore;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;

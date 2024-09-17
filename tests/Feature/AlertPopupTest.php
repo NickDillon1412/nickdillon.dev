@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Livewire\AlertPopup;
+use Illuminate\Support\Facades\Session;
 
 use function Pest\Livewire\livewire;
 
@@ -18,7 +19,7 @@ it('can set alerts', function () {
 });
 
 it('can flash alert to session', function () {
-    session()->flash('alert', [
+    Session::flash('alert', [
         'status' => 'success',
         'message' => 'Test message',
     ]);

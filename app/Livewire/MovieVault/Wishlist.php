@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
-use App\Models\MovieVault\Vault;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\HtmlString;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
+use App\Models\MovieVault\Vault;
+use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 
 #[Layout('layouts.app')]
 class Wishlist extends Component
@@ -32,8 +32,8 @@ class Wishlist extends Component
             'status' => 'success',
             'message' => (string) new HtmlString(
                 '<p>Successfully added <strong>'
-                .($vault->title ?? $vault->name).
-                '</strong> to your vault</p>'
+                    . ($vault->title ?? $vault->name) .
+                    '</strong> to your vault</p>'
             ),
         ]);
     }

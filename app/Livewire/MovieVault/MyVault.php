@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
-use App\Models\MovieVault\Vault;
-use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\HtmlString;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
+use App\Models\MovieVault\Vault;
+use Illuminate\Support\HtmlString;
+use App\Services\MovieVaultService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 
 #[Layout('layouts.app')]
 class MyVault extends Component
@@ -26,28 +27,28 @@ class MyVault extends Component
 
     public function addToWishlist(Vault $vault): void
     {
-        $vault?->update(['on_wishlist' => true]);
+        MovieVaultService::add($vault, wishlist: true);
 
         $this->dispatch('showAlertPopup', [
             'status' => 'success',
             'message' => (string) new HtmlString(
                 '<p>Successfully added <strong>'
-                .($vault->title ?? $vault->name).
-                '</strong> to your wishlist</p>'
+                    . ($vault->title ?? $vault->name) .
+                    '</strong> to your wishlist</p>'
             ),
         ]);
     }
 
     public function delete(Vault $vault): void
     {
-        $vault?->delete();
+        MovieVaultService::delete($vault);
 
         $this->dispatch('showAlertPopup', [
             'status' => 'success',
             'message' => (string) new HtmlString(
                 '<p>Successfully removed <strong>'
-                .($vault->title ?? $vault->name).
-                '</strong> from your vault</p>'
+                    . $vault->name .
+                    '</strong> from your wishlist</p>'
             ),
         ]);
     }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
-use Livewire\Attributes\On;
-use Livewire\Component;
 
 class AlertPopup extends Component
 {

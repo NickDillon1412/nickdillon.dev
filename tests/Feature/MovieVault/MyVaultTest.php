@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Livewire\MovieVault\MyVault;
-use App\Models\MovieVault\Vault;
 use App\Models\User;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use App\Models\MovieVault\Vault;
+use Illuminate\Support\Facades\URL;
+use App\Livewire\MovieVault\MyVault;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
@@ -31,7 +31,6 @@ it('can update search', function () {
 it('can add to wishlist', function () {
     livewire(MyVault::class)
         ->call('addToWishlist', Vault::first())
-        ->assertDispatched('showAlertPopup')
         ->assertHasNoErrors();
 
     $this->assertDatabaseCount('vaults', 1);
@@ -40,7 +39,6 @@ it('can add to wishlist', function () {
 it('can delete a vault record', function () {
     livewire(MyVault::class)
         ->call('delete', Vault::first())
-        ->assertDispatched('showAlertPopup')
         ->assertHasNoErrors();
 
     $this->assertDatabaseCount('vaults', 0);

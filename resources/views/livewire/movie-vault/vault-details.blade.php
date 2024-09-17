@@ -51,13 +51,34 @@
                 </p>
             </div>
 
-            <div class="pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">
+            <div class="pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0 flex items-center space-x-0.5">
+                <x-modal
+                    wire:click="{{ $vault->on_wishlist ? 'addToVault(' . $vault->id . ')' : 'addToWishlist(' . $vault->id . ')' }}"
+                    info>
+                    <x-heroicon-s-plus-small
+                        class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+
+                    <x-slot:title>
+                        Add to
+                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}?
+                    </x-slot:title>
+
+                    <x-slot:body>
+                        Are you sure you want to add
+                        <span class="font-semibold text-indigo-500">
+                            '{{ $vault->title ?? $vault->name }}'
+                        </span>
+                        to your
+                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}?
+                    </x-slot:body>
+                </x-modal>
+
                 <x-modal wire:click="delete({{ $vault->id }})" delete>
                     <x-heroicon-o-trash class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
 
                     <x-slot:title>
                         Remove from
-                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}
+                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}
                     </x-slot:title>
 
                     <x-slot:body>
@@ -66,7 +87,7 @@
                             '{{ $vault->title ?? $vault->name }}'
                         </span>
                         from your
-                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}?
+                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}?
                     </x-slot:body>
                 </x-modal>
             </div>
