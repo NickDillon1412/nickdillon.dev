@@ -31,7 +31,7 @@ new class extends Component {
 
     <div class="flex flex-col px-3 space-y-8 sm:space-y-0 sm:space-x-8 sm:flex-row text-slate-800">
         @foreach ($projects as $project)
-            <a href="{{ $project['url'] }}" target="_blank">
+            <a href="{{ $project['url'] }}">
                 <div
                     class="max-w-sm duration-300 ease-in-out bg-white border rounded-lg shadow-2xl border-slate-200 hover:shadow-pink-500 hover:scale-105 hover:-rotate-2">
                     <img class="object-cover w-full h-48 rounded-t-lg sm:h-56" src="{{ asset($project['image']) }}" />
@@ -54,7 +54,6 @@ new class extends Component {
             </a>
         @endforeach
     </div>
-
 
     <a class="mt-6 font-medium text-pink-400 duration-300 ease-in-out hover:text-pink-300 hover:scale-110"
         href="{{ route('apps') }}" wire:navigate>
