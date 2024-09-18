@@ -8,7 +8,7 @@ new class extends Component {
         return [
             'projects' => [
                 'movie-vault' => [
-                    'url' => 'https://nickdillon.dev/movie-vault/my-vault',
+                    'url' => route('movie-vault.my-vault'),
                     'image' => 'movie-vault.png',
                     'title' => 'Movie Vault',
                     'technologies' => ['Tailwind', 'Alpine.js', 'Laravel', 'Livewire'],
