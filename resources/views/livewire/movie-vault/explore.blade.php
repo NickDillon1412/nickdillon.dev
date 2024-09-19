@@ -12,7 +12,7 @@
 
     <div class="relative mt-4">
         <x-text-input id="search" wire:model.live.debounce.300ms='search'
-            class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="search"
+            class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
             placeholder="Search..." />
 
         <button class="absolute inset-0 right-auto group" type="submit" aria-label="Search">
@@ -23,6 +23,12 @@
                 <path
                     d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
             </svg>
+        </button>
+
+        <button x-show="$wire.search.length > 0" wire:click="$set('search', '')"
+            class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
+            <x-heroicon-s-x-mark
+                class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
         </button>
     </div>
 
