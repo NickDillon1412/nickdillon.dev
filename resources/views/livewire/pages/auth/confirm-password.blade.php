@@ -35,25 +35,25 @@ new #[Layout('layouts.guest')] class extends Component {
 }; ?>
 
 <div>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-    </div>
+    <x-auth-card submit="confirmPassword">
+        <x-slot:header>
+            <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+            </div>
+        </x-slot:header>
 
-    <form wire:submit="confirmPassword">
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+        <x-slot:content>
+            <!-- Password -->
+            <div>
+                <x-input-label for="password" :value="__('Password')" />
+                <x-text-input wire:model="password" id="password" class="block w-full mt-1" type="password" name="password"
+                    required autocomplete="current-password" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
+        </x-slot:content>
 
-            <x-text-input wire:model="password" id="password" class="block w-full mt-1" type="password" name="password"
-                required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
+        <x-slot:button>
+            Confirm
+        </x-slot:button>
+    </x-auth-card>
 </div>

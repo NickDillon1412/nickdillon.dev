@@ -36,14 +36,15 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div
-    class="w-full max-w-[30rem] p-2 flex flex-col gap-2 rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">
-    <div class="flex flex-col p-6 bg-white shadow-sm rounded-xl md:p-8 dark:bg-gray-800">
-        <h1 class="flex justify-center mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-100">
-            Sign Up
-        </h1>
+<div>
+    <x-auth-card submit="signup">
+        <x-slot:header>
+            <h1 class="flex justify-center mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-100">
+                Sign Up
+            </h1>
+        </x-slot:header>
 
-        <form wire:submit="signup">
+        <x-slot:content>
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Name')" />
@@ -61,35 +62,29 @@ new #[Layout('layouts.guest')] class extends Component
             <!-- Password -->
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
-
                 <x-text-input wire:model="password" id="password" class="block w-full mt-1"
                     type="password"
                     name="password"
                     required autocomplete="new-password" />
-
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
                 <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block w-full mt-1"
                     type="password"
                     name="password_confirmation" required autocomplete="new-password" />
-
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
+        </x-slot:content>
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}" wire:navigate>
-                    {{ __('Already signed up?') }}
-                </a>
+        <x-slot:link route="login">
+            Already signed up?
+        </x-slot:link>
 
-                <x-primary-button class="ms-4">
-                    {{ __('Sign Up') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </div>
+        <x-slot:button>
+            Sign Up
+        </x-slot:button>
+    </x-auth-card>
 </div>
