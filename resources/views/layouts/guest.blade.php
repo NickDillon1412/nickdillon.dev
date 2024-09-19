@@ -30,6 +30,7 @@
         </div>
     </div>
 
+    <x-toaster-hub />
     @livewireScriptConfig
 </body>
 
