@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -16,8 +16,6 @@
     @livewireStyles
 </head>
 
-<html class="h-full">
-
 <body @class([
     'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter h-full',
     '!bg-[#18192c] bg-dots text-slate-50' => request()->routeIs('portfolio'),
@@ -30,7 +28,7 @@
         'sidebar-expanded': sidebarExpanded
     }"
     x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
-    
+
     <script>
         if (localStorage.getItem('sidebar-expanded') == 'true') {
             document.querySelector('body').classList.add('sidebar-expanded');
@@ -50,7 +48,8 @@
                 <livewire:layout.navigation />
             @endif
 
-            <main class="grow min-h-screen overscroll-y-auto">
+            <main class="grow h-full min-h-0">
+                
                 {{ $slot }}
             </main>
         </div>
