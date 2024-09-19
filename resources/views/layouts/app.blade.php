@@ -45,7 +45,7 @@
                 <livewire:layout.navigation />
             @endif
 
-            <main class="grow">
+            <main class="grow min-screen overscroll-y-contain">
                 {{ $slot }}
             </main>
         </div>
