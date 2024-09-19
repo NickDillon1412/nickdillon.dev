@@ -24,7 +24,7 @@
             class="transition-all duration-200 ease-in-out btn btn-circle btn-ghost hover:text-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:hover:text-slate-200" />
     </div>
 
-    <div class="flex flex-col items-center justify-center min-h-screen -mt-5 bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
         <div class="overflow-hidden sm:w-full w-[360px] sm:max-w-md">
             {{ $slot }}
         </div>
