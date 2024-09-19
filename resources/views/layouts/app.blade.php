@@ -16,16 +16,21 @@
     @livewireStyles
 </head>
 
+<html class="h-full">
+
 <body @class([
-    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter',
+    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter h-full',
     '!bg-[#18192c] bg-dots text-slate-50' => request()->routeIs('portfolio'),
-]) x-data="{
-    sidebarOpen: false,
-    sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true'
-}" :class="{
-    'sidebar-expanded': sidebarExpanded
-}"
+]) 
+    x-data="{
+        sidebarOpen: false,
+        sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true'
+    }" 
+    :class="{
+        'sidebar-expanded': sidebarExpanded
+    }"
     x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
+    
     <script>
         if (localStorage.getItem('sidebar-expanded') == 'true') {
             document.querySelector('body').classList.add('sidebar-expanded');
@@ -34,7 +39,7 @@
         }
     </script>
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex h-full overflow-hidden">
         @if (!request()->routeIs('portfolio'))
             <x-sidebar :variant="$attributes['sidebarVariant']" />
         @endif
@@ -45,7 +50,7 @@
                 <livewire:layout.navigation />
             @endif
 
-            <main class="grow min-screen overscroll-y-contain">
+            <main class="grow min-h-screen overscroll-y-auto">
                 {{ $slot }}
             </main>
         </div>
