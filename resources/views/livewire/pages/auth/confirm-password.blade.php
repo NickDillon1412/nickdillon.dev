@@ -52,7 +52,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </div>
         </x-slot:content>
 
-        <x-slot:button>
+        <x-slot:button target="confirmPassword">
             Confirm
         </x-slot:button>
     </x-auth-card>

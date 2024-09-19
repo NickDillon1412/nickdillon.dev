@@ -56,7 +56,7 @@ new #[Layout('layouts.guest')] class extends Component
             </div>
         </x-slot:content>
 
-        <x-slot:button>
+        <x-slot:button target="sendPasswordResetLink">
             Email Password Reset Link
         </x-slot:button>
     </x-auth-card>

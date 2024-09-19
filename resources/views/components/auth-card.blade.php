@@ -14,9 +14,13 @@
                     {{ $link }}
                 </a>
 
-                <x-primary-button>
-                    {{ $button }}
-                </x-primary-button>
+                <div class="relative flex items-center space-x-9">
+                    <x-loading-spinner target="{{ $button->attributes['target'] }}" class="!left-0" />
+
+                    <x-primary-button>
+                        {{ $button }}
+                    </x-primary-button>
+                </div>
             </div>
         </form>
     </div>

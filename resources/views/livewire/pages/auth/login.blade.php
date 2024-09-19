@@ -78,7 +78,7 @@ new #[Layout('layouts.guest')] class extends Component {
             Sign Up &rarr;
         </x-slot:link>
 
-        <x-slot:button>
+        <x-slot:button target="login">
             Log in
         </x-slot:button>
     </x-auth-card>

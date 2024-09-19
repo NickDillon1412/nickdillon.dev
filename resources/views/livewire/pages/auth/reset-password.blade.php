@@ -96,7 +96,7 @@ new #[Layout('layouts.guest')] class extends Component
             </div>
         </x-slot:content>
 
-        <x-slot:button>
+        <x-slot:button target="resetPassword">
             Reset Password
         </x-slot:button>
     </x-auth-card>

@@ -83,7 +83,7 @@ new #[Layout('layouts.guest')] class extends Component
             Already signed up?
         </x-slot:link>
 
-        <x-slot:button>
+        <x-slot:button target="signup">
             Sign Up
         </x-slot:button>
     </x-auth-card>
