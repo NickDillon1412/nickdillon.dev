@@ -17,7 +17,7 @@
 </head>
 
 <body @class([
-    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter h-full',
+    'antialiased bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-400 font-inter min-h-screen',
     '!bg-[#18192c] bg-dots text-slate-50' => request()->routeIs('portfolio'),
 ]) x-data="{
     sidebarOpen: false,
