@@ -26,7 +26,6 @@
     'sidebar-expanded': sidebarExpanded
 }"
     x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))">
-
     <script>
         if (localStorage.getItem('sidebar-expanded') == 'true') {
             document.querySelector('body').classList.add('sidebar-expanded');
@@ -40,19 +39,18 @@
             <x-sidebar :variant="$attributes['sidebarVariant']" />
         @endif
 
-        <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain @if ($attributes['background']) {{ $attributes['background'] }} @endif"
+        <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden @if ($attributes['background']) {{ $attributes['background'] }} @endif"
             x-ref="contentarea">
             @if (!request()->routeIs('portfolio'))
                 <livewire:layout.navigation />
             @endif
 
-            <main class="flex-grow overscroll-y-contain">
+            <main class="grow">
                 {{ $slot }}
             </main>
         </div>
     </div>
 
-    <x-toaster-hub />
     @livewireScriptConfig
 </body>
 
