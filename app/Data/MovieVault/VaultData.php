@@ -24,6 +24,7 @@ class VaultData extends Data implements Wireable
         public ?string $poster_path,
         public ?string $release_date,
         public ?string $first_air_date,
+        public ?string $rating,
         public ?bool $on_wishlist = false
     ) {}
 }

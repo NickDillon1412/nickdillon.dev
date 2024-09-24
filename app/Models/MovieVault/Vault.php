@@ -24,6 +24,7 @@ class Vault extends Model
         'poster_path',
         'release_date',
         'first_air_date',
+        'rating',
         'on_wishlist',
     ];
 
