@@ -4,11 +4,11 @@
             {{ $vault->title ?? $vault->name }}
         </h1>
 
-        <a href="{{ route($previous_url === '/movie-vault/my-vault' ? 'movie-vault.my-vault' : 'movie-vault.wishlist') }}"
+        <a href="{{ route($previous_url === 'my-vault' ? 'movie-vault.my-vault' : 'movie-vault.wishlist') }}"
             wire:navigate
             class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
             &larr; Back to My
-            {{ $previous_url === '/movie-vault/my-vault' ? 'Vault' : 'Wishlist' }}
+            {{ $previous_url === 'my-vault' ? 'Vault' : 'Wishlist' }}
         </a>
     </div>
 
@@ -86,7 +86,7 @@
 
                     <x-slot:title>
                         Remove from
-                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}
+                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}
                     </x-slot:title>
 
                     <x-slot:body>
@@ -95,7 +95,7 @@
                             '{{ $vault->title ?? $vault->name }}'
                         </span>
                         from your
-                        {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}?
+                        {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}?
                     </x-slot:body>
                 </x-modal>
             </div>

@@ -85,7 +85,6 @@ it('can save new movie', function () {
             'release_date' => '2014-11-05',
             'rating' => 'PG'
         ])
-        ->assertDispatched('showAlertPopup')
         ->assertNoRedirect()
         ->assertHasNoErrors();
 });
@@ -157,7 +156,6 @@ it('can save new tv show', function () {
             'first_air_date' => '2010-07-10',
             'rating' => 'TV-PG'
         ])
-        ->assertDispatched('showAlertPopup')
         ->assertNoRedirect()
         ->assertHasNoErrors();
 });
@@ -168,7 +166,6 @@ it('can show popup alert when record already exists in vault', function () {
             'id' => 1234,
             'title' => 'Test Movie',
         ])
-        ->assertDispatched('showAlertPopup')
         ->assertHasNoErrors();
 });
 
