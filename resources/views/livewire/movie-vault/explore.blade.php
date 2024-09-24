@@ -50,7 +50,7 @@
 
                             <p>
                                 Rating:
-                                {{ $media['rating'] }}
+                                {{ $media['rating'] ?? 'No rating found' }}
                             </p>
 
                             <div class="flex items-center justify-between space-x-3">
