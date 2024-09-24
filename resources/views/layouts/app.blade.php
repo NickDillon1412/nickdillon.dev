@@ -34,7 +34,7 @@
         }
     </script>
 
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex min-h-screen overflow-hidden sm:overflow-visible sm:h-screen">
         @if (!request()->routeIs('portfolio'))
             <x-sidebar :variant="$attributes['sidebarVariant']" />
         @endif
@@ -45,7 +45,7 @@
                 <livewire:layout.navigation />
             @endif
 
-            <main class="grow">
+            <main class="overflow-y-auto grow">
                 {{ $slot }}
             </main>
         </div>
