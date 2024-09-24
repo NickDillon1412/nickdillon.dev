@@ -31,7 +31,6 @@ it('can update search', function () {
 it('can add a record to vault', function () {
     livewire(Wishlist::class)
         ->call('addToVault', Vault::first())
-        ->assertDispatched('showAlertPopup')
         ->assertHasNoErrors()
         ->assertNoRedirect();
 });

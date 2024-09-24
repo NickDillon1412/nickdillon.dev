@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Computed;
-use Illuminate\Support\HtmlString;
 use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
@@ -73,21 +73,14 @@ class Explore extends Component
 
     public function save(array $media, ?string $wishlist = null): void
     {
-        if (
-            auth()
-            ->user()
-            ->vaults()
-            ->whereVaultId($media['id'])
-            ->exists()
-        ) {
-            $this->dispatch('showAlertPopup', [
-                'status' => 'danger',
-                'message' => (string) new HtmlString(
-                    '<strong>'
-                        . ($media['title'] ?? $media['name']) .
-                        '</strong> is already in your vault'
-                ),
-            ]);
+        $user_vaults = auth()->user()->vaults();
+
+        if ($in_vault = $user_vaults->whereVaultId($media['id'])->exists()) {
+            $name = $media['title'] ?? $media['name'];
+
+            $page = $in_vault ? 'vault' : 'wishlist';
+
+            Toaster::error("{$name} is already in your {$page}");
         } else {
             $this->new_media = $media['media_type'] === 'movie'
                 ? [
@@ -108,18 +101,15 @@ class Explore extends Component
             $this->new_media['rating'] = $media['rating'];
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
-            auth()->user()->vaults()->create(
+            $user_vaults->create(
                 VaultData::from($this->new_media)->toArray()
             );
 
-            $this->dispatch('showAlertPopup', [
-                'status' => 'success',
-                'message' => $wishlist ? (string) new HtmlString(
-                    '<p>Successfully added <strong>'
-                        . ($this->new_media['title'] ?? $this->new_media['name']) .
-                        '</strong> to your wishlist</p>'
-                ) : 'Successfully added to your vault',
-            ]);
+            $media = $this->new_media['title'] ?? $this->new_media['name'];
+
+            $page = $wishlist ? 'wishlist' : 'vault';
+
+            Toaster::success("Successfully added {$media} to your {$page}");
         }
     }
 

@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
-use App\Services\MovieVaultService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\RedirectResponse;
+use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('layouts.app')]
 class VaultDetails extends Component
@@ -19,32 +20,40 @@ class VaultDetails extends Component
 
     public ?string $previous_url = '';
 
-    public function addToVault(Vault $vault): void
+    public function addToVault(Vault $vault): RedirectResponse|Redirector
     {
-        MovieVaultService::add($vault);
+        $vault?->update(['on_wishlist' => false]);
 
-        $this->redirectRoute('movie-vault.my-vault');
+        $name = $vault->title ?? $vault->name;
+
+        return redirect(route('movie-vault.my-vault'))->success("Successfully added {$name} to your vault");
     }
 
-    public function addToWishlist(Vault $vault): void
+    public function addToWishlist(Vault $vault): RedirectResponse|Redirector
     {
-        MovieVaultService::add($vault, wishlist: true);
+        $vault?->update(['on_wishlist' => true]);
 
-        $this->redirectRoute('movie-vault.wishlist');
+        $name = $vault->title ?? $vault->name;
+
+        return redirect(route('movie-vault.wishlist'))->success("Successfully added {$name} to your wishlist");
     }
 
-    public function delete(Vault $vault): void
+    public function delete(Vault $vault): RedirectResponse|Redirector
     {
-        $on_wishlist = Request::routeIs('movie-vault.wishlist') ? true : false;
+        $page = $vault->on_wishlist ? 'wishlist' : 'vault';
 
-        MovieVaultService::delete($vault, $on_wishlist);
+        $route = $vault->on_wishlist ? 'wishlist' : 'my-vault';
 
-        $this->redirectRoute('movie-vault.my-vault');
+        $name = $vault->title ?? $vault->name;
+
+        $vault?->delete();
+
+        return redirect(route("movie-vault.{$route}"))->success("Successfully removed {$name} from your {$page}");
     }
 
     public function render(): View
     {
-        $this->previous_url = parse_url(URL::previous(), PHP_URL_PATH);
+        $this->previous_url = Str::afterLast(URL::previous(), '/');
 
         return view('livewire.movie-vault.vault-details');
     }

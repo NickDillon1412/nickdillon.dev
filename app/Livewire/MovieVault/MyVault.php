@@ -6,10 +6,9 @@ namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
-use Illuminate\Support\HtmlString;
-use App\Services\MovieVaultService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -27,30 +26,18 @@ class MyVault extends Component
 
     public function addToWishlist(Vault $vault): void
     {
-        MovieVaultService::add($vault, wishlist: true);
+        $vault?->update(['on_wishlist' => true]);
 
-        $this->dispatch('showAlertPopup', [
-            'status' => 'success',
-            'message' => (string) new HtmlString(
-                '<p>Successfully added <strong>'
-                    . ($vault->title ?? $vault->name) .
-                    '</strong> to your wishlist</p>'
-            ),
-        ]);
+        $name = $vault->title ?? $vault->name;
+
+        Toaster::success("Successfully added {$name} to your wishlist");
     }
 
     public function delete(Vault $vault): void
     {
-        MovieVaultService::delete($vault);
+        Toaster::success("Successfully removed {$vault->name} from your vault");
 
-        $this->dispatch('showAlertPopup', [
-            'status' => 'success',
-            'message' => (string) new HtmlString(
-                '<p>Successfully removed <strong>'
-                    . $vault->name .
-                    '</strong> from your wishlist</p>'
-            ),
-        ]);
+        $vault?->delete();
     }
 
     public function render(): View

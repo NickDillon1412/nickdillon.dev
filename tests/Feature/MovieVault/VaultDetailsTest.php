@@ -35,12 +35,10 @@ it('can add to wishlist', function () {
     $this->assertDatabaseCount('vaults', 1);
 });
 
-it('can delete a record from vault', function () {
-    $vault = Vault::first();
-
-    livewire(VaultDetails::class, ['vault' => $vault])
-        ->set('previous_url', '/test')
-        ->call('delete', $vault)
+it('can delete a record', function () {
+    livewire(VaultDetails::class, ['vault' => Vault::first()])
+        ->set('previous_url', '/my-vault')
+        ->call('delete', Vault::first())
         ->assertHasNoErrors()
         ->assertRedirect(route('movie-vault.my-vault'));
 });
