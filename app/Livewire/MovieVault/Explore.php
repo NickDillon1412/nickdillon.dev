@@ -40,9 +40,15 @@ class Explore extends Component
 
                     $releases = $movie_response->json()['release_dates']['results'] ?? [];
 
-                    $us_release = collect($releases)->firstWhere('iso_3166_1', 'US');
+                    $us_releases = collect($releases)->firstWhere('iso_3166_1', 'US') ?? [];
 
-                    $rating = $us_release['release_dates'][0]['certification'] ?? 'No rating found';
+                    if (array_key_exists('release_dates', $us_releases)) {
+                        foreach ($us_releases['release_dates'] as $us_release) {
+                            if ($us_release['certification']) {
+                                $rating = $us_release['certification'] ?? 'No rating found';
+                            }
+                        }
+                    }
 
                     $result['rating'] = $rating ?: 'N/A';
 

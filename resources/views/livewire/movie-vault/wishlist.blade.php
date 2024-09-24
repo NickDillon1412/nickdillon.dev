@@ -60,6 +60,10 @@
                         {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
                     </h3>
 
+                    <p>
+                        Rating: {{ $vault->rating }}
+                    </p>
+
                     <div class="flex items-center justify-between w-full text-sm">
                         <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
                             href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate>
