@@ -24,9 +24,51 @@ class Explore extends Component
     #[Computed]
     public function searchResults(): array
     {
-        return Http::withToken(config('services.movie-api.token'))
-            ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
-            ->json()['results'];
+        if (strlen($this->search) > 1) {
+            $results = Http::withToken(config('services.movie-api.token'))
+                ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
+                ->json()['results'];
+
+            $data = [];
+
+            foreach ($results as $result) {
+                if ($result['media_type'] === 'movie') {
+                    $movie_response = Http::withToken(config('services.movie-api.token'))
+                        ->get("https://api.themoviedb.org/3/movie/{$result['id']}", [
+                            'append_to_response' => 'release_dates',
+                        ]);
+
+                    $releases = $movie_response->json()['release_dates']['results'] ?? [];
+
+                    $us_release = collect($releases)->firstWhere('iso_3166_1', 'US');
+
+                    $rating = $us_release['release_dates'][0]['certification'] ?? 'No rating found';
+
+                    $result['rating'] = $rating ?: 'N/A';
+
+                    $data[$result['id']] = $result;
+                } elseif ($result['media_type'] === 'tv') {
+                    $tv_response = Http::withToken(config('services.movie-api.token'))
+                        ->get("https://api.themoviedb.org/3/tv/{$result['id']}", [
+                            'append_to_response' => 'content_ratings',
+                        ]);
+
+                    $releases = $tv_response->json()['content_ratings']['results'] ?? [];
+
+                    $us_release = collect($releases)->firstWhere('iso_3166_1', 'US');
+
+                    $rating = $us_release['rating'] ?? 'No rating found';
+
+                    $result['rating'] = $rating ?: 'N/A';
+
+                    $data[$result['id']] = $result;
+                }
+            }
+
+            return $data;
+        } else {
+            return [];
+        }
     }
 
     public function save(array $media, ?string $wishlist = null): void
@@ -63,6 +105,7 @@ class Explore extends Component
             $this->new_media['vault_id'] = $media['id'];
             $this->new_media['vault_type'] = $media['media_type'];
             $this->new_media['overview'] = $media['overview'];
+            $this->new_media['rating'] = $media['rating'];
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             auth()->user()->vaults()->create(

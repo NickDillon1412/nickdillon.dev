@@ -49,6 +49,14 @@
 
                     {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
                 </p>
+
+                <p>
+                    <span class="font-semibold">
+                        Rating:
+                    </span>
+
+                    {{ $vault->rating }}
+                </p>
             </div>
 
             <div class="pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0 flex items-center space-x-0.5">

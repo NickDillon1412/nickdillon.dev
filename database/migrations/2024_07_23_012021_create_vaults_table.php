@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('poster_path')->nullable();
             $table->string('release_date')->nullable();
             $table->string('first_air_date')->nullable();
+            $table->string('rating')->nullable();
             $table->boolean('on_wishlist')->default(0);
             $table->timestamps();
         });

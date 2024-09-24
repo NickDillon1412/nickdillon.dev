@@ -25,7 +25,7 @@
             </svg>
         </button>
 
-        <button x-show="$wire.search.length > 0" wire:click="$set('search', '')"
+        <button x-cloak x-show="$wire.search.length > 0" wire:click="$set('search', '')"
             class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
             <x-heroicon-s-x-mark
                 class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
@@ -48,6 +48,11 @@
                                 {{ Carbon\Carbon::parse($media['release_date'] ?? $media['first_air_date'])->format('M d, Y') }}
                             </h3>
 
+                            <p>
+                                Rating:
+                                {{ $media['rating'] }}
+                            </p>
+
                             <div class="flex items-center justify-between space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
                                     <button
@@ -59,7 +64,7 @@
 
                                 <form wire:submit="save(@js($media), 'wishlist')" class="w-full">
                                     <button
-                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-100 rounded-md hover:bg-slate-300 text-slate-700"
+                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-200 dark:bg-slate-100 rounded-md hover:bg-slate-300 dark:hover:bg-slate-300 text-slate-700"
                                         type="submit">
                                         Add to wishlist
                                     </button>
