@@ -42,17 +42,17 @@ class Explore extends Component
 
                     $us_releases = collect($releases)->firstWhere('iso_3166_1', 'US') ?? [];
 
-                    $result['rating'] = '';
-
                     if (array_key_exists('release_dates', $us_releases)) {
                         foreach ($us_releases['release_dates'] as $us_release) {
                             if ($us_release['certification']) {
                                 $rating = $us_release['certification'] ?? 'No rating found';
                             }
                         }
+                    } else {
+                        $rating = 'N/A';
                     }
 
-                    $result['rating'] = $rating ?: 'N/A';
+                    $result['rating'] = $rating;
 
                     $data[$result['id']] = $result;
                 } elseif ($result['media_type'] === 'tv') {
