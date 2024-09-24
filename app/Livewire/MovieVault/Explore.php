@@ -42,14 +42,14 @@ class Explore extends Component
 
                     $us_releases = collect($releases)->firstWhere('iso_3166_1', 'US') ?? [];
 
+                    $rating = '';
+
                     if (array_key_exists('release_dates', $us_releases)) {
                         foreach ($us_releases['release_dates'] as $us_release) {
                             if ($us_release['certification']) {
                                 $rating = $us_release['certification'] ?? 'No rating found';
                             }
                         }
-                    } else {
-                        $rating = 'N/A';
                     }
 
                     $result['rating'] = $rating;
