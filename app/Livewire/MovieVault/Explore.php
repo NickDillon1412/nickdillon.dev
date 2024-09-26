@@ -66,6 +66,10 @@ class Explore extends Component
 
                 $result['rating'] = $this->extractRating($result['media_type'], $detail_response);
 
+                if (isset($detail_response['genres'])) {
+                    $result['genres'] = implode(',', collect($detail_response['genres'])->pluck('name')->toArray());
+                }
+
                 return $result;
             }
         )->keyBy('id')->toArray();
@@ -99,6 +103,7 @@ class Explore extends Component
             $this->new_media['vault_type'] = $media['media_type'];
             $this->new_media['overview'] = $media['overview'];
             $this->new_media['rating'] = $media['rating'];
+            $this->new_media['genres'] = $media['genres'] ?: 'No genres found';
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             $user_vaults->create(
