@@ -61,6 +61,10 @@
                     </h3>
 
                     <p>
+                        Genres: {{ Str::replace(',', ', ', $vault->genres) }}
+                    </p>
+
+                    <p>
                         Rating: {{ $vault->rating }}
                     </p>
 

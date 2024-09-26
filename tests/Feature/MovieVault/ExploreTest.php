@@ -62,6 +62,16 @@ it('can save new movie', function () {
                             ]
                         ]
                     ]
+                ],
+                'genres' => [
+                    [
+                        'id' => 1,
+                        'name' => 'Family'
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'Comedy'
+                    ]
                 ]
             ]
         ], 200)
@@ -83,7 +93,8 @@ it('can save new movie', function () {
             'poster_path' => '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
             'media_type' => 'movie',
             'release_date' => '2014-11-05',
-            'rating' => 'PG'
+            'rating' => 'PG',
+            'genres' => 'Drama,Space'
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();
@@ -133,6 +144,16 @@ it('can save new tv show', function () {
                             'rating' => 'TV-PG'
                         ]
                     ]
+                ],
+                'genres' => [
+                    [
+                        'id' => 1,
+                        'name' => 'Family'
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => 'Comedy'
+                    ]
                 ]
             ]
         ], 200)
@@ -154,7 +175,8 @@ it('can save new tv show', function () {
             'poster_path' => '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
             'media_type' => 'tv',
             'first_air_date' => '2010-07-10',
-            'rating' => 'TV-PG'
+            'rating' => 'TV-PG',
+            'genres' => 'Drama,Comedy'
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();

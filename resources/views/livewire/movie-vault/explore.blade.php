@@ -49,6 +49,11 @@
                             </h3>
 
                             <p>
+                                Genres:
+                                {{ Str::replace(',', ', ', $media['genres']) }}
+                            </p>
+
+                            <p>
                                 Rating:
                                 {{ $media['rating'] ?? 'No rating found' }}
                             </p>
@@ -56,7 +61,7 @@
                             <div class="flex items-center justify-between space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
                                     <button
-                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50"
+                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
                                         type="submit">
                                         Add to vault
                                     </button>
@@ -64,7 +69,7 @@
 
                                 <form wire:submit="save(@js($media), 'wishlist')" class="w-full">
                                     <button
-                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-200 dark:bg-slate-100 rounded-md hover:bg-slate-300 dark:hover:bg-slate-300 text-slate-700"
+                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-200 dark:bg-slate-100 rounded-md hover:bg-slate-300 dark:hover:bg-slate-300 text-slate-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
                                         type="submit">
                                         Add to wishlist
                                     </button>

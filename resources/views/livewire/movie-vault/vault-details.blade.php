@@ -37,7 +37,9 @@
                 </p>
 
                 <p>
-                    <span class="font-semibold">Overview:</span>
+                    <span class="font-semibold">
+                        Overview:
+                    </span>
 
                     {{ $vault->overview }}
                 </p>
@@ -48,6 +50,14 @@
                     </span>
 
                     {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
+                </p>
+
+                <p>
+                    <span class="font-semibold">
+                        Genres:
+                    </span>
+
+                    {{ Str::replace(',', ', ', $vault->genres) }}
                 </p>
 
                 <p>
