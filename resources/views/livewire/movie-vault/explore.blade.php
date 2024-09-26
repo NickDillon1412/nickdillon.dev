@@ -48,9 +48,9 @@
                                 {{ Carbon\Carbon::parse($media['release_date'] ?? $media['first_air_date'])->format('M d, Y') }}
                             </h3>
 
-                            <p>
+                            <p class="truncate">
                                 Genres:
-                                {{ Str::replace(',', ', ', $media['genres']) }}
+                                {{ Str::replace(',', ', ', $vault->genres) }}
                             </p>
 
                             <p>

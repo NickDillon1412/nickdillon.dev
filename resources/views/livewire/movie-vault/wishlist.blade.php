@@ -60,7 +60,7 @@
                         {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
                     </h3>
 
-                    <p>
+                    <p class="truncate">
                         Genres: {{ Str::replace(',', ', ', $vault->genres) }}
                     </p>
 
