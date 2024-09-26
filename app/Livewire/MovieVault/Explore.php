@@ -7,6 +7,8 @@ namespace App\Livewire\MovieVault;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Layout;
+use GuzzleHttp\Promise\Promise;
+use Illuminate\Http\Client\Pool;
 use Livewire\Attributes\Computed;
 use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
@@ -21,62 +23,52 @@ class Explore extends Component
 
     public array $new_media = [];
 
+    protected function extractRating(string $media_type, array $detail_response): string
+    {
+        if ($media_type === 'movie') {
+            $releases = $detail_response['release_dates']['results'] ?? [];
+
+            $us_releases = collect($releases)->firstWhere('iso_3166_1', 'US')['release_dates'] ?? [];
+
+            return collect($us_releases)->pluck('certification')->filter()->first() ?? 'N/A';
+        } else {
+            $releases = $detail_response['content_ratings']['results'] ?? [];
+
+            return collect($releases)->firstWhere('iso_3166_1', 'US')['rating'] ?? 'N/A';
+        }
+    }
+
     #[Computed]
     public function searchResults(): array
     {
-        if (strlen($this->search) > 1) {
-            $results = Http::withToken(config('services.movie-api.token'))
-                ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
-                ->json()['results'];
+        if (strlen($this->search) < 1) return [];
 
-            $data = [];
+        $results = Http::withToken(config('services.movie-api.token'))
+            ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
+            ->json()['results'];
 
-            foreach ($results as $result) {
-                if ($result['media_type'] === 'movie') {
-                    $movie_response = Http::withToken(config('services.movie-api.token'))
-                        ->get("https://api.themoviedb.org/3/movie/{$result['id']}", [
-                            'append_to_response' => 'release_dates',
-                        ]);
+        $detail_requests = Http::pool(
+            function (Pool $pool) use ($results): void {
+                collect($results)->map(function (array $result) use ($pool): Promise {
+                    $endpoint = $result['media_type'] === 'movie' ? 'movie' : 'tv';
 
-                    $releases = $movie_response->json()['release_dates']['results'] ?? [];
+                    $append_response = $result['media_type'] === 'movie' ? 'release_dates' : 'content_ratings';
 
-                    $us_releases = collect($releases)->firstWhere('iso_3166_1', 'US') ?? [];
-
-                    $rating = '';
-
-                    if (array_key_exists('release_dates', $us_releases)) {
-                        foreach ($us_releases['release_dates'] as $us_release) {
-                            if ($us_release['certification']) {
-                                $rating = $us_release['certification'] ?? 'No rating found';
-                            }
-                        }
-                    }
-
-                    $result['rating'] = $rating;
-
-                    $data[$result['id']] = $result;
-                } elseif ($result['media_type'] === 'tv') {
-                    $tv_response = Http::withToken(config('services.movie-api.token'))
-                        ->get("https://api.themoviedb.org/3/tv/{$result['id']}", [
-                            'append_to_response' => 'content_ratings',
-                        ]);
-
-                    $releases = $tv_response->json()['content_ratings']['results'] ?? [];
-
-                    $us_release = collect($releases)->firstWhere('iso_3166_1', 'US');
-
-                    $rating = $us_release['rating'] ?? 'No rating found';
-
-                    $result['rating'] = $rating ?: 'N/A';
-
-                    $data[$result['id']] = $result;
-                }
+                    return $pool->withToken(config('services.movie-api.token'))
+                        ->get("https://api.themoviedb.org/3/{$endpoint}/{$result['id']}?append_to_response={$append_response}");
+                })->toArray();
             }
+        );
 
-            return $data;
-        } else {
-            return [];
-        }
+        return collect($results)->map(
+            function (array $result, int $index) use ($detail_requests): array {
+                $detail_response = $detail_requests[$index]->json();
+
+                $result['rating'] = $this->extractRating($result['media_type'], $detail_response);
+
+                return $result;
+            }
+        )->keyBy('id')->toArray();
     }
 
     public function save(array $media, ?string $wishlist = null): void

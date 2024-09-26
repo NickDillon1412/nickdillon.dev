@@ -87,7 +87,7 @@
                 </h1>
 
                 <div class="flex justify-center" wire:loading wire:target='search'>
-                    <x-mary-loading />
+                    <x-large-loading-spinner />
                 </div>
             </div>
         @endforelse
