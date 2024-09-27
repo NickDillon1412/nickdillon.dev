@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.3",
         "blade-ui-kit/blade-heroicons": "^2.4",
+        "brunocfalcao/blade-feather-icons": "^4.0",
         "laravel/framework": "^11.18.1",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",

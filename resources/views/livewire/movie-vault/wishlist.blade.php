@@ -22,26 +22,30 @@
     </div>
 
     @if (count(auth()->user()->vaults->where('on_wishlist', true)) > 0)
-        <div class="relative mt-4">
-            <x-text-input id="search" wire:model.live.debounce.300ms='search'
-                class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
-                placeholder="Search..." />
+        <div class="flex items-center mt-4 space-x-2">
+            <div class="relative w-full">
+                <x-text-input id="search" wire:model.live.debounce.300ms='search'
+                    class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
+                    placeholder="Search..." />
 
-            <button class="absolute inset-0 right-auto group" type="submit" aria-label="Search">
-                <svg class="ml-3 mr-2 fill-current text-slate-400 shrink-0 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400"
-                    width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
-                    <path
-                        d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
-                </svg>
-            </button>
+                <button class="absolute inset-0 right-auto group" type="submit" aria-label="Search">
+                    <svg class="ml-3 mr-2 fill-current text-slate-400 shrink-0 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400"
+                        width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
+                        <path
+                            d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
+                    </svg>
+                </button>
 
-            <button x-show="$wire.search.length > 0" wire:click="$set('search', '')"
-                class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
-                <x-heroicon-s-x-mark
-                    class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
-            </button>
+                <button x-show="$wire.search.length > 0" wire:click="$set('search', '')"
+                    class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
+                    <x-heroicon-s-x-mark
+                        class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
+                </button>
+            </div>
+
+            <x-movie-vault.filter :$genres />
         </div>
     @endif
 
@@ -74,10 +78,10 @@
                             View all details &rarr;
                         </a>
 
-                        <div class="flex items-center -mr-1 space-x-0.5">
+                        <div class="flex items-center -mr-2">
                             <x-modal wire:click="addToVault({{ $vault->id }})" info>
                                 <x-heroicon-s-plus-small
-                                    class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+                                    class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                                 <x-slot:title>
                                     Add to vault
@@ -85,16 +89,18 @@
 
                                 <x-slot:body>
                                     Are you sure you want to add
+
                                     <span class="font-semibold text-indigo-500">
                                         '{{ $vault->title ?? $vault->name }}'
                                     </span>
+
                                     to your vault?
                                 </x-slot:body>
                             </x-modal>
 
                             <x-modal wire:click="addToVault({{ $vault->id }})" delete>
                                 <x-heroicon-o-trash
-                                    class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
+                                    class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                                 <x-slot:title>
                                     Remove from wishlist
@@ -102,9 +108,11 @@
 
                                 <x-slot:body>
                                     Are you sure you want to remove
+
                                     <span class="font-semibold text-red-500">
                                         '{{ $vault->title ?? $vault->name }}'
                                     </span>
+
                                     from your wishlist?
                                 </x-slot:body>
                             </x-modal>
@@ -113,8 +121,11 @@
                 </div>
 
                 <x-slot:figure>
-                    <img class="h-[300px] w-full object-cover"
-                        src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}" />
+                    <a href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate class="w-full">
+                        <img class="h-[300px] w-full object-cover"
+                            src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
+                            alt="{{ $vault->original_title ?? $vault->original_name }}" />
+                    </a>
                 </x-slot:figure>
             </x-mary-card>
         @empty

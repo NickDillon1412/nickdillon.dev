@@ -69,12 +69,12 @@
                 </p>
             </div>
 
-            <div class="pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0 flex items-center space-x-0.5">
+            <div class="flex items-center pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">
                 <x-modal
                     wire:click="{{ $vault->on_wishlist ? 'addToVault(' . $vault->id . ')' : 'addToWishlist(' . $vault->id . ')' }}"
                     info>
                     <x-heroicon-s-plus-small
-                        class="w-6 h-6 duration-200 ease-in-out hover:text-slate-600 dark:hover:text-slate-400" />
+                        class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                     <x-slot:title>
                         Add to
@@ -83,16 +83,20 @@
 
                     <x-slot:body>
                         Are you sure you want to add
+
                         <span class="font-semibold text-indigo-500">
                             '{{ $vault->title ?? $vault->name }}'
                         </span>
+
                         to your
+
                         {{ $vault->on_wishlist ? 'vault' : 'wishlist' }}?
                     </x-slot:body>
                 </x-modal>
 
                 <x-modal wire:click="delete({{ $vault->id }})" delete>
-                    <x-heroicon-o-trash class="w-6 h-6 text-red-600 duration-100 ease-in-out hover:text-red-700" />
+                    <x-heroicon-o-trash
+                        class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                     <x-slot:title>
                         Remove from
@@ -101,10 +105,13 @@
 
                     <x-slot:body>
                         Are you sure you want to remove
+
                         <span class="font-semibold text-red-500">
                             '{{ $vault->title ?? $vault->name }}'
                         </span>
+
                         from your
+
                         {{ $vault->on_wishlist ? 'wishlist' : 'vault' }}?
                     </x-slot:body>
                 </x-modal>
