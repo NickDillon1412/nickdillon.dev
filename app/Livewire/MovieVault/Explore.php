@@ -6,8 +6,8 @@ namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
-use Livewire\Attributes\Layout;
 use GuzzleHttp\Promise\Promise;
+use Livewire\Attributes\Layout;
 use Illuminate\Http\Client\Pool;
 use Livewire\Attributes\Computed;
 use App\Data\MovieVault\VaultData;
@@ -70,6 +70,14 @@ class Explore extends Component
                     $result['genres'] = implode(',', collect($detail_response['genres'])->pluck('name')->toArray());
                 }
 
+                $keys = ['runtime', 'number_of_seasons'];
+
+                foreach ($keys as $key) {
+                    if (isset($detail_response[$key])) {
+                        $result[$key] = $detail_response[$key];
+                    }
+                }
+
                 return $result;
             }
         )->keyBy('id')->toArray();
@@ -103,7 +111,9 @@ class Explore extends Component
             $this->new_media['vault_type'] = $media['media_type'];
             $this->new_media['overview'] = $media['overview'];
             $this->new_media['rating'] = $media['rating'];
-            $this->new_media['genres'] = $media['genres'] ?: 'No genres found';
+            $this->new_media['genres'] = $media['genres'] ?: null;
+            $this->new_media['runtime'] = $media['runtime'] ?? null;
+            $this->new_media['seasons'] = $media['number_of_seasons'] ?? null;
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             $user_vaults->create(

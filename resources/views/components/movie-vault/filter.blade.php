@@ -16,7 +16,7 @@
 
     <div x-cloak x-show="open" x-anchor.offset.5.bottom-end="$refs.filter" x-on:click.outside="open = false"
         x-on:click.outside="open = false" x-on:keydown.escape.window="open = false"
-        class="z-10 w-64 transform bg-white border divide-y rounded-md shadow-md dark:bg-slate-800 border-slate-300 dark:border-slate-700 dark:text-slate-200 divide-slate-300 dark:divide-slate-700 text-slate-800"
+        class="z-10 w-64 bg-white border divide-y rounded-md shadow-md dark:bg-slate-800 border-slate-300 dark:border-slate-700 dark:text-slate-200 divide-slate-300 dark:divide-slate-700 text-slate-800"
         x-transition:enter="transition ease-out duration-150 transform"
         x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-out duration-150" x-transition:leave-start="opacity-100"

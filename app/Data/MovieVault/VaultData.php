@@ -26,6 +26,8 @@ class VaultData extends Data implements Wireable
         public ?string $first_air_date,
         public ?string $rating,
         public ?string $genres,
+        public ?string $runtime,
+        public ?string $seasons,
         public ?bool $on_wishlist = false
     ) {}
 }

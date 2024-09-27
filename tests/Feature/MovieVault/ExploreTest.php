@@ -72,7 +72,8 @@ it('can save new movie', function () {
                         'id' => 2,
                         'name' => 'Comedy'
                     ]
-                ]
+                ],
+                'runtime' => 101
             ]
         ], 200)
     ]);
@@ -94,7 +95,8 @@ it('can save new movie', function () {
             'media_type' => 'movie',
             'release_date' => '2014-11-05',
             'rating' => 'PG',
-            'genres' => 'Drama,Space'
+            'genres' => 'Drama,Space',
+            'runtime' => 101
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();
@@ -154,7 +156,8 @@ it('can save new tv show', function () {
                         'id' => 2,
                         'name' => 'Comedy'
                     ]
-                ]
+                ],
+                'seasons' => 8
             ]
         ], 200)
     ]);
@@ -176,7 +179,8 @@ it('can save new tv show', function () {
             'media_type' => 'tv',
             'first_air_date' => '2010-07-10',
             'rating' => 'TV-PG',
-            'genres' => 'Drama,Comedy'
+            'genres' => 'Drama,Comedy',
+            'seasons' => 8
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();
