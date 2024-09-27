@@ -50,7 +50,7 @@
 
                             <p class="truncate">
                                 Genres:
-                                {{ Str::replace(',', ', ', $vault->genres) }}
+                                {{ Str::replace(',', ', ', $media['genres']) ?: 'No genres found' }}
                             </p>
 
                             <p>
