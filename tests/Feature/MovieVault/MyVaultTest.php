@@ -44,6 +44,12 @@ it('can delete a vault record', function () {
     $this->assertDatabaseCount('vaults', 0);
 });
 
+it('can select genres', function () {
+    livewire(MyVault::class)
+        ->set('selected_genres', ['Comedy', 'Crime'])
+        ->assertHasNoErrors();
+});
+
 test('component can render', function () {
     livewire(MyVault::class)
         ->assertHasNoErrors();

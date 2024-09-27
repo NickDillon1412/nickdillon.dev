@@ -35,6 +35,12 @@ it('can add a record to vault', function () {
         ->assertNoRedirect();
 });
 
+it('can select genres', function () {
+    livewire(Wishlist::class)
+        ->set('selected_genres', ['Comedy', 'Crime'])
+        ->assertHasNoErrors();
+});
+
 test('component can render', function () {
     livewire(Wishlist::class)
         ->assertHasNoErrors();
