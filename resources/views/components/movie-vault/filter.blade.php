@@ -9,7 +9,7 @@
 
     <div x-cloak x-show="open" x-anchor.offset.5.bottom-end="$refs.filter" x-on:click.outside="open = false"
         x-on:click.outside="open = false" x-on:keydown.escape.window="open = false"
-        class="z-10 w-56 bg-white border divide-y rounded-md shadow-sm dark:bg-slate-800 border-slate-300 dark:border-slate-700 dark:text-slate-300 divide-slate-300 dark:divide-slate-700">
+        class="z-10 w-56 bg-white border divide-y rounded-md shadow-md dark:bg-slate-800 border-slate-300 dark:border-slate-700 dark:text-slate-200 divide-slate-300 dark:divide-slate-700 text-slate-800">
         <h1 class="p-2 text-sm font-medium">
             Filter by genre:
         </h1>
