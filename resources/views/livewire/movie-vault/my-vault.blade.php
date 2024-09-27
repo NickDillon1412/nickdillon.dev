@@ -1,22 +1,28 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
-    <div class="flex items-center justify-between">
-        <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
-            My Vault
-        </h1>
+    <div class="flex flex-col justify-between sm:flex-row sm:items-center">
+        <div class="flex flex-row items-center space-x-1.5">
+            <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
+                My Vault
+            </h1>
 
-        <div class="flex items-center space-x-2">
+            <p class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
+                (Total: {{ $vault_records->total() }})
+            </p>
+        </div>
+
+        <div class="flex items-center mt-2 space-x-2 sm:mt-0">
             <a href="{{ route('movie-vault.wishlist') }}" wire:navigate
-                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
+                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
                 <x-heroicon-o-heart class="w-4 h-4 mr-1 -ml-1" />
 
-                Wishlist
+                <span>Wishlist</span>
             </a>
 
             <a href="{{ route('movie-vault.explore') }}" wire:navigate
-                class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
+                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
                 <x-heroicon-s-plus-small class="w-5 h-5 mr-0.5 -ml-1" />
 
-                Add to vault
+                <span>Add to vault</span>
             </a>
         </div>
     </div>
@@ -38,7 +44,7 @@
                     </svg>
                 </button>
 
-                <button x-show="$wire.search.length > 0" wire:click="$set('search', '')"
+                <button x-cloak x-show="$wire.search.length > 0" wire:click="$set('search', '')"
                     class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
                     <x-heroicon-s-x-mark
                         class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
@@ -52,7 +58,8 @@
     <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
         @forelse ($vault_records as $vault)
             <x-mary-card shadow
-                class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
+                class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50"
+                wire:key='{{ $vault->id }}'>
                 <div class="-mx-1 -my-3">
                     <h1 class="text-xl font-bold truncate whitespace-nowrap">
                         {{ $vault->original_title ?? $vault->original_name }}
@@ -78,7 +85,7 @@
                             View all details &rarr;
                         </a>
 
-                        <div class="flex items-center -mr-2">
+                        <div wire:ignore class="flex items-center -mr-2">
                             <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
                                 <x-heroicon-s-plus-small
                                     class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
