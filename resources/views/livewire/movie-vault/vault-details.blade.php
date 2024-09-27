@@ -1,3 +1,5 @@
+@use('App\Services\MovieVaultService', 'MovieVaultService')
+
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
     <div class="flex flex-wrap-reverse items-center justify-between gap-2">
         <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
@@ -67,6 +69,26 @@
 
                     {{ $vault->rating }}
                 </p>
+
+                @isset($vault->runtime)
+                    <p>
+                        <span class="font-semibold">
+                            Length:
+                        </span>
+
+                        {{ MovieVaultService::formatRuntime($vault->runtime) }}
+                    </p>
+                @endisset
+
+                @isset($vault->seasons)
+                    <p>
+                        <span class="font-semibold">
+                            Seasons:
+                        </span>
+
+                        {{ $vault->seasons }}
+                    </p>
+                @endisset
             </div>
 
             <div class="flex items-center pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">

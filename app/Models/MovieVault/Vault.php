@@ -26,6 +26,8 @@ class Vault extends Model
         'first_air_date',
         'rating',
         'genres',
+        'runtime',
+        'seasons',
         'on_wishlist',
     ];
 

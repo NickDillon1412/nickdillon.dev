@@ -1,3 +1,5 @@
+@use('App\Services\MovieVaultService', 'MovieVaultService')
+
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
     <div class="flex items-center justify-between">
         <h1 class="text-2xl font-bold text-gray-800 md:text-3xl dark:text-gray-100">
@@ -58,6 +60,20 @@
                                 {{ $media['rating'] ?? 'No rating found' }}
                             </p>
 
+                            @isset($media['runtime'])
+                                <p>
+                                    Length:
+                                    {{ MovieVaultService::formatRuntime($media['runtime']) }}
+                                </p>
+                            @endisset
+
+                            @isset($media['number_of_seasons'])
+                                <p>
+                                    Seasons:
+                                    {{ $media['number_of_seasons'] }}
+                                </p>
+                            @endisset
+
                             <div class="flex items-center justify-between space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
                                     <button
@@ -78,7 +94,7 @@
                         </div>
 
                         <x-slot:figure>
-                            <img class="h-[300px] w-[375px] object-cover"
+                            <img class="h-[300px] w-full object-cover"
                                 src="{{ 'https://image.tmdb.org/t/p/w500/' . $media['poster_path'] ?? $media['backdrop_path'] . '?include_adult=false&language=en-US&page=1' }}"
                                 alt="{{ $media['original_title'] ?? $media['original_name'] }}" />
                         </x-slot:figure>
