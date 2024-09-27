@@ -9,7 +9,7 @@
         </button>
 
         <span x-cloak x-show="$wire.selected_genres.length > 0"
-            class="absolute top-0 right-0 flex items-center justify-center w-[20px] h-[20px] -mt-2 -mr-2 text-xs bg-indigo-500 rounded-full dark:bg-indigo-600 text-slate-200"
+            class="absolute top-0 right-0 flex items-center justify-center w-[20px] h-[20px] -mt-2 -mr-2 text-xs bg-indigo-500 rounded-full text-slate-200"
             x-text="$wire.selected_genres.length">
         </span>
     </div>
