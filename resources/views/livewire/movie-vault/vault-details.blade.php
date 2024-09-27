@@ -1,5 +1,5 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
-    <div class="flex items-center justify-between">
+    <div class="flex flex-wrap-reverse items-center justify-between gap-2">
         <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
             {{ $vault->title ?? $vault->name }}
         </h1>
