@@ -70,9 +70,7 @@ class Explore extends Component
                     $result['genres'] = implode(',', collect($detail_response['genres'])->pluck('name')->toArray());
                 }
 
-                $keys = ['runtime', 'number_of_seasons'];
-
-                foreach ($keys as $key) {
+                foreach (['runtime', 'number_of_seasons'] as $key) {
                     if (isset($detail_response[$key])) {
                         $result[$key] = $detail_response[$key];
                     }
