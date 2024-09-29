@@ -67,7 +67,8 @@ class Wishlist extends Component
                         $query->whereLike('title', "%$this->search%")
                             ->orWhereLike('original_title', "%$this->search%")
                             ->orWhereLike('name', "%$this->search%")
-                            ->orWhereLike('original_name', "%$this->search%");
+                            ->orWhereLike('original_name', "%$this->search%")
+                            ->orWhereLike('actors', "%$this->search%");
                     });
                 })
                 ->when($this->type, function (Builder $query): void {
