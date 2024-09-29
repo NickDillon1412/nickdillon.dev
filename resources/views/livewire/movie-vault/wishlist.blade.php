@@ -175,7 +175,7 @@
         </div>
     </div>
 
-    <div wire:loading.flex class="flex justify-center mt-4 items center">
+    <div wire:loading.flex class="flex justify-center mt-6">
         <x-large-loading-spinner />
     </div>
 </div>
