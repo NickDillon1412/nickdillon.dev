@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <x-movie-vault.filter :$genres />
+            <x-movie-vault.filters :$ratings :$genres />
         </div>
     @endif
 

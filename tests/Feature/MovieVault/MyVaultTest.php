@@ -44,9 +44,30 @@ it('can delete a vault record', function () {
     $this->assertDatabaseCount('vaults', 0);
 });
 
+it('can select type', function () {
+    livewire(MyVault::class)
+        ->set('type', 'movie')
+        ->assertHasNoErrors();
+});
+
+it('can select ratings', function () {
+    livewire(MyVault::class)
+        ->set('selected_ratings', ['PG'])
+        ->assertHasNoErrors();
+});
+
 it('can select genres', function () {
     livewire(MyVault::class)
         ->set('selected_genres', ['Comedy', 'Crime'])
+        ->assertHasNoErrors();
+});
+
+it('can clear filters', function () {
+    livewire(MyVault::class)
+        ->call('clearFilters')
+        ->assertSet('type', '')
+        ->assertSet('selected_ratings', [])
+        ->assertSet('selected_genres', [])
         ->assertHasNoErrors();
 });
 

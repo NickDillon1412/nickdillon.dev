@@ -35,9 +35,30 @@ it('can add a record to vault', function () {
         ->assertNoRedirect();
 });
 
+it('can select type', function () {
+    livewire(Wishlist::class)
+        ->set('type', 'movie')
+        ->assertHasNoErrors();
+});
+
+it('can select ratings', function () {
+    livewire(Wishlist::class)
+        ->set('selected_ratings', ['PG'])
+        ->assertHasNoErrors();
+});
+
 it('can select genres', function () {
     livewire(Wishlist::class)
         ->set('selected_genres', ['Comedy', 'Crime'])
+        ->assertHasNoErrors();
+});
+
+it('can clear filters', function () {
+    livewire(Wishlist::class)
+        ->call('clearFilters')
+        ->assertSet('type', '')
+        ->assertSet('selected_ratings', [])
+        ->assertSet('selected_genres', [])
         ->assertHasNoErrors();
 });
 
