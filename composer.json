@@ -13,7 +13,7 @@
         "blade-ui-kit/blade-heroicons": "^2.4",
         "brunocfalcao/blade-feather-icons": "^4.0",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
-        "laravel/framework": "^11.18.1",
+        "laravel/framework": "^11.25.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.0",
