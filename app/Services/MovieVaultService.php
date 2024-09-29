@@ -27,6 +27,8 @@ class MovieVaultService
 				}
 			});
 
+		sort($genres);
+
 		return $genres;
 	}
 

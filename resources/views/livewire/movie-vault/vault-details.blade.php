@@ -89,6 +89,14 @@
                         {{ $vault->seasons }}
                     </p>
                 @endisset
+
+                <p>
+                    <span class="font-semibold">
+                        Actors:
+                    </span>
+
+                    {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
+                </p>
             </div>
 
             <div class="flex items-center pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">

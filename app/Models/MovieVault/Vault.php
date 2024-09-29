@@ -28,6 +28,7 @@ class Vault extends Model
         'genres',
         'runtime',
         'seasons',
+        'actors',
         'on_wishlist',
     ];
 

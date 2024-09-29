@@ -33,6 +33,7 @@ class VaultFactory extends Factory
             'genres' => 'Comedy,Crime,Family',
             'runtime' => 45,
             'seasons' => 9,
+            'actors' => 'Nick,Anna,Howie',
             'on_wishlist' => 0,
         ];
     }

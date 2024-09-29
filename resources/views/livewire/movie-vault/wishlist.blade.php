@@ -15,7 +15,7 @@
         <div class="flex items-center mt-2 space-x-2 sm:mt-0">
             <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
                 class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
-                <x-heroicon-o-eye class="w-4 h-4 mr-1 -ml-1" />
+                <x-ri-safe-2-line class="w-4 h-4 mr-1.5 -ml-1" />
 
                 <span>Vault</span>
             </a>
@@ -93,6 +93,11 @@
                             {{ $vault->seasons }}
                         </p>
                     @endisset
+
+                    <p class="truncate">
+                        Actors:
+                        {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
+                    </p>
 
                     <div class="flex items-center justify-between w-full text-sm">
                         <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"

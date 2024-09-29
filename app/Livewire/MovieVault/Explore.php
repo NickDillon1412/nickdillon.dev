@@ -55,7 +55,7 @@ class Explore extends Component
                     $append_response = $result['media_type'] === 'movie' ? 'release_dates' : 'content_ratings';
 
                     return $pool->withToken(config('services.movie-api.token'))
-                        ->get("https://api.themoviedb.org/3/{$endpoint}/{$result['id']}?append_to_response={$append_response}");
+                        ->get("https://api.themoviedb.org/3/{$endpoint}/{$result['id']}?append_to_response={$append_response},credits");
                 })->toArray();
             }
         );
@@ -74,6 +74,13 @@ class Explore extends Component
                     if (isset($detail_response[$key])) {
                         $result[$key] = $detail_response[$key];
                     }
+                }
+
+                if (isset($detail_response['credits']['cast'])) {
+                    $result['actors'] = collect($detail_response['credits']['cast'])
+                        ->pluck('name')
+                        ->take(3)
+                        ->implode(',');
                 }
 
                 return $result;
@@ -112,6 +119,7 @@ class Explore extends Component
             $this->new_media['genres'] = $media['genres'] ?: null;
             $this->new_media['runtime'] = $media['runtime'] ?? null;
             $this->new_media['seasons'] = $media['number_of_seasons'] ?? null;
+            $this->new_media['actors'] = $media['actors'] ?? null;
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             $user_vaults->create(
