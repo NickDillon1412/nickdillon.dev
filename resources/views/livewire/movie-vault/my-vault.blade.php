@@ -57,120 +57,126 @@
         </div>
     @endif
 
-    <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
-        @forelse ($vault_records as $vault)
-            <x-mary-card shadow
-                class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50"
-                wire:key='{{ $vault->id }}'>
-                <div class="-mx-1 -my-3">
-                    <h1 class="text-xl font-bold truncate whitespace-nowrap">
-                        {{ $vault->original_title ?? $vault->original_name }}
-                    </h1>
+    <div wire:loading.remove>
+        <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
+            @forelse ($vault_records as $vault)
+                <x-mary-card shadow
+                    class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50"
+                    wire:key='{{ $vault->id }}'>
+                    <div class="-mx-1 -my-3">
+                        <h1 class="text-xl font-bold truncate whitespace-nowrap">
+                            {{ $vault->original_title ?? $vault->original_name }}
+                        </h1>
 
-                    <h3>
-                        {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
+                        <h3>
+                            {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
 
-                        {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
-                    </h3>
+                            {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
+                        </h3>
 
-                    <p class="truncate">
-                        Genres: {{ Str::replace(',', ', ', $vault->genres) }}
-                    </p>
-
-                    <p>
-                        Rating: {{ $vault->rating }}
-                    </p>
-
-                    @isset($vault->runtime)
-                        <p>
-                            Length:
-                            {{ MovieVaultService::formatRuntime($vault->runtime) }}
+                        <p class="truncate">
+                            Genres: {{ Str::replace(',', ', ', $vault->genres) }}
                         </p>
-                    @endisset
 
-                    @isset($vault->seasons)
                         <p>
-                            Seasons:
-                            {{ $vault->seasons }}
+                            Rating: {{ $vault->rating }}
                         </p>
-                    @endisset
 
-                    <p class="truncate">
-                        Actors:
-                        {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
-                    </p>
+                        @isset($vault->runtime)
+                            <p>
+                                Length:
+                                {{ MovieVaultService::formatRuntime($vault->runtime) }}
+                            </p>
+                        @endisset
 
-                    <div class="flex items-center justify-between w-full text-sm">
-                        <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
-                            href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate>
-                            View all details &rarr;
-                        </a>
+                        @isset($vault->seasons)
+                            <p>
+                                Seasons:
+                                {{ $vault->seasons }}
+                            </p>
+                        @endisset
 
-                        <div wire:ignore class="flex items-center -mr-2">
-                            <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
-                                <x-heroicon-s-plus-small
-                                    class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
+                        <p class="truncate">
+                            Actors:
+                            {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
+                        </p>
 
-                                <x-slot:title>
-                                    Add to wishlist
-                                </x-slot:title>
+                        <div class="flex items-center justify-between w-full text-sm">
+                            <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
+                                href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate>
+                                View all details &rarr;
+                            </a>
 
-                                <x-slot:body>
-                                    Are you sure you want to add
+                            <div wire:ignore class="flex items-center -mr-2">
+                                <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
+                                    <x-heroicon-s-plus-small
+                                        class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
 
-                                    <span class="font-semibold text-indigo-500">
-                                        '{{ $vault->title ?? $vault->name }}'
-                                    </span>
+                                    <x-slot:title>
+                                        Add to wishlist
+                                    </x-slot:title>
 
-                                    to your wishlist?
-                                </x-slot:body>
-                            </x-modal>
+                                    <x-slot:body>
+                                        Are you sure you want to add
 
-                            <x-modal wire:click="delete({{ $vault->id }})" delete>
-                                <x-heroicon-o-trash
-                                    class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                        <span class="font-semibold text-indigo-500">
+                                            '{{ $vault->title ?? $vault->name }}'
+                                        </span>
 
-                                <x-slot:title>
-                                    Remove from vault
-                                </x-slot:title>
+                                        to your wishlist?
+                                    </x-slot:body>
+                                </x-modal>
 
-                                <x-slot:body>
-                                    Are you sure you want to remove
+                                <x-modal wire:click="delete({{ $vault->id }})" delete>
+                                    <x-heroicon-o-trash
+                                        class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
 
-                                    <span class="font-semibold text-red-500">
-                                        '{{ $vault->title ?? $vault->name }}'
-                                    </span>
+                                    <x-slot:title>
+                                        Remove from vault
+                                    </x-slot:title>
 
-                                    from your vault?
-                                </x-slot:body>
-                            </x-modal>
+                                    <x-slot:body>
+                                        Are you sure you want to remove
+
+                                        <span class="font-semibold text-red-500">
+                                            '{{ $vault->title ?? $vault->name }}'
+                                        </span>
+
+                                        from your vault?
+                                    </x-slot:body>
+                                </x-modal>
+                            </div>
                         </div>
                     </div>
+
+                    <x-slot:figure>
+                        <a href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate class="w-full">
+                            <img class="h-[300px] w-full object-cover"
+                                src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
+                                alt="{{ $vault->original_title ?? $vault->original_name }}" />
+                        </a>
+                    </x-slot:figure>
+                </x-mary-card>
+            @empty
+                <div class="col-span-3 mx-auto mt-6 text-center">
+                    <h1 class="text-lg font-semibold text-slate-500">
+                        Add movies or TV shows from the
+
+                        <a class="-mr-1 font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
+                            href="{{ route('movie-vault.explore') }}" wire:navigate>
+                            Explore page
+                        </a>.
+                    </h1>
                 </div>
+            @endforelse
+        </div>
 
-                <x-slot:figure>
-                    <a href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate class="w-full">
-                        <img class="h-[300px] w-full object-cover"
-                            src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
-                            alt="{{ $vault->original_title ?? $vault->original_name }}" />
-                    </a>
-                </x-slot:figure>
-            </x-mary-card>
-        @empty
-            <div class="col-span-3 mx-auto mt-6 text-center">
-                <h1 class="text-lg font-semibold text-slate-500">
-                    Add movies or TV shows from the
-
-                    <a class="-mr-1 font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
-                        href="{{ route('movie-vault.explore') }}" wire:navigate>
-                        Explore page
-                    </a>.
-                </h1>
-            </div>
-        @endforelse
+        <div class="pt-4">
+            {{ $vault_records->links() }}
+        </div>
     </div>
 
-    <div class="pt-4">
-        {{ $vault_records->links() }}
+    <div wire:loading.flex class="flex justify-center mt-4 items center">
+        <x-large-loading-spinner />
     </div>
 </div>
