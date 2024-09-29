@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Layout;
@@ -20,6 +21,12 @@ class MyVault extends Component
 
     public string $search = '';
 
+    public string $type = '';
+
+    public array $ratings = [];
+
+    public array $selected_ratings = [];
+
     public array $genres = [];
 
     public array $selected_genres = [];
@@ -27,6 +34,12 @@ class MyVault extends Component
     public function updatedSearch(): void
     {
         $this->resetPage();
+    }
+
+    #[On('clear-filters')]
+    public function clearFilters(): void
+    {
+        $this->reset(['type', 'selected_ratings', 'selected_genres']);
     }
 
     public function addToWishlist(Vault $vault): void
@@ -47,6 +60,8 @@ class MyVault extends Component
 
     public function render(): View
     {
+        $this->ratings = MovieVaultService::getRatings();
+
         $this->genres = MovieVaultService::getGenres();
 
         return view('livewire.movie-vault.my-vault', [
@@ -61,6 +76,14 @@ class MyVault extends Component
                             ->orWhereLike('name', "%$this->search%")
                             ->orWhereLike('original_name', "%$this->search%");
                     });
+                })
+                ->when($this->type, function (Builder $query): void {
+                    $query->where('vault_type', $this->type);
+                })
+                ->when($this->selected_ratings, function (Builder $query): void {
+                    foreach ($this->selected_ratings as $rating) {
+                        $query->where('rating', $rating);
+                    }
                 })
                 ->when($this->selected_genres, function (Builder $query): void {
                     foreach ($this->selected_genres as $genre) {
