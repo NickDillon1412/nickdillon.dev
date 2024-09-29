@@ -74,6 +74,11 @@
                                 </p>
                             @endisset
 
+                            <p class="truncate">
+                                Actors:
+                                {{ Str::replace(',', ', ', $media['actors']) ?: 'No actors found' }}
+                            </p>
+
                             <div class="flex items-center justify-between space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
                                     <button
