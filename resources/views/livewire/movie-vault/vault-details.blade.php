@@ -6,12 +6,21 @@
             {{ $vault->title ?? $vault->name }}
         </h1>
 
-        <a href="{{ route($previous_url === 'my-vault' ? 'movie-vault.my-vault' : 'movie-vault.wishlist') }}"
-            wire:navigate
-            class="flex items-center px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50">
-            &larr; Back to My
-            {{ $previous_url === 'my-vault' ? 'Vault' : 'Wishlist' }}
-        </a>
+        <div class="flex items-center mt-2 space-x-2 sm:mt-0">
+            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
+                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
+                <x-ri-safe-2-line class="w-4 h-4 mr-1.5 -ml-1" />
+
+                <span>Vault</span>
+            </a>
+
+            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate
+                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
+                <x-heroicon-o-heart class="w-4 h-4 mr-1 -ml-1" />
+
+                <span>Wishlist</span>
+            </a>
+        </div>
     </div>
 
     <div
