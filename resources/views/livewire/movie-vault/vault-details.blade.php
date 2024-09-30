@@ -1,12 +1,12 @@
 @use('App\Services\MovieVaultService', 'MovieVaultService')
 
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
-    <div class="flex flex-wrap-reverse items-center justify-between gap-2">
-        <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
+    <div class="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
+        <h1 class="w-full text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
             {{ $vault->title ?? $vault->name }}
         </h1>
 
-        <div class="flex items-center mt-2 space-x-2 sm:mt-0">
+        <div class="flex items-center w-full mt-2 space-x-2 sm:w-auto sm:flex-row sm:mt-0">
             <a href="{{ route('movie-vault.my-vault') }}" wire:navigate
                 class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
                 <x-ri-safe-2-line class="w-4 h-4 mr-1.5 -ml-1" />
