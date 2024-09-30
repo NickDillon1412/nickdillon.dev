@@ -11,6 +11,7 @@ export default {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js',
         './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
+        './vendor/livewire/flux/stubs/**/*.blade.php',
     ],
 
     darkMode: 'class',

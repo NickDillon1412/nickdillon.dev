@@ -15,6 +15,7 @@
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "laravel/framework": "^11.25.0",
         "laravel/tinker": "^2.9",
+        "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
         "livewire/volt": "^1.0",
         "masmerise/livewire-toaster": "^2.3",

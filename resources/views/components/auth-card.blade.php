@@ -15,11 +15,9 @@
                 </a>
 
                 <div class="relative flex items-center space-x-9">
-                    <x-loading-spinner target="{{ $button->attributes['target'] }}" class="!left-0" />
-
-                    <x-primary-button>
+                    <flux:button variant="primary" class="w-auto !px-4 text-xs uppercase" type="submit">
                         {{ $button }}
-                    </x-primary-button>
+                    </flux:button>
                 </div>
             </div>
         </form>

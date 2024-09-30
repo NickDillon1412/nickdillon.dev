@@ -15,6 +15,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @fluxStyles
     @livewireStyles
 </head>
 
@@ -31,6 +32,8 @@
     </div>
 
     <x-toaster-hub />
+
+    @fluxScripts
     @livewireScriptConfig
 </body>
 
