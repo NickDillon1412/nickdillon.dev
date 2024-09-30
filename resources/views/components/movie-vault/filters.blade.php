@@ -5,6 +5,8 @@
     totalFilters() {
         total = $wire.selected_ratings.length + $wire.selected_genres.length;
 
+        if ($wire.sort_direction) total++;
+
         if ($wire.type) total++;
 
         return total;
@@ -46,7 +48,7 @@
                                         </h2>
 
                                         <div class="flex items-center space-x-1">
-                                            <button x-cloak x-show="totalFilters() > 0"
+                                            <button x-cloak x-show="totalFilters() > 1"
                                                 class="px-2 text-sm font-medium text-indigo-500 duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
                                                 x-on:click="$dispatch('clear-filters')">
                                                 Clear all
@@ -61,6 +63,39 @@
                                 </div>
 
                                 <div class="relative flex-1 px-4 mt-2 space-y-3 sm:px-5">
+                                    <div class="mb-4">
+                                        <div
+                                            class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                                            <p>
+                                                Sort By
+                                            </p>
+                                        </div>
+
+                                        <div class="pt-2 space-y-2">
+                                            <label for="sort_direction_asc" class="flex items-center">
+                                                <input id="sort_direction_asc" type="radio" value="asc"
+                                                    name="sort_direction"
+                                                    class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                    wire:model.live='sort_direction' />
+
+                                                <span class="ml-2 text-sm">
+                                                    A-Z
+                                                </span>
+                                            </label>
+
+                                            <label for="sort_direction_desc" class="flex items-center">
+                                                <input id="sort_direction_desc" type="radio" value="desc"
+                                                    name="sort_direction"
+                                                    class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                    wire:model.live='sort_direction' />
+
+                                                <span class="ml-2 text-sm">
+                                                    Z-A
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+
                                     <div class="mb-4">
                                         <div
                                             class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
@@ -151,7 +186,8 @@
                                                     <input id="selected_genre.{{ $genre }}"
                                                         name="selected_genre.{{ $genre }}" type="checkbox"
                                                         class="w-4 h-4 text-indigo-600 rounded bg-slate-100 border-slate-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-slate-800 focus:ring-2 dark:bg-slate-700 dark:border-slate-600"
-                                                        wire:model.live='selected_genres' value="{{ $genre }}" />
+                                                        wire:model.live='selected_genres'
+                                                        value="{{ $genre }}" />
 
                                                     <span class="ml-2 text-sm">
                                                         {{ $genre }}

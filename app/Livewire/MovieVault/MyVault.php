@@ -31,6 +31,8 @@ class MyVault extends Component
 
     public array $selected_genres = [];
 
+    public string $sort_direction = 'asc';
+
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -73,8 +75,6 @@ class MyVault extends Component
                     $query->where(function (Builder $query): void {
                         $query->whereLike('title', "%$this->search%")
                             ->orWhereLike('original_title', "%$this->search%")
-                            ->orWhereLike('name', "%$this->search%")
-                            ->orWhereLike('original_name', "%$this->search%")
                             ->orWhereLike('actors', "%$this->search%");
                     });
                 })
@@ -91,7 +91,7 @@ class MyVault extends Component
                         $query->where('genres', 'LIKE', "%$genre%");
                     }
                 })
-                ->latest()
+                ->orderBy('title', $this->sort_direction)
                 ->paginate(9),
         ]);
     }

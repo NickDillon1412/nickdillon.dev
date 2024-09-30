@@ -71,6 +71,12 @@ it('can clear filters', function () {
         ->assertHasNoErrors();
 });
 
+it('can set sort direction to desc', function () {
+    livewire(MyVault::class)
+        ->set('sort_direction', 'desc')
+        ->assertHasNoErrors();
+});
+
 test('component can render', function () {
     livewire(MyVault::class)
         ->assertHasNoErrors();

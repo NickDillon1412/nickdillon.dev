@@ -22,18 +22,14 @@ class VaultDetails extends Component
     {
         $vault?->update(['on_wishlist' => false]);
 
-        $name = $vault->title ?? $vault->name;
-
-        return redirect(route('movie-vault.my-vault'))->success("Successfully added {$name} to your vault");
+        return redirect(route('movie-vault.my-vault'))->success("Successfully added {$vault->title} to your vault");
     }
 
     public function addToWishlist(Vault $vault): RedirectResponse|Redirector
     {
         $vault?->update(['on_wishlist' => true]);
 
-        $name = $vault->title ?? $vault->name;
-
-        return redirect(route('movie-vault.wishlist'))->success("Successfully added {$name} to your wishlist");
+        return redirect(route('movie-vault.wishlist'))->success("Successfully added {$vault->title} to your wishlist");
     }
 
     public function delete(Vault $vault): RedirectResponse|Redirector
@@ -42,7 +38,7 @@ class VaultDetails extends Component
 
         $route = $vault->on_wishlist ? 'wishlist' : 'my-vault';
 
-        $name = $vault->title ?? $vault->name;
+        $name = $vault->title;
 
         $vault?->delete();
 

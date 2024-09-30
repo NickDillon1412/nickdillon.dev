@@ -3,7 +3,7 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
     <div class="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
         <h1 class="w-full text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
-            {{ $vault->title ?? $vault->name }}
+            {{ $vault->title }}
         </h1>
 
         <div class="flex items-center w-full mt-2 space-x-2 sm:w-auto sm:flex-row sm:mt-0">
@@ -33,10 +33,10 @@
             <div class="space-y-3">
                 <p>
                     <span class="font-semibold">
-                        {{ $vault->title ? 'Title:' : 'Name:' }}
+                        Title:
                     </span>
 
-                    {{ $vault->title ?? $vault->name }}
+                    {{ $vault->title }}
                 </p>
 
                 <p>
@@ -124,7 +124,7 @@
                         Are you sure you want to add
 
                         <span class="font-semibold text-indigo-500">
-                            '{{ $vault->title ?? $vault->name }}'
+                            '{{ $vault->title }}'
                         </span>
 
                         to your
@@ -146,7 +146,7 @@
                         Are you sure you want to remove
 
                         <span class="font-semibold text-red-500">
-                            '{{ $vault->title ?? $vault->name }}'
+                            '{{ $vault->title }}'
                         </span>
 
                         from your

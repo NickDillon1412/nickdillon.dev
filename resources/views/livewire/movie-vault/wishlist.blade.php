@@ -64,7 +64,7 @@
                     class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
                     <div class="-mx-1 -my-3">
                         <h1 class="text-xl font-bold truncate whitespace-nowrap">
-                            {{ $vault->original_title ?? $vault->original_name }}
+                            {{ $vault->original_title }}
                         </h1>
 
                         <h3>
@@ -119,7 +119,7 @@
                                         Are you sure you want to add
 
                                         <span class="font-semibold text-indigo-500">
-                                            '{{ $vault->title ?? $vault->name }}'
+                                            '{{ $vault->title }}'
                                         </span>
 
                                         to your vault?
@@ -138,7 +138,7 @@
                                         Are you sure you want to remove
 
                                         <span class="font-semibold text-red-500">
-                                            '{{ $vault->title ?? $vault->name }}'
+                                            '{{ $vault->title }}'
                                         </span>
 
                                         from your wishlist?
@@ -152,7 +152,7 @@
                         <a href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate class="w-full">
                             <img class="h-[300px] w-full object-cover"
                                 src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
-                                alt="{{ $vault->original_title ?? $vault->original_name }}" />
+                                alt="{{ $vault->original_title }}" />
                         </a>
                     </x-slot:figure>
                 </x-mary-card>
