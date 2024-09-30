@@ -29,10 +29,11 @@ class VaultSeeder extends Seeder
         foreach ($vaults as $vault) {
             $response = $responses[$vault['vault_id']]->json();
 
-            $vault->update([
-                'title' => $response['title'] ?? $response['name'],
-                'original_title' => $response['original_title'] ?? $response['original_name'],
-            ]);
+            if (isset($response['genres'])) {
+                $response['genres'] = implode(',', collect($response['genres'])->pluck('name')->toArray());
+            }
+
+            $vault->update(['genres' => $response['genres'] ?? 'None']);
         }
     }
 }

@@ -13,17 +13,15 @@
         </div>
 
         <div class="flex items-center mt-2 space-x-2 sm:mt-0">
-            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" icon="film" class="w-full sm:w-auto">
-                    Vault
-                </flux:button>
-            </a>
+            <flux:button variant="indigo" icon="film" href="{{ route('movie-vault.my-vault') }}" wire:navigate
+                class="w-full sm:w-auto">
+                Vault
+            </flux:button>
 
-            <a href="{{ route('movie-vault.explore') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" icon="plus" class="w-full sm:w-auto">
-                    Add to vault
-                </flux:button>
-            </a>
+            <flux:button variant="indigo" icon="plus" href="{{ route('movie-vault.explore') }}" wire:navigate
+                class="w-full sm:w-auto">
+                Add to vault
+            </flux:button>
         </div>
     </div>
 

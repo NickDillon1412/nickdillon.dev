@@ -113,11 +113,11 @@ class Explore extends Component
             $this->new_media['vault_id'] = $media['id'];
             $this->new_media['vault_type'] = $media['media_type'];
             $this->new_media['overview'] = $media['overview'];
-            $this->new_media['rating'] = $media['rating'];
-            $this->new_media['genres'] = $media['genres'] ?: null;
+            $this->new_media['rating'] = $media['rating'] ?: 'None';
+            $this->new_media['genres'] = $media['genres'] ?: 'None';
             $this->new_media['runtime'] = $media['runtime'] ?? null;
             $this->new_media['seasons'] = $media['number_of_seasons'] ?? null;
-            $this->new_media['actors'] = $media['actors'] ?? null;
+            $this->new_media['actors'] = $media['actors'] ?: 'None';
             $this->new_media['on_wishlist'] = $wishlist ? true : false;
 
             $user_vaults->create(

@@ -7,19 +7,17 @@
         </h1>
 
         <div class="flex items-center w-full mt-2 space-x-2 sm:w-auto sm:flex-row sm:mt-0">
-            <a href="{{ route('movie-vault.my-vault') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" icon="film" class="w-full sm:w-auto">
-                    Vault
-                </flux:button>
-            </a>
+            <flux:button variant="indigo" icon="film" href="{{ route('movie-vault.my-vault') }}" wire:navigate
+                class="w-full sm:w-auto">
+                Vault
+            </flux:button>
 
-            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" class="w-full sm:w-auto">
-                    <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
+            <flux:button variant="indigo" href="{{ route('movie-vault.wishlist') }}" wire:navigate
+                class="w-full sm:w-auto">
+                <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
 
-                    Wishlist
-                </flux:button>
-            </a>
+                Wishlist
+            </flux:button>
         </div>
     </div>
 
