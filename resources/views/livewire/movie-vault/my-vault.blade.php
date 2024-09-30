@@ -36,9 +36,9 @@
                     class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
                     placeholder="Search..." />
 
-                <button class="absolute inset-0 right-auto group" type="submit" aria-label="Search">
-                    <svg class="ml-3 mr-2 fill-current text-slate-400 shrink-0 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400"
-                        width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <button class="absolute inset-0 right-auto" type="submit" aria-label="Search">
+                    <svg class="ml-3 mr-2 fill-current text-slate-400 shrink-0 dark:text-slate-500" width="16"
+                        height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
                         <path
@@ -47,7 +47,7 @@
                 </button>
 
                 <button x-cloak x-show="$wire.search.length > 0" wire:click="$set('search', '')"
-                    class="absolute inset-0 left-auto pr-2 group" type="submit" aria-label="Search">
+                    class="absolute inset-0 left-auto pr-2" type="submit" aria-label="Search">
                     <x-heroicon-s-x-mark
                         class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
                 </button>
