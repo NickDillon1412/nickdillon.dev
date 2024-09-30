@@ -35,6 +35,14 @@ it('can add a record to vault', function () {
         ->assertNoRedirect();
 });
 
+it('can delete a wishlist record', function () {
+    livewire(Wishlist::class)
+        ->call('delete', Vault::first())
+        ->assertHasNoErrors();
+
+    $this->assertDatabaseCount('vaults', 0);
+});
+
 it('can select type', function () {
     livewire(Wishlist::class)
         ->set('type', 'movie')

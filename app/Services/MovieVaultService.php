@@ -4,10 +4,31 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Number;
 
 class MovieVaultService
 {
+	public static function getRatings(?bool $on_wishlist = false): array
+	{
+		$ratings = [];
+
+		auth()
+			->user()
+			->vaults()
+			->whereOnWishlist($on_wishlist)
+			->pluck('rating')
+			->each(function (string $rating) use (&$ratings): void {
+				if (!in_array($rating, $ratings)) {
+					$ratings[] = $rating;
+				}
+			});
+
+		sort($ratings);
+
+		return $ratings;
+	}
+
 	public static function getGenres(?bool $on_wishlist = false): array
 	{
 		$genres = [];
@@ -45,23 +66,8 @@ class MovieVaultService
 		}
 	}
 
-	public static function getRatings(?bool $on_wishlist = false): array
+	public static function formatDate(string $date): string
 	{
-		$ratings = [];
-
-		auth()
-			->user()
-			->vaults()
-			->whereOnWishlist($on_wishlist)
-			->pluck('rating')
-			->each(function (string $rating) use (&$ratings): void {
-				if (!in_array($rating, $ratings)) {
-					$ratings[] = $rating;
-				}
-			});
-
-		sort($ratings);
-
-		return $ratings;
+		return Carbon::parse($date)->format('M d, Y');
 	}
 }

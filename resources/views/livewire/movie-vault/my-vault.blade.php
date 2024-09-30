@@ -15,7 +15,7 @@
         <div class="flex items-center mt-2 space-x-2 sm:mt-0">
             <flux:button variant="indigo" href="{{ route('movie-vault.wishlist') }}" wire:navigate
                 class="w-full sm:w-auto">
-                <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
+                <flux:icon icon="heart" variant="outline" class="w-4 h-4" />
 
                 Wishlist
             </flux:button>
@@ -55,7 +55,7 @@
         </div>
     @endif
 
-    <div wire:loading.remove>
+    <div wire:loading.remove wire:target='search,type,selected_ratings,selected_genres,sort_direction'>
         <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
             @forelse ($vault_records as $vault)
                 <x-mary-card shadow
@@ -69,7 +69,7 @@
                         <h3>
                             {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
 
-                            {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
+                            {{ MovieVaultService::formatDate($vault->release_date ?? $vault->first_air_date) }}
                         </h3>
 
                         <p class="truncate">
@@ -108,7 +108,7 @@
                             <div class="flex items-center -mr-2">
                                 <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
                                     <x-heroicon-s-plus-small
-                                        class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                        class="w-6 h-6 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                                     <x-slot:title>
                                         Add to wishlist
@@ -127,7 +127,7 @@
 
                                 <x-modal wire:click="delete({{ $vault->id }})" delete>
                                     <x-heroicon-o-trash
-                                        class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                        class="p-1 duration-100 ease-in-out rounded-md text-rose-600 w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                                     <x-slot:title>
                                         Remove from vault
@@ -136,7 +136,7 @@
                                     <x-slot:body>
                                         Are you sure you want to remove
 
-                                        <span class="font-semibold text-red-500">
+                                        <span class="font-semibold text-rose-600">
                                             '{{ $vault->title }}'
                                         </span>
 
@@ -174,7 +174,8 @@
         </div>
     </div>
 
-    <div wire:loading.flex class="flex justify-center mt-6">
+    <div class="flex justify-center mt-6" class="flex justify-center mt-6" wire:loading.flex
+        wire:target='search,type,selected_ratings,selected_genres,sort_direction'>
         <x-large-loading-spinner />
     </div>
 </div>

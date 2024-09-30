@@ -56,7 +56,7 @@ $classes = Flux::classes()
         'filled' => 'bg-slate-200 hover:bg-slate-300 dark:bg-white dark:hover:bg-slate-200 duration-200 ease-in-out',
         'outline' => 'bg-white hover:bg-slate-50 dark:bg-slate-700 dark:hover:bg-slate-600/75',
         'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
-        'ghost' => 'bg-transparent hover:bg-slate-800/5 dark:hover:bg-white/15',
+        'ghost' => 'bg-transparent dark:hover:bg-slate-700 hover:bg-slate-200 duration-200 ease-in-out',
         'subtle' => 'bg-transparent hover:bg-slate-800/5 dark:hover:bg-white/15 duration-200 ease-in-out',
     })
     ->add(match ($variant) { // Text color...

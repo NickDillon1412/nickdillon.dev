@@ -14,7 +14,7 @@
 
             <flux:button variant="indigo" href="{{ route('movie-vault.wishlist') }}" wire:navigate
                 class="w-full sm:w-auto">
-                <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
+                <flux:icon icon="heart" variant="outline" class="w-4 h-4" />
 
                 Wishlist
             </flux:button>
@@ -22,96 +22,96 @@
     </div>
 
     <div
-        class="flex flex-col justify-center w-full mt-4 border rounded-lg md:mt-8 md:flex-row border-slate-200 dark:border-slate-600/50">
-        <img class="object-cover w-auto rounded-lg rounded-b-none md:rounded-r-none md:rounded-bl-lg h-96"
-            src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}" />
+        class="flex flex-col w-full mt-2 overflow-hidden bg-white border rounded-lg shadow sm:mt-4 md:flex-row border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+        <div class="relative w-full md:w-96 h-96 md:h-auto">
+            <img class="absolute inset-0 object-cover w-full h-full"
+                src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
+                alt="{{ $vault->title }}" />
+        </div>
 
-        <div
-            class="flex flex-col p-4 bg-white rounded-b-lg sm:rounded-r-lg sm:rounded-bl-none sm:flex-row sm:relative dark:bg-slate-800 dark:text-slate-50 text-slate-800">
-            <div class="space-y-3">
+        <div class="relative flex flex-col justify-between w-full p-4 space-y-3">
+            <p>
+                <span class="font-semibold">
+                    Title:
+                </span>
+
+                {{ $vault->title }}
+            </p>
+
+            <p>
+                <span class="font-semibold">
+                    Type:
+                </span>
+
+                {{ $vault->vault_type === 'tv' ? 'TV Show' : Str::title($vault->vault_type) }}
+            </p>
+
+            <p>
+                <span class="font-semibold">
+                    Overview:
+                </span>
+
+                {{ $vault->overview }}
+            </p>
+
+            <p>
+                <span class="font-semibold">
+                    {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
+                </span>
+
+                {{ MovieVaultService::formatDate($vault->release_date ?? $vault->first_air_date) }}
+            </p>
+
+            <p>
+                <span class="font-semibold">
+                    Genres:
+                </span>
+
+                {{ Str::replace(',', ', ', $vault->genres) }}
+            </p>
+
+            <p>
+                <span class="font-semibold">
+                    Rating:
+                </span>
+
+                {{ $vault->rating }}
+            </p>
+
+            @isset($vault->runtime)
                 <p>
                     <span class="font-semibold">
-                        Title:
+                        Length:
                     </span>
 
-                    {{ $vault->title }}
+                    {{ MovieVaultService::formatRuntime($vault->runtime) }}
                 </p>
+            @endisset
 
+            @isset($vault->seasons)
                 <p>
                     <span class="font-semibold">
-                        Type:
+                        Seasons:
                     </span>
 
-                    {{ $vault->vault_type === 'tv' ? 'TV Show' : Str::title($vault->vault_type) }}
+                    {{ $vault->seasons }}
                 </p>
+            @endisset
 
-                <p>
-                    <span class="font-semibold">
-                        Overview:
-                    </span>
+            <p>
+                <span class="font-semibold">
+                    Actors:
+                </span>
 
-                    {{ $vault->overview }}
-                </p>
+                {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
+            </p>
 
-                <p>
-                    <span class="font-semibold">
-                        {{ $vault->release_date ? 'Release Date: ' : 'First Air Date: ' }}
-                    </span>
-
-                    {{ Carbon\Carbon::parse($vault->release_date ?? $vault->first_air_date)->format('M d, Y') }}
-                </p>
-
-                <p>
-                    <span class="font-semibold">
-                        Genres:
-                    </span>
-
-                    {{ Str::replace(',', ', ', $vault->genres) }}
-                </p>
-
-                <p>
-                    <span class="font-semibold">
-                        Rating:
-                    </span>
-
-                    {{ $vault->rating }}
-                </p>
-
-                @isset($vault->runtime)
-                    <p>
-                        <span class="font-semibold">
-                            Length:
-                        </span>
-
-                        {{ MovieVaultService::formatRuntime($vault->runtime) }}
-                    </p>
-                @endisset
-
-                @isset($vault->seasons)
-                    <p>
-                        <span class="font-semibold">
-                            Seasons:
-                        </span>
-
-                        {{ $vault->seasons }}
-                    </p>
-                @endisset
-
-                <p>
-                    <span class="font-semibold">
-                        Actors:
-                    </span>
-
-                    {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
-                </p>
-            </div>
-
-            <div class="flex items-center pt-3 sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">
+            <div class="flex items-center sm:bottom-0 sm:right-0 sm:p-4 sm:absolute sm:pt-0">
                 <x-modal
                     wire:click="{{ $vault->on_wishlist ? 'addToVault(' . $vault->id . ')' : 'addToWishlist(' . $vault->id . ')' }}"
                     info>
                     <x-heroicon-s-plus-small
-                        class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
+                        class="w-6 h-6 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                     <x-slot:title>
                         Add to
@@ -133,7 +133,7 @@
 
                 <x-modal wire:click="delete({{ $vault->id }})" delete>
                     <x-heroicon-o-trash
-                        class="p-1 text-red-600 duration-100 ease-in-out rounded w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                        class="p-1 duration-100 ease-in-out rounded-md text-rose-600 w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
 
                     <x-slot:title>
                         Remove from
@@ -143,7 +143,7 @@
                     <x-slot:body>
                         Are you sure you want to remove
 
-                        <span class="font-semibold text-red-500">
+                        <span class="font-semibold text-rose-600">
                             '{{ $vault->title }}'
                         </span>
 

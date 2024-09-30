@@ -10,7 +10,7 @@
             <div x-show="modalOpen" x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200"
                 x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" @click="modalOpen=false"
-                class="absolute inset-0 w-full h-full bg-black bg-opacity-40 dark:bg-opacity-60">
+                class="absolute inset-0 w-full h-full bg-slate-900 bg-opacity-40 dark:bg-opacity-60">
             </div>
 
             <div x-show="modalOpen" x-trap.inert.noscroll="modalOpen" x-transition:enter="ease-out duration-200"
@@ -22,7 +22,7 @@
                 class="relative w-10/12 py-6 bg-white border rounded-lg dark:bg-slate-800 sm:w-full px-7 sm:max-w-lg border-slate-200 dark:border-slate-600/50">
                 <div @class([
                     'stroke-indigo-500' => $attributes->has('info'),
-                    'stroke-[#ff2825]' => $attributes->has('delete'),
+                    'stroke-rose-600' => $attributes->has('delete'),
                     'flex items-center pb-4',
                 ])>
                     <svg xmlns="http://www.w3.org/2000/svg" @class([
@@ -67,7 +67,7 @@
                             @class([
                                 'bg-indigo-500 border-indigo-500 hover:border-indigo-600 hover:bg-indigo-600' => $attributes->has(
                                     'info'),
-                                'bg-red-500 border-red-500 hover:border-red-600 hover:bg-red-600' => $attributes->has(
+                                'bg-rose-600 border-rose-600 hover:border-rose-700 hover:bg-rose-700' => $attributes->has(
                                     'delete'),
                                 'inline-flex items-center justify-center px-4 py-1 font-medium leading-6 text-white whitespace-no-wrap transition duration-300 ease-in-out rounded-md shadow-sm border',
                             ])>
