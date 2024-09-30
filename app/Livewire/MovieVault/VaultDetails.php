@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Http\RedirectResponse;
 use Livewire\Features\SupportRedirects\Redirector;
 
@@ -53,8 +51,6 @@ class VaultDetails extends Component
 
     public function render(): View
     {
-        $this->previous_url = Str::afterLast(URL::previous(), '/');
-
         return view('livewire.movie-vault.vault-details');
     }
 }
