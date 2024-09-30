@@ -6,8 +6,7 @@
             Explore
         </h1>
 
-        <flux:button variant="indigo" icon="arrow-left" href="{{ route('movie-vault.my-vault') }}" wire:navigate
-            class="w-full sm:w-auto">
+        <flux:button variant="indigo" icon="arrow-left" href="{{ route('movie-vault.my-vault') }}" wire:navigate>
             Back to vault
         </flux:button>
     </div>
