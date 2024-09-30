@@ -53,6 +53,13 @@ class Wishlist extends Component
         Toaster::success("Successfully added {$name} to your vault");
     }
 
+    public function delete(Vault $vault): void
+    {
+        Toaster::success("Successfully removed {$vault->name} from your wishlist");
+
+        $vault?->delete();
+    }
+
     public function render(): View
     {
         $this->ratings = MovieVaultService::getRatings(on_wishlist: true);
