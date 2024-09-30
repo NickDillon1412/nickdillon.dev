@@ -17,8 +17,6 @@ class VaultData extends Data implements Wireable
         public string $vault_type,
         public ?string $title,
         public ?string $original_title,
-        public ?string $name,
-        public ?string $original_name,
         public string $overview,
         public ?string $backdrop_path,
         public ?string $poster_path,

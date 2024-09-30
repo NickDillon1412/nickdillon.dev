@@ -31,6 +31,8 @@ class Wishlist extends Component
 
     public array $selected_genres = [];
 
+    public string $sort_direction = 'asc';
+
     public function updatedSearch(): void
     {
         $this->resetPage();
@@ -84,7 +86,7 @@ class Wishlist extends Component
                         $query->where('genres', 'LIKE', "%$genre%");
                     }
                 })
-                ->latest()
+                ->orderBy('title', $this->sort_direction)
                 ->paginate(9),
         ]);
     }

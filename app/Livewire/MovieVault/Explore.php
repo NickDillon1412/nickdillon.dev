@@ -101,16 +101,14 @@ class Explore extends Component
         } else {
             $this->new_media = $media['media_type'] === 'movie'
                 ? [
-                    'title' => $media['title'],
-                    'original_title' => $media['original_title'],
                     'release_date' => $media['release_date'],
                 ]
                 : [
-                    'name' => $media['name'],
-                    'original_name' => $media['original_name'],
                     'first_air_date' => $media['first_air_date'],
                 ];
 
+            $this->new_media['title'] = $media['title'] ?? $media['name'];
+            $this->new_media['original_title'] = $media['original_title'] ?? $media['original_name'];
             $this->new_media['poster_path'] = $media['poster_path'] ?? $media['backdrop_path'] ?? null;
             $this->new_media['vault_id'] = $media['id'];
             $this->new_media['vault_type'] = $media['media_type'];

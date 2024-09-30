@@ -17,8 +17,6 @@ class Vault extends Model
         'vault_type',
         'title',
         'original_title',
-        'name',
-        'original_name',
         'overview',
         'backdrop_path',
         'poster_path',

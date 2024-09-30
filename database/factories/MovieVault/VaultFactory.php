@@ -23,8 +23,6 @@ class VaultFactory extends Factory
             'vault_type' => 'movie',
             'title' => 'Movie Title',
             'original_title' => 'Movie Title',
-            'name' => '',
-            'original_name' => '',
             'overview' => 'Movie Overview',
             'backdrop_path' => '',
             'poster_path' => '/' . Str::uuid(),

@@ -62,6 +62,12 @@ it('can clear filters', function () {
         ->assertHasNoErrors();
 });
 
+it('can set sort direction to desc', function () {
+    livewire(Wishlist::class)
+        ->set('sort_direction', 'desc')
+        ->assertHasNoErrors();
+});
+
 test('component can render', function () {
     livewire(Wishlist::class)
         ->assertHasNoErrors();
