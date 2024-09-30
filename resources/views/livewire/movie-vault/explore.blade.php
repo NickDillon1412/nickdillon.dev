@@ -6,11 +6,10 @@
             Explore
         </h1>
 
-        <a href="{{ route('movie-vault.my-vault') }}" wire:navigate>
-            <flux:button variant="indigo" icon="arrow-left">
-                Back to vault
-            </flux:button>
-        </a>
+        <flux:button variant="indigo" icon="arrow-left" href="{{ route('movie-vault.my-vault') }}" wire:navigate
+            class="w-full sm:w-auto">
+            Back to vault
+        </flux:button>
     </div>
 
     <div class="relative mt-4">
@@ -53,12 +52,12 @@
 
                             <p class="truncate">
                                 Genres:
-                                {{ Str::replace(',', ', ', $media['genres']) ?: 'No genres found' }}
+                                {{ Str::replace(',', ', ', $media['genres']) ?: 'None' }}
                             </p>
 
                             <p>
                                 Rating:
-                                {{ $media['rating'] ?? 'No rating found' }}
+                                {{ $media['rating'] ?? 'None' }}
                             </p>
 
                             @isset($media['runtime'])
@@ -77,24 +76,20 @@
 
                             <p class="truncate">
                                 Actors:
-                                {{ Str::replace(',', ', ', $media['actors']) ?: 'No actors found' }}
+                                {{ Str::replace(',', ', ', $media['actors']) ?: 'None' }}
                             </p>
 
-                            <div class="flex items-center justify-between space-x-3">
+                            <div class="flex items-center justify-between my-2 space-x-3">
                                 <form wire:submit='save(@json($media))' class="w-full">
-                                    <button
-                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md hover:bg-indigo-600 text-slate-50 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
-                                        type="submit">
+                                    <flux:button variant="indigo" class="w-full" type="submit">
                                         Add to vault
-                                    </button>
+                                    </flux:button>
                                 </form>
 
                                 <form wire:submit="save(@js($media), 'wishlist')" class="w-full">
-                                    <button
-                                        class="w-full px-4 py-2.5 my-2 text-sm font-semibold duration-200 ease-in-out bg-slate-200 dark:bg-slate-100 rounded-md hover:bg-slate-300 dark:hover:bg-slate-300 text-slate-700 disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-100 disabled:text-slate-400"
-                                        type="submit">
+                                    <flux:button variant="filled" class="w-full" type="submit">
                                         Add to wishlist
-                                    </button>
+                                    </flux:button>
                                 </form>
                             </div>
                         </div>

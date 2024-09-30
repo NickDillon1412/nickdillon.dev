@@ -1,4 +1,4 @@
-<div x-data="{ modalOpen: false }" @keydown.escape.window="modalOpen = false" class="relative w-auto h-auto z-60">
+<div wire:ignore x-data="{ modalOpen: false }" @keydown.escape.window="modalOpen = false" class="relative w-auto h-auto z-60">
     <div @click="modalOpen=true" class="cursor-pointer">
         {{ $slot }}
     </div>

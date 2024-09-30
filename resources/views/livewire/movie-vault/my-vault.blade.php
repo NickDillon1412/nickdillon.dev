@@ -13,19 +13,17 @@
         </div>
 
         <div class="flex items-center mt-2 space-x-2 sm:mt-0">
-            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" class="w-full sm:w-auto">
-                    <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
+            <flux:button variant="indigo" href="{{ route('movie-vault.wishlist') }}" wire:navigate
+                class="w-full sm:w-auto">
+                <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
 
-                    Wishlist
-                </flux:button>
-            </a>
+                Wishlist
+            </flux:button>
 
-            <a href="{{ route('movie-vault.explore') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" icon="plus" class="w-full sm:w-auto">
-                    Add to vault
-                </flux:button>
-            </a>
+            <flux:button variant="indigo" icon="plus" href="{{ route('movie-vault.explore') }}" wire:navigate
+                class="w-full sm:w-auto">
+                Add to vault
+            </flux:button>
         </div>
     </div>
 
@@ -107,7 +105,7 @@
                                 View all details &rarr;
                             </a>
 
-                            <div wire:ignore class="flex items-center -mr-2">
+                            <div class="flex items-center -mr-2">
                                 <x-modal wire:click="addToWishlist({{ $vault->id }})" info>
                                     <x-heroicon-s-plus-small
                                         class="w-6 h-6 duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-700" />
