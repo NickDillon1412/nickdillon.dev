@@ -1,6 +1,10 @@
 @props(['ratings', 'genres'])
 
 <div x-data="{
+    showSortBy: true,
+    showTypes: true,
+    showRatings: true,
+    showGenres: true,
     slideOverOpen: false,
     totalFilters() {
         total = $wire.selected_ratings.length + $wire.selected_genres.length;
@@ -63,15 +67,20 @@
                                 </div>
 
                                 <div class="relative flex-1 px-4 mt-2 space-y-3 sm:px-5">
-                                    <div class="mb-4">
-                                        <div
-                                            class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <div class="flex pb-0.5 items-center justify-between text-sm font-medium">
                                             <p>
                                                 Sort By
                                             </p>
+
+                                            <flux:button variant="subtle" icon="chevron-down"
+                                                class="!h-6 !w-6 hover:!bg-slate-200 dark:hover:!bg-slate-700 !-mr-0.5  hover:text-slate-800 dark:hover:text-slate-200"
+                                                x-bind:class="showSortBy ? 'rotate-180' : ''"
+                                                x-on:click="showSortBy = !showSortBy" />
                                         </div>
 
-                                        <div class="pt-2 space-y-2">
+                                        <div x-collapse x-show="showSortBy"
+                                            class="pt-2 space-y-2 border-t border-slate-300 dark:border-slate-700">
                                             <label for="sort_direction_asc" class="flex items-center">
                                                 <input id="sort_direction_asc" type="radio" value="asc"
                                                     name="sort_direction"
@@ -97,20 +106,27 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <div
-                                            class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                                        <div class="pb-0.5 text-sm font-medium flex items-center justify-between">
                                             <p>
                                                 Types
                                             </p>
 
-                                            <button x-cloak x-show="$wire.type"
-                                                class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
-                                                x-on:click="$wire.set('type', '')">
-                                                Clear
-                                            </button>
+                                            <div class="flex items-center justify-between">
+                                                <button x-cloak x-show="$wire.type"
+                                                    class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:!bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
+                                                    x-on:click="$wire.set('type', '')">
+                                                    Clear
+                                                </button>
+
+                                                <flux:button variant="subtle" icon="chevron-down"
+                                                    class="!h-6 !w-6 hover:!bg-slate-200 dark:hover:!bg-slate-700 !-mr-0.5  hover:text-slate-800 dark:hover:text-slate-200"
+                                                    x-bind:class="showTypes ? 'rotate-180' : ''"
+                                                    x-on:click="showTypes = !showTypes" />
+                                            </div>
                                         </div>
 
-                                        <div class="pt-2 space-y-2">
+                                        <div x-collapse x-show="showTypes"
+                                            class="pt-2 space-y-2 border-t border-slate-300 dark:border-slate-700">
                                             <label for="movie" class="flex items-center">
                                                 <input id="movie" type="radio" value="movie" name="type"
                                                     class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
@@ -134,20 +150,27 @@
                                     </div>
 
                                     <div>
-                                        <div
-                                            class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                                        <div class="pb-0.5 text-sm font-medium flex items-center justify-between">
                                             <p>
                                                 Ratings
                                             </p>
 
-                                            <button x-cloak x-show="$wire.selected_ratings.length > 0"
-                                                class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
-                                                x-on:click="$wire.set('selected_ratings', [])">
-                                                Clear
-                                            </button>
+                                            <div class="flex items-center justify-between">
+                                                <button x-cloak x-show="$wire.selected_ratings.length > 0"
+                                                    class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
+                                                    x-on:click="$wire.set('selected_ratings', [])">
+                                                    Clear
+                                                </button>
+
+                                                <flux:button variant="subtle" icon="chevron-down"
+                                                    class="!h-6 !w-6 hover:!bg-slate-200 dark:hover:!bg-slate-700 !-mr-0.5  hover:text-slate-800 dark:hover:text-slate-200"
+                                                    x-bind:class="showRatings ? 'rotate-180' : ''"
+                                                    x-on:click="showRatings = !showRatings" />
+                                            </div>
                                         </div>
 
-                                        <div class="pt-1">
+                                        <div x-collapse x-show="showRatings"
+                                            class="pt-1 border-t border-slate-300 dark:border-slate-700">
                                             @foreach ($ratings as $rating)
                                                 <label for="selected_rating.{{ $rating }}"
                                                     class="flex items-center py-1.5">
@@ -166,20 +189,27 @@
                                     </div>
 
                                     <div>
-                                        <div
-                                            class="pb-1.5 text-sm font-medium border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
+                                        <div class="pb-0.5 text-sm font-medium flex items-center justify-between">
                                             <p>
                                                 Genres
                                             </p>
 
-                                            <button x-cloak x-show="$wire.selected_genres.length > 0"
-                                                class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
-                                                x-on:click="$wire.set('selected_genres', [])">
-                                                Clear
-                                            </button>
+                                            <div class="flex items-center justify-between">
+                                                <button x-cloak x-show="$wire.selected_genres.length > 0"
+                                                    class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
+                                                    x-on:click="$wire.set('selected_genres', [])">
+                                                    Clear
+                                                </button>
+
+                                                <flux:button variant="subtle" icon="chevron-down"
+                                                    class="!h-6 !w-6 hover:!bg-slate-200 dark:hover:!bg-slate-700 !-mr-0.5  hover:text-slate-800 dark:hover:text-slate-200"
+                                                    x-bind:class="showGenres ? 'rotate-180' : ''"
+                                                    x-on:click="showGenres = !showGenres" />
+                                            </div>
                                         </div>
 
-                                        <div class="pt-1">
+                                        <div x-collapse x-show="showGenres"
+                                            class="pt-1 border-t border-slate-300 dark:border-slate-700">
                                             @foreach ($genres as $genre)
                                                 <label for="selected_genre.{{ $genre }}"
                                                     class="flex items-center py-1.5">

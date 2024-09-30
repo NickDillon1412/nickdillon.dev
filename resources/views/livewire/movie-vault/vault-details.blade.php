@@ -14,7 +14,9 @@
             </a>
 
             <a href="{{ route('movie-vault.wishlist') }}" wire:navigate class="w-full sm:w-auto">
-                <flux:button variant="indigo" icon="heart" class="w-full sm:w-auto">
+                <flux:button variant="indigo" class="w-full sm:w-auto">
+                    <flux:icon icon="heart" variant="outline" size="xs" class="w-4 h-4" />
+
                     Wishlist
                 </flux:button>
             </a>
