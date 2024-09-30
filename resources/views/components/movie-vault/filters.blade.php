@@ -58,10 +58,9 @@
                                                 Clear all
                                             </button>
 
-                                            <button x-on:click="slideOverOpen = false" type="button"
-                                                class="duration-200 ease-in-out rounded hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200">
-                                                <x-heroicon-s-x-mark class="w-5 h-5" />
-                                            </button>
+                                            <flux:button variant="subtle" icon="x-mark"
+                                                class="!h-6 !w-6 hover:!bg-slate-200 dark:hover:!bg-slate-700 !-mr-0.5  hover:text-slate-800 dark:hover:text-slate-200"
+                                                x-on:click="slideOverOpen = false" />
                                         </div>
                                     </div>
                                 </div>
