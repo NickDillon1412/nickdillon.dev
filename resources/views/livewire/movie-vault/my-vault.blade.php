@@ -13,18 +13,16 @@
         </div>
 
         <div class="flex items-center mt-2 space-x-2 sm:mt-0">
-            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate
-                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
-                <x-heroicon-o-heart class="w-4 h-4 mr-1 -ml-1" />
-
-                <span>Wishlist</span>
+            <a href="{{ route('movie-vault.wishlist') }}" wire:navigate class="w-full sm:w-auto">
+                <flux:button variant="indigo" icon="heart" class="w-full sm:w-auto">
+                    Wishlist
+                </flux:button>
             </a>
 
-            <a href="{{ route('movie-vault.explore') }}" wire:navigate
-                class="flex items-center justify-center w-full px-3 py-2 text-sm font-semibold duration-200 ease-in-out bg-indigo-500 rounded-md sm:w-auto hover:bg-indigo-600 text-slate-50">
-                <x-heroicon-s-plus-small class="w-5 h-5 mr-0.5 -ml-1" />
-
-                <span>Add to vault</span>
+            <a href="{{ route('movie-vault.explore') }}" wire:navigate class="w-full sm:w-auto">
+                <flux:button variant="indigo" icon="plus" class="w-full sm:w-auto">
+                    Add to vault
+                </flux:button>
             </a>
         </div>
     </div>

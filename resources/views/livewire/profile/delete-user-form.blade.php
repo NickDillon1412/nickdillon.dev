@@ -33,8 +33,9 @@ new class extends Component {
         </p>
     </header>
 
-    <x-danger-button x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">{{ __('Delete Account') }}</x-danger-button>
+    <flux:button variant="danger" class="!px-5 uppercase text-xs" x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')">{{ __('Delete Account') }}
+    </flux:button>
 
     <x-default-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
         <form wire:submit="deleteUser" class="p-6">
@@ -61,9 +62,9 @@ new class extends Component {
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ms-3">
+                <flux:button variant="danger" class="!px-4 ms-3 uppercase text-xs" type="submit">
                     {{ __('Delete Account') }}
-                </x-danger-button>
+                </flux:button>
             </div>
         </form>
     </x-default-modal>
