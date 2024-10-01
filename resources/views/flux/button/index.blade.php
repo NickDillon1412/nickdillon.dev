@@ -53,15 +53,17 @@ $classes = Flux::classes()
     ->add(match ($variant) { // Background color...
         'primary' => 'bg-slate-800 hover:bg-slate-700 dark:bg-white dark:hover:bg-slate-200 duration-200 ease-in-out',
         'indigo' => 'bg-indigo-500 hover:bg-indigo-600 duration-200 ease-in-out',
+        'pink' => 'bg-pink-500 hover:bg-pink-600 duration-200 ease-in-out',
         'filled' => 'bg-slate-200 hover:bg-slate-300 dark:bg-white dark:hover:bg-slate-200 duration-200 ease-in-out',
-        'outline' => 'bg-white hover:bg-slate-50 dark:bg-slate-700 dark:hover:bg-slate-600/75',
-        'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500',
+        'outline' => 'bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-600 duration-200 ease-in-out',
+        'danger' => 'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500 duration-200 ease-in-out',
         'ghost' => 'bg-transparent dark:hover:bg-slate-700 hover:bg-slate-200 duration-200 ease-in-out',
         'subtle' => 'bg-transparent hover:bg-slate-800/5 dark:hover:bg-white/15 duration-200 ease-in-out',
     })
     ->add(match ($variant) { // Text color...
         'primary' => 'text-slate-50 dark:text-slate-800 font-semibold',
         'indigo' => 'text-slate-50 font-semibold',
+        'pink' => 'text-slate-50 font-semibold',
         'filled' => 'text-slate-800 font-semibold',
         'outline' => 'text-slate-800 dark:text-white',
         'danger' => 'text-white',

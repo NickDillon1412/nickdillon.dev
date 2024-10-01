@@ -19,7 +19,7 @@
     <div class="relative inline-block">
         <button
             class="p-2 duration-200 ease-in-out bg-white border rounded-md shadow-sm hover:bg-slate-200 dark:bg-slate-900 border-slate-300 dark:hover:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
-            x-on:click.prevent="slideOverOpen = true">
+            x-on:click="slideOverOpen = true">
             <x-feathericon-filter />
         </button>
 
@@ -30,7 +30,8 @@
     </div>
 
     <template x-teleport="body">
-        <div x-show="slideOverOpen" x-on:keydown.window.escape="slideOverOpen = false" class="relative z-[99]">
+        <div x-show="slideOverOpen" x-on:keydown.window.escape="slideOverOpen = false"
+            x-trap.inert.noscroll="slideOverOpen" class="relative z-[99]">
             <div x-cloak x-show="slideOverOpen" x-transition.opacity.duration.200ms x-on:click="slideOverOpen = false"
                 class="fixed inset-0 bg-slate-900 bg-opacity-20"></div>
 
