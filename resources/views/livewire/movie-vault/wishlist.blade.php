@@ -103,41 +103,51 @@
                             </a>
 
                             <div class="flex items-center -mr-2">
-                                <x-modal wire:click="addToVault({{ $vault->id }})" info>
-                                    <x-heroicon-s-plus-small
-                                        class="w-6 h-6 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                <x-modal icon="information-circle" info variant="indigo"
+                                    wire:submit="addToVault({{ $vault->id }})">
+                                    <x-slot:button>
+                                        <x-heroicon-s-plus-small
+                                            class="w-6 h-6 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                    </x-slot:button>
 
                                     <x-slot:title>
                                         Add to vault
                                     </x-slot:title>
 
                                     <x-slot:body>
-                                        Are you sure you want to add
+                                        <div class="ml-5">
+                                            Are you sure you want to add
 
-                                        <span class="font-semibold text-indigo-500">
-                                            '{{ $vault->title }}'
-                                        </span>
+                                            <span class="font-semibold text-indigo-500">
+                                                '{{ $vault->title }}'
+                                            </span>
 
-                                        to your vault?
+                                            to your vault?
+                                        </div>
                                     </x-slot:body>
                                 </x-modal>
 
-                                <x-modal wire:click="delete({{ $vault->id }})" delete>
-                                    <x-heroicon-o-trash
-                                        class="p-1 duration-100 ease-in-out rounded-md text-rose-600 w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                <x-modal icon="information-circle" delete variant="danger"
+                                    wire:submit="delete({{ $vault->id }})">
+                                    <x-slot:button>
+                                        <x-heroicon-o-trash
+                                            class="p-1 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                    </x-slot:button>
 
                                     <x-slot:title>
                                         Remove from wishlist
                                     </x-slot:title>
 
                                     <x-slot:body>
-                                        Are you sure you want to remove
+                                        <div class="ml-5">
+                                            Are you sure you want to remove
 
-                                        <span class="font-semibold text-rose-600">
-                                            '{{ $vault->title }}'
-                                        </span>
+                                            <span class="font-semibold text-red-600">
+                                                '{{ $vault->title }}'
+                                            </span>
 
-                                        from your wishlist?
+                                            from your wishlist?
+                                        </div>
                                     </x-slot:body>
                                 </x-modal>
                             </div>

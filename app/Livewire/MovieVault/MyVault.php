@@ -51,6 +51,8 @@ class MyVault extends Component
         $name = $vault->title ?? $vault->name;
 
         Toaster::success("Successfully added {$name} to your wishlist");
+
+        $this->dispatch('close-modal');
     }
 
     public function delete(Vault $vault): void
@@ -58,6 +60,8 @@ class MyVault extends Component
         Toaster::success("Successfully removed {$vault->name} from your vault");
 
         $vault?->delete();
+
+        $this->dispatch('close-modal');
     }
 
     public function render(): View
