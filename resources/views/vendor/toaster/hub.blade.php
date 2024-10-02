@@ -25,18 +25,18 @@
             ])
             :class="toast.select({
                 error: 'text-rose-500',
-                info: 'text-slate-600 dark:text-slate-200',
+                info: 'text-pink-500',
                 success: 'text-emerald-500',
-                warning: 'text-amber-500'
+                warning: 'text-amber-500',
             })"
             >
             <i x-text="toast.message"
                 class="inline-block select-none not-italic px-6 py-3 rounded border shadow-lg text-sm w-full bg-white dark:bg-slate-800 {{ $alignment->is('bottom') ? 'mt-3' : 'mb-3' }}"
                 :class="toast.select({
                     error: 'border-rose-500',
-                    info: 'border-slate-500 dark:border-slate-200',
+                    info: 'border-pink-500',
                     success: 'border-emerald-500',
-                    warning: 'border-amber-500'
+                    warning: 'border-amber-500',
                 })">
             </i>
 
