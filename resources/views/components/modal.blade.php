@@ -1,7 +1,7 @@
 @props(['icon', 'variant'])
 
-<div {{ $attributes->whereStartsWith('x-init') }} x-data="{ modalOpen: false }" x-on:keydown.escape.window="modalOpen = false"
-    class="relative w-auto h-auto z-60">
+<div wire:ignore {{ $attributes->whereStartsWith('x-init') }} x-data="{ modalOpen: false }"
+    x-on:keydown.escape.window="modalOpen = false" class="relative w-auto h-auto z-60">
     <div x-on:click="modalOpen = true" class="cursor-pointer">
         {{ $button }}
     </div>
