@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Livewire\Volt\Component;
 
 new class extends Component {
@@ -58,24 +60,24 @@ new class extends Component {
 
     <div class="p-4 space-y-8 md:space-y-12">
         @foreach ($technologies as $stack => $items)
-            <div class="grid grid-cols-2 gap-8 md:flex md:justify-center md:space-x-2 flex:space-y-4 md:space-y-0">
-                @foreach ($items as $technology)
-                    <div
-                        class="p-2 duration-300 hover:shadow-2xl hover:ease-in-out hover:scale-125 hover:shadow-pink-500 hover:bg-slate-50 hover:text-slate-800 hover:rounded hover:-rotate-3 w-36">
-                        <a href="{{ $technology['url'] }}" target="_blank">
-                            <div class="flex justify-center mb-1 5">
-                                <img src="{{ asset($technology['image']) }}" />
-                            </div>
-
-                            <div class="text-center">
-                                <h1 class="text-xl font-semibold shadow-indigo-400/50">
-                                    {{ $technology['title'] }}
-                                </h1>
-                            </div>
-                        </a>
+        <div class="grid grid-cols-2 gap-8 md:flex md:justify-center md:space-x-2 flex:space-y-4 md:space-y-0">
+            @foreach ($items as $technology)
+            <div
+                class="p-2 duration-300 hover:shadow-2xl hover:ease-in-out hover:scale-125 hover:shadow-pink-500 hover:bg-slate-50 hover:text-slate-800 hover:rounded hover:-rotate-3 w-36">
+                <a href="{{ $technology['url'] }}" target="_blank">
+                    <div class="flex justify-center mb-1 5">
+                        <img src="{{ asset($technology['image']) }}" />
                     </div>
-                @endforeach
+
+                    <div class="text-center">
+                        <h1 class="text-xl font-semibold shadow-indigo-400/50">
+                            {{ $technology['title'] }}
+                        </h1>
+                    </div>
+                </a>
             </div>
+            @endforeach
+        </div>
         @endforeach
     </div>
 </div>

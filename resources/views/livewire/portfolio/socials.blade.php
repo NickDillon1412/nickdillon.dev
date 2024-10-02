@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Livewire\Volt\Component;
 
 new class extends Component {
@@ -26,11 +28,11 @@ new class extends Component {
 
 <div class="flex space-x-3">
     @foreach ($socials as $social)
-        <div class="ml-0 duration-300 ease-in-out hover:scale-125">
-            <a href="{{ $social['link'] }}">
-                <x-dynamic-component :component="$social['icon']"
-                    class="w-6 h-6 text-white duration-300 ease-in-out hover:text-pink-500" />
-            </a>
-        </div>
+    <div class="ml-0 duration-300 ease-in-out hover:scale-125">
+        <a href="{{ $social['link'] }}">
+            <x-dynamic-component :component="$social['icon']"
+                class="w-6 h-6 text-white duration-300 ease-in-out hover:text-pink-500" />
+        </a>
+    </div>
     @endforeach
 </div>
