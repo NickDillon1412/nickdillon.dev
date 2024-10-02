@@ -102,8 +102,8 @@
                             {{ Str::replace(',', ', ', $vault->actors) ?: 'No actors found' }}
                         </p>
 
-                        <div class="flex items-center justify-between w-full text-sm">
-                            <a class="font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
+                        <div class="flex items-center justify-between w-full">
+                            <a class="text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
                                 href="{{ route('movie-vault.details', $vault->id) }}" wire:navigate>
                                 View all details &rarr;
                             </a>

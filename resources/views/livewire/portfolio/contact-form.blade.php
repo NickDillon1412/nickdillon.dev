@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Mail\ContactForm;
 use Livewire\Volt\Component;
+use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Mail;
 
@@ -26,6 +27,8 @@ new class extends Component {
         $this->reset();
 
         $this->dispatch('close-modal');
+
+        Toaster::info("Your message has been sent!");
     }
 }; ?>
 
