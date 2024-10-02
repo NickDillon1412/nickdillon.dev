@@ -113,7 +113,7 @@
 
                                             <div class="flex items-center justify-between">
                                                 <button x-cloak x-show="$wire.type"
-                                                    class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:!bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
+                                                    class="px-2 text-sm font-medium duration-200 ease-in-out rounded hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700"
                                                     x-on:click="$wire.set('type', '')">
                                                     Clear
                                                 </button>
