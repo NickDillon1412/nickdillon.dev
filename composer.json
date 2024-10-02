@@ -14,6 +14,7 @@
         "brunocfalcao/blade-feather-icons": "^4.0",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "laravel/framework": "^11.25.0",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
