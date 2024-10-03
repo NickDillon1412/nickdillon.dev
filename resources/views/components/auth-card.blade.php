@@ -22,14 +22,16 @@
             </div>
         </form>
 
-        <flux:separator text="or" class="my-8" />
-
-        <div class="flex items-center space-x-2">
-            <flux:button variant="outline" href="{{ route('github.redirect') }}" class="w-full">
-                <x-bi-github class="w-5 h-5" />
-
-                Continue with GitHub
-            </flux:button>
-        </div>
+        @if(request()->routeIs(['login', 'sign-up']))
+            <flux:separator text="or" class="my-8" />
+    
+            <div class="flex items-center space-x-2">
+                <flux:button variant="outline" href="{{ route('github.redirect') }}" class="w-full">
+                    <x-bi-github class="w-5 h-5" />
+    
+                    Continue with GitHub
+                </flux:button>
+            </div>
+        @endif
     </div>
 </div>
