@@ -22,23 +22,13 @@
             </div>
         </form>
 
-        <flux:separator text="Or continue with" class="my-8" />
+        <flux:separator text="or" class="my-8" />
 
         <div class="flex items-center space-x-2">
-            <flux:button variant="outline" href="{{ route('movie-vault.wishlist') }}" class="w-full">
-                <x-bi-google class="w-5 h-5" />
-            </flux:button>
-
             <flux:button variant="outline" href="{{ route('github.redirect') }}" class="w-full">
                 <x-bi-github class="w-5 h-5" />
-            </flux:button>
 
-            <flux:button variant="outline" href="{{ route('movie-vault.wishlist') }}" class="w-full">
-                <x-bi-apple class="w-5 h-5" />
-            </flux:button>
-
-            <flux:button variant="outline" href="{{ route('movie-vault.wishlist') }}" class="w-full">
-                <x-fab-x-twitter class="w-5 h-5" />
+                Continue with GitHub
             </flux:button>
         </div>
     </div>
