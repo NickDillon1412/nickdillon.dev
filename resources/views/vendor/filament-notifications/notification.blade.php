@@ -41,7 +41,7 @@
         ...match ($isInline) {
             true => ['fi-inline'],
             false => [
-                'max-w-sm rounded-xl bg-white shadow-lg ring-1 dark:bg-slate-900',
+                'max-w-md rounded-xl bg-white shadow-lg ring-1 dark:bg-slate-900',
                 match ($color) {
                     'slate' => 'ring-slate-950/5 dark:ring-white/10',
                     default
