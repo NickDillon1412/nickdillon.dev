@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
-use Masmerise\Toaster\Toaster;
 use GuzzleHttp\Promise\Promise;
 use Livewire\Attributes\Layout;
 use Illuminate\Http\Client\Pool;
@@ -13,6 +12,7 @@ use Livewire\Attributes\Computed;
 use App\Data\MovieVault\VaultData;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
+use Filament\Notifications\Notification;
 
 #[Layout('layouts.app')]
 class Explore extends Component
@@ -97,7 +97,10 @@ class Explore extends Component
 
             $page = $in_vault ? 'vault' : 'wishlist';
 
-            Toaster::error("{$name} is already in your {$page}");
+            Notification::make()
+                ->title("{$name} is already in your {$page}")
+                ->danger()
+                ->send();
         } else {
             $this->new_media = $media['media_type'] === 'movie'
                 ? [
@@ -128,7 +131,14 @@ class Explore extends Component
 
             $page = $wishlist ? 'wishlist' : 'vault';
 
-            Toaster::success("Successfully added {$media} to your {$page}");
+            Notification::make()
+                ->title(
+                    "Successfully added {$media} to your {$page}. 
+                    <a href='" . route('movie-vault.details', $user_vaults->latest()->first()->id) . "' class='text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400'>View details &rarr;</a>"
+                )
+                ->success()
+                ->seconds(10)
+                ->send();
         }
     }
 

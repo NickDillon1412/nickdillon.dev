@@ -9,6 +9,7 @@ use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Filament\Notifications\Notification;
 use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('layouts.app')]
@@ -22,14 +23,24 @@ class VaultDetails extends Component
     {
         $vault?->update(['on_wishlist' => false]);
 
-        return redirect(route('movie-vault.my-vault'))->success("Successfully added {$vault->title} to your vault");
+        Notification::make()
+            ->title("Successfully added {$vault->title} to your vault")
+            ->success()
+            ->send();
+
+        return redirect(route('movie-vault.my-vault'));
     }
 
     public function addToWishlist(Vault $vault): RedirectResponse|Redirector
     {
         $vault?->update(['on_wishlist' => true]);
 
-        return redirect(route('movie-vault.wishlist'))->success("Successfully added {$vault->title} to your wishlist");
+        Notification::make()
+            ->title("Successfully added {$vault->title} to your wishlist")
+            ->success()
+            ->send();
+
+        return redirect(route('movie-vault.wishlist'));
     }
 
     public function delete(Vault $vault): RedirectResponse|Redirector
@@ -38,11 +49,14 @@ class VaultDetails extends Component
 
         $route = $vault->on_wishlist ? 'wishlist' : 'my-vault';
 
-        $name = $vault->title;
+        Notification::make()
+            ->title("Successfully removed {$vault->title} from your {$page}")
+            ->success()
+            ->send();
 
         $vault?->delete();
 
-        return redirect(route("movie-vault.{$route}"))->success("Successfully removed {$name} from your {$page}");
+        return redirect(route("movie-vault.{$route}"));
     }
 
     public function render(): View

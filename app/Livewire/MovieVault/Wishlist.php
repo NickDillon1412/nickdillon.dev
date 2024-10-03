@@ -7,11 +7,11 @@ namespace App\Livewire\MovieVault;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
-use Masmerise\Toaster\Toaster;
 use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
 use App\Services\MovieVaultService;
 use Illuminate\Contracts\View\View;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 
 #[Layout('layouts.app')]
@@ -48,16 +48,20 @@ class Wishlist extends Component
     {
         $vault?->update(['on_wishlist' => false]);
 
-        $name = $vault->title ?? $vault->name;
-
-        Toaster::success("Successfully added {$name} to your vault");
+        Notification::make()
+            ->title("Successfully added {$vault->title} to your vault")
+            ->success()
+            ->send();
 
         $this->dispatch('close-modal');
     }
 
     public function delete(Vault $vault): void
     {
-        Toaster::success("Successfully removed {$vault->name} from your wishlist");
+        Notification::make()
+            ->title("Successfully removed {$vault->title} from your wishlist")
+            ->success()
+            ->send();
 
         $vault?->delete();
 
