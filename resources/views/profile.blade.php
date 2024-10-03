@@ -18,6 +18,12 @@
                     <livewire:profile.delete-user-form />
                 </div>
             </div>
+
+            <div class="p-8 bg-white rounded-lg shadow dark:bg-slate-800">
+                <div class="max-w-xl">
+                    <livewire:profile.github-auth />
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>
