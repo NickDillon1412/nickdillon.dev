@@ -58,18 +58,19 @@
                                 Rating:
                                 {{ $media['rating'] ?? 'None' }}
 
-                                @isset($media['imdb_id'])
+                                @if ($media['imdb_id'] !== '' ? $media['imdb_id'] : null)
                                     -
 
                                     <a class="text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
-                                        href="https://www.imdb.com/title/{{ $media['imdb_id'] }}/parentalguide" target="_blank">
+                                        href="https://www.imdb.com/title/{{ $media['imdb_id'] }}/parentalguide"
+                                        target="_blank">
                                         <span class="inline-flex items-center">
                                             View parental guide
 
                                             <x-heroicon-s-arrow-up-right class="w-3 h-3 ml-0.5" />
                                         </span>
                                     </a>
-                                @endisset
+                                @endif
                             </p>
 
                             @isset($media['runtime'])
