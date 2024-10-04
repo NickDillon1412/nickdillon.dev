@@ -22,7 +22,7 @@
     </div>
 
     <div
-        class="flex flex-col w-full mt-2 overflow-hidden bg-white border rounded-lg shadow sm:mt-4 md:flex-row border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
+        class="flex flex-col w-full mt-2 overflow-hidden bg-white border rounded-lg shadow-sm sm:mt-4 md:flex-row border-slate-200 dark:border-slate-700 dark:bg-slate-800 text-slate-800 dark:text-slate-100">
         <div class="relative w-full md:w-96 h-96 md:h-auto">
             <img class="absolute inset-0 object-cover w-full h-full"
                 src="{{ 'https://image.tmdb.org/t/p/w500/' . $vault->poster_path ?? $vault->backdrop_path . '?include_adult=false&language=en-US&page=1' }}"
