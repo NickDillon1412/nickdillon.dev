@@ -23,15 +23,19 @@
         </form>
 
         @if (request()->routeIs(['login', 'sign-up']))
-            <flux:separator text="or" class="my-8" />
+            <flux:separator text="or continue with" class="my-8" />
 
             <div class="flex items-center space-x-2">
                 <flux:button variant="outline" href="{{ route('auth.redirect', 'github') }}" class="w-full">
                     <x-bi-github class="w-5 h-5" />
+                    
+                    GitHub
                 </flux:button>
 
                 <flux:button variant="outline" href="{{ route('auth.redirect', 'google') }}" class="w-full">
                     <x-bi-google class="w-5 h-5" />
+                    
+                    Google
                 </flux:button>
             </div>
         @endif
