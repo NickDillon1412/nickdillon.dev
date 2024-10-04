@@ -65,7 +65,7 @@
                                         href="https://www.imdb.com/title/{{ $media['imdb_id'] }}/parentalguide"
                                         target="_blank">
                                         <span class="inline-flex items-center">
-                                            View parental guide
+                                            View parents guide
 
                                             <x-heroicon-s-arrow-up-right class="w-3 h-3 ml-0.5" />
                                         </span>
