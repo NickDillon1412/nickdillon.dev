@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
         ->group(function () {
             Route::get('my-vault', MyVault::class)->name('my-vault');
 
-            Route::get('explore', Explore::class)->name('explore');
+            Route::get('explore/{query?}', Explore::class)->name('explore');
 
             Route::get('{vault}/details', VaultDetails::class)->name('details');
 

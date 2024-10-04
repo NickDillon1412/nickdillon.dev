@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    @if (count(auth()->user()->vaults) > 0)
+    @if (count(auth()->user()->vaults->where('on_wishlist', false)) > 0)
         <div class="flex items-center mt-4 space-x-2">
             <div class="relative w-full">
                 <x-text-input id="search" wire:model.live.debounce.300ms='search'
@@ -184,10 +184,10 @@
             @empty
                 <div class="col-span-3 mx-auto mt-6 text-center">
                     <h1 class="text-lg font-semibold text-slate-500">
-                        Add movies or TV shows from the
+                        Search movies or TV shows from the
 
                         <a class="-mr-1 font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
-                            href="{{ route('movie-vault.explore') }}" wire:navigate>
+                            href="{{ route('movie-vault.explore', $search ?: null) }}" wire:navigate>
                             Explore page
                         </a>.
                     </h1>
