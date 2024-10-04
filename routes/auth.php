@@ -2,17 +2,17 @@
 
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Socialite\GitHubAuthController;
-
-Route::prefix('github')
-    ->name('github.')
-    ->group(function () {
-        Route::get('auth/redirect', [GitHubAuthController::class, 'create'])->name('redirect');
-
-        Route::get('auth/callback', [GitHubAuthController::class, 'store'])->name('callback');
-    });
+use App\Http\Controllers\SocialiteController;
 
 Route::middleware('guest')->group(function () {
+    Route::controller(SocialiteController::class)
+        ->name('auth.')
+        ->group(function () {
+            Route::get("{provider}/auth/redirect", 'create')->name('redirect');
+
+            Route::get('{provider}/auth/callback', 'store')->name('callback');
+        });
+
     Volt::route('sign-up', 'pages.auth.sign-up')
         ->name('sign-up');
 
