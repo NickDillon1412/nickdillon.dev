@@ -61,7 +61,6 @@ class Explore extends Component
         return collect($results)->map(
             function (array $result, int $index) use ($detail_requests): array {
                 $detail_response = $detail_requests[$index]->json();
-                // dd($detail_response);
 
                 $result['rating'] = $this->extractRating($result['media_type'], $detail_response);
 
@@ -108,7 +107,7 @@ class Explore extends Component
             $user_vaults->create(
                 VaultData::from([
                     'vault_id' => $media['id'],
-                    'imdb_id' => $media['imdb_id'] ?? null,
+                    'imdb_id' => $media['imdb_id'] !== '' ? $media['imdb_id'] : null,
                     'vault_type' => $media['media_type'],
                     'title' => $media['title'] ?? $media['name'],
                     'original_title' => $media['original_title'] ?? $media['original_name'],
