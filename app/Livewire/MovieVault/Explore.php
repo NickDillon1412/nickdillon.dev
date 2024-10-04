@@ -21,6 +21,11 @@ class Explore extends Component
 
     public array $search_results = [];
 
+    public function mount(?string $query = null): void
+    {
+        if ($query) $this->search = $query;
+    }
+
     protected function extractRating(string $media_type, array $detail_response): string
     {
         if ($media_type === 'movie') {
