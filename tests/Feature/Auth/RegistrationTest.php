@@ -29,8 +29,8 @@ test('new users can sign up', function () {
     $this->assertAuthenticated();
 });
 
-describe('Register Using Github', function () {
-    test('redirect to Github for authorization', function () {
+describe('Register Using OAuth Provider', function () {
+    test('redirect to github for authorization', function () {
         Socialite::shouldReceive('driver->redirect')->once();
 
         $this->get('github/auth/redirect');
@@ -68,57 +68,46 @@ describe('Register Using Github', function () {
 
     test('add Github credentials to existing account.', function () {
         // given I have a user
-        $user = User::factory()->create();
+        $user = User::factory()->create(['email' => 'test@example.com']);
 
-        // and that user is signed in
-        $this->actingAs($user);
-
-        $github_user = fakeGithubUser();
+        $github_user = fakeOAuthUser();
 
         // if they grant authorization to Github
-        $this->get('github/auth/callback');
+        $this->get('github/auth/callback')->assertRedirect(route('apps'));
+
+        $this->assertAuthenticated();
 
         // their user record should be updated with github_id credentials.
-        expect($user->refresh()->github_id)->toBe($github_user->getId());
+        expect($user->refresh()->provider_id)->toBe($github_user->getId());
 
-        expect($user->github_token)->toBe($github_user->token);
+        expect($user->provider_token)->toBe($github_user->token);
     });
 
     test('login existing account', function () {
-        $user = User::factory()->create(['github_id' => 'id123', 'github_token' => 'oldtoken123']);
+        $user = User::factory()->create(['provider_id' => 'id123', 'provider_token' => 'oldtoken123']);
 
-        $github_user = fakeGithubUser(['github_token' => 'newtoken123']);
+        $github_user = fakeOAuthUser(['provider_token' => 'newtoken123']);
 
         $this->get('github/auth/callback')->assertRedirect(route('apps'));
 
         $this->assertAuthenticated();
 
-        expect($user->refresh()->github_id)->toBe($github_user->getId());
+        expect($user->refresh()->provider_id)->toBe($github_user->getId());
 
-        expect($user->refresh()->github_token)->toBe($github_user->token);
-    });
-
-    test('existing account with same email address requires login.', function () {
-        User::factory()->create(['email' => 'test@example.com', 'github_id' => null]);
-
-        fakeGithubUser(['email' => 'test@example.com']);
-
-        $this->get('github/auth/callback')
-            ->assertInvalid(['email' => 'An account for this email already exists. Please login and visit your profile settings page to add Github authentication.'])
-            ->assertRedirect(route('sign-up'));
+        expect($user->refresh()->provider_token)->toBe($github_user->token);
     });
 });
 
-function fakeGithubUser(array $attributes = []): SocialiteUser
+function fakeOAuthUser(array $attributes = []): SocialiteUser
 {
-    $fake_github_user = (new SocialiteUser)->map(attributes: array_merge([
+    $fake_provider_user = (new SocialiteUser)->map(attributes: array_merge([
         'id' => 'id123',
         'name' => 'Test User',
         'email' => 'test@example.com',
         'token' => 'newtoken123',
     ], $attributes));
 
-    Socialite::shouldReceive('driver->user')->once()->andReturn($fake_github_user);
+    Socialite::shouldReceive('driver->user')->once()->andReturn($fake_provider_user);
 
-    return $fake_github_user;
+    return $fake_provider_user;
 }
