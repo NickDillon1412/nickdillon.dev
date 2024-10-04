@@ -28,14 +28,14 @@
             <div class="flex items-center space-x-2">
                 <flux:button variant="outline" href="{{ route('auth.redirect', 'github') }}" class="w-full">
                     <x-bi-github class="w-5 h-5" />
-                    
-                    GitHub
                 </flux:button>
 
                 <flux:button variant="outline" href="{{ route('auth.redirect', 'google') }}" class="w-full">
                     <x-bi-google class="w-5 h-5" />
-                    
-                    Google
+                </flux:button>
+
+                <flux:button variant="outline" href="{{ route('auth.redirect', 'twitter') }}" class="w-full">
+                    <x-fab-x-twitter class="w-5 h-5" />
                 </flux:button>
             </div>
         @endif
