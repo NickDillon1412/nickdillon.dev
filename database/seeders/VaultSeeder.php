@@ -23,17 +23,17 @@ class VaultSeeder extends Seeder
 
             return $pool->as($vault['vault_id'])
                 ->withToken(config('services.movie-api.token'))
-                ->get("https://api.themoviedb.org/3/{$endpoint}/{$vault['vault_id']}?append_to_response={$append_response}");
+                ->get("https://api.themoviedb.org/3/{$endpoint}/{$vault['vault_id']}?append_to_response={$append_response},external_ids");
         }));
 
         foreach ($vaults as $vault) {
             $response = $responses[$vault['vault_id']]->json();
 
-            if (isset($response['genres'])) {
-                $response['genres'] = implode(',', collect($response['genres'])->pluck('name')->toArray());
+            if (isset($detail_response['external_ids'])) {
+                $result['imdb_id'] = $detail_response['external_ids']['imdb_id'];
             }
 
-            $vault->update(['genres' => $response['genres'] ?? 'None']);
+            $vault->update(['imdb_id' => $response['imdb_id'] ?? null]);
         }
     }
 }

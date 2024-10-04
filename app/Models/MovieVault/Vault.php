@@ -14,6 +14,7 @@ class Vault extends Model
     protected $fillable = [
         'user_id',
         'vault_id',
+        'imdb_id',
         'vault_type',
         'title',
         'original_title',

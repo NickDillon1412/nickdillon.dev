@@ -14,6 +14,7 @@ class VaultData extends Data implements Wireable
 
     public function __construct(
         public int $vault_id,
+        public ?string $imdb_id,
         public string $vault_type,
         public ?string $title,
         public ?string $original_title,
