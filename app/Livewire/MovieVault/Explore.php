@@ -21,8 +21,6 @@ class Explore extends Component
 
     public array $search_results = [];
 
-    public array $new_media = [];
-
     protected function extractRating(string $media_type, array $detail_response): string
     {
         if ($media_type === 'movie') {
@@ -55,7 +53,7 @@ class Explore extends Component
                     $append_response = $result['media_type'] === 'movie' ? 'release_dates' : 'content_ratings';
 
                     return $pool->withToken(config('services.movie-api.token'))
-                        ->get("https://api.themoviedb.org/3/{$endpoint}/{$result['id']}?append_to_response={$append_response},credits");
+                        ->get("https://api.themoviedb.org/3/{$endpoint}/{$result['id']}?append_to_response={$append_response},credits,external_ids");
                 })->toArray();
             }
         );
@@ -63,6 +61,7 @@ class Explore extends Component
         return collect($results)->map(
             function (array $result, int $index) use ($detail_requests): array {
                 $detail_response = $detail_requests[$index]->json();
+                // dd($detail_response);
 
                 $result['rating'] = $this->extractRating($result['media_type'], $detail_response);
 
@@ -81,6 +80,10 @@ class Explore extends Component
                         ->pluck('name')
                         ->take(3)
                         ->implode(',');
+                }
+
+                if (isset($detail_response['external_ids'])) {
+                    $result['imdb_id'] = $detail_response['external_ids']['imdb_id'];
                 }
 
                 return $result;
@@ -102,32 +105,28 @@ class Explore extends Component
                 ->danger()
                 ->send();
         } else {
-            $this->new_media = $media['media_type'] === 'movie'
-                ? [
-                    'release_date' => $media['release_date'],
-                ]
-                : [
-                    'first_air_date' => $media['first_air_date'],
-                ];
-
-            $this->new_media['title'] = $media['title'] ?? $media['name'];
-            $this->new_media['original_title'] = $media['original_title'] ?? $media['original_name'];
-            $this->new_media['poster_path'] = $media['poster_path'] ?? $media['backdrop_path'] ?? null;
-            $this->new_media['vault_id'] = $media['id'];
-            $this->new_media['vault_type'] = $media['media_type'];
-            $this->new_media['overview'] = $media['overview'];
-            $this->new_media['rating'] = $media['rating'] ?: 'None';
-            $this->new_media['genres'] = $media['genres'] ?: 'None';
-            $this->new_media['runtime'] = $media['runtime'] ?? null;
-            $this->new_media['seasons'] = $media['number_of_seasons'] ?? null;
-            $this->new_media['actors'] = $media['actors'] ?: 'None';
-            $this->new_media['on_wishlist'] = $wishlist ? true : false;
-
             $user_vaults->create(
-                VaultData::from($this->new_media)->toArray()
+                VaultData::from([
+                    'vault_id' => $media['id'],
+                    'imdb_id' => $media['imdb_id'] ?? null,
+                    'vault_type' => $media['media_type'],
+                    'title' => $media['title'] ?? $media['name'],
+                    'original_title' => $media['original_title'] ?? $media['original_name'],
+                    'overview' => $media['overview'],
+                    'backdrop_path' => $media['backdrop_path'] ?? null,
+                    'poster_path' => $media['poster_path'] ?? null,
+                    'release_date' => $media['release_date'] ?? null,
+                    'first_air_date' => $media['first_air_date'] ?? null,
+                    'rating' => $media['rating'] ?: 'None',
+                    'genres' => $media['genres'] ?: 'None',
+                    'runtime' => $media['runtime'] ?? null,
+                    'seasons' => $media['number_of_seasons'] ?? null,
+                    'actors' => $media['actors'] ?: 'None',
+                    'on_wishlist' => $wishlist ? true : false,
+                ])->toArray()
             );
 
-            $media = $this->new_media['title'] ?? $this->new_media['name'];
+            $media = $media['title'] ?? $media['name'];
 
             $page = $wishlist ? 'wishlist' : 'vault';
 

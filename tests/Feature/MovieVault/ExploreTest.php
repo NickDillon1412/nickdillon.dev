@@ -80,6 +80,9 @@ it('can save new movie', function () {
                             'name' => 'Actor'
                         ]
                     ]
+                ],
+                'external_ids' => [
+                    'imdb_id' => '1234'
                 ]
             ]
         ], 200)
@@ -95,6 +98,7 @@ it('can save new movie', function () {
         ->call('save', [
             'backdrop_path' => '/xJHokMbljvjADYdit5fK5VQsXEG.jpg',
             'id' => 157336,
+            'imdb_id' => '1234',
             'title' => 'Interstellar',
             'original_title' => 'Interstellar',
             'overview' => 'Interstellar',
@@ -172,6 +176,9 @@ it('can save new tv show', function () {
                             'name' => 'Actor'
                         ]
                     ]
+                ],
+                'external_ids' => [
+                    'imdb_id' => '1234'
                 ]
             ]
         ], 200)
@@ -187,6 +194,7 @@ it('can save new tv show', function () {
         ->call('save', [
             'backdrop_path' => '/xJHokMbljvjADYdit5fK5VQsXEG.jpg',
             'id' => 1573367,
+            'imdb_id' => '1234',
             'name' => 'Suits',
             'original_name' => 'Suits',
             'overview' => 'Suits',

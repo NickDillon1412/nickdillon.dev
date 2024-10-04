@@ -20,6 +20,7 @@ class VaultFactory extends Factory
         return [
             'user_id' => 1,
             'vault_id' => 1234,
+            'imdb_id' => 'tt0108037',
             'vault_type' => 'movie',
             'title' => 'Movie Title',
             'original_title' => 'Movie Title',
