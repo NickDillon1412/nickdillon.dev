@@ -31,7 +31,8 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                         </button>
                     
                         <button type="button" wire:click="previousPage('{{ $paginator->getPageName() }}')" x-on:click="{{ $scrollIntoViewJsSnippet }}" wire:loading.attr="disabled" dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}.before" class="relative inline-flex items-center p-2 text-sm font-medium leading-5 transition duration-150 ease-in-out bg-white border rounded-md text-slate-700 border-slate-200 hover:text-indigo-500 dark:text-slate-300 hover:bg-indigo-50 dark:border-slate-600 dark:hover:bg-slate-700 dark:bg-slate-800">
-                            <x-ri-arrow-left-s-line class="w-5 h-5" />
+
+                            <x-ri-arrow-left-double-fill class="w-5 h-5" />
                         </button>
                     @endif
                 </span>
@@ -54,7 +55,7 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                             <x-ri-arrow-right-double-fill class="w-5 h-5" />
                         </button>
                     @else
-                        <span class="relative inline-flex items-center p-2 ml-3 text-sm font-medium leading-5 bg-white border rounded-md cursor-default text-slate-500 border-slate-200 dark:text-slate-600 dark:bg-slate-800 dark:border-slate-600">
+                        <span class="relative inline-flex items-center p-2 text-sm font-medium leading-5 bg-white border rounded-md cursor-default text-slate-500 border-slate-200 dark:bg-slate-800 dark:border-slate-600 dark:focus:border-indigo-700 dark:active:bg-slate-700 dark:active:text-slate-300">
                             <x-ri-arrow-right-s-line class="w-5 h-5" />
                         </span>
 
