@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\MovieVault;
 
 use Livewire\Component;
+use Livewire\Attributes\Lazy;
 use GuzzleHttp\Promise\Promise;
 use Livewire\Attributes\Layout;
 use Illuminate\Http\Client\Pool;
@@ -14,7 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
 
-#[Layout('layouts.app')]
+#[Layout('layouts.app'), Lazy]
 class Explore extends Component
 {
     public string $search = '';
@@ -143,6 +144,15 @@ class Explore extends Component
                 ->seconds(10)
                 ->send();
         }
+    }
+
+    public function placeholder(): string
+    {
+        return <<<'HTML'
+            <div class="flex items-center justify-center py-16">
+                <x-large-loading-spinner />
+            </div>
+        HTML;
     }
 
     public function render(): View
