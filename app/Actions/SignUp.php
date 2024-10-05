@@ -25,9 +25,7 @@ class SignUp
 			'provider_token' => [new RequiredIf(isset($attributes['provider_id'])), 'max:255'],
 		]);
 
-		if ($validator->fails()) {
-			return redirect(route('sign-up'))->withErrors($validator);
-		}
+		if ($validator->fails()) return redirect(route('sign-up'))->withErrors($validator);
 
 		$user = User::create([
 			'name' => $attributes['name'],
