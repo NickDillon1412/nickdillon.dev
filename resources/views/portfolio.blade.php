@@ -1,15 +1,15 @@
 <x-app-layout>
-    <div>
-        <x-portfolio.header />
+    <x-snowfall />
 
-        <x-portfolio.intro />
+    <x-portfolio.header />
 
-        @livewire('portfolio.work')
+    <x-portfolio.intro />
 
-        @livewire('portfolio.technologies')
+    @livewire('portfolio.work')
 
-        @livewire('portfolio.projects')
+    @livewire('portfolio.technologies')
 
-        <x-portfolio.footer />
-    </div>
+    @livewire('portfolio.projects')
+
+    <x-portfolio.footer />
 </x-app-layout>
