@@ -3,10 +3,11 @@
 declare(strict_types=1);
 
 use App\Models\User;
-use function Pest\Laravel\actingAs;
+use Livewire\Livewire;
 
-use App\Livewire\MovieVault\Explore;
+use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
+use App\Livewire\MovieVault\Explore;
 use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
@@ -15,6 +16,8 @@ beforeEach(function () {
             ->hasVaults(1)
             ->create()
     );
+
+    Livewire::withoutLazyLoading();
 });
 
 it('can save new movie', function () {
@@ -216,6 +219,12 @@ it('can show popup alert when record already exists in vault', function () {
             'id' => 1234,
             'title' => 'Test Movie',
         ])
+        ->assertHasNoErrors();
+});
+
+it('can pass in and set search term', function () {
+    livewire(Explore::class, ['query' => 'Toy Story'])
+        ->assertSet('search', 'Toy Story')
         ->assertHasNoErrors();
 });
 
