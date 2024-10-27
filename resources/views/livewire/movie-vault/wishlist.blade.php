@@ -57,7 +57,8 @@
         <div class="grid grid-cols-1 gap-4 pt-4 sm:grid-cols-2 lg:grid-cols-3">
             @forelse ($wishlist_records as $vault)
                 <x-mary-card shadow
-                    class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50">
+                    class="duration-200 ease-in-out border text-slate-800 dark:bg-slate-800 border-slate-200 dark:border-slate-700 bg-slate-50 dark:text-slate-50"
+                    wire:key='{{ $vault->id }}'>
                     <div class="-mx-1 -my-3">
                         <h1 class="text-xl font-bold truncate whitespace-nowrap">
                             {{ $vault->original_title }}
