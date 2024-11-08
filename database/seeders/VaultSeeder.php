@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\MovieVault\Vault;
+use Illuminate\Database\Seeder;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Support\Facades\Http;
 
@@ -16,7 +16,7 @@ class VaultSeeder extends Seeder
     {
         $vaults = Vault::get();
 
-        $responses = Http::pool(fn(Pool $pool) => $vaults->map(function (Vault $vault) use ($pool) {
+        $responses = Http::pool(fn (Pool $pool) => $vaults->map(function (Vault $vault) use ($pool) {
             $endpoint = $vault['vault_type'] === 'movie' ? 'movie' : 'tv';
 
             $append_response = $vault['vault_type'] === 'movie' ? 'release_dates' : 'content_ratings';

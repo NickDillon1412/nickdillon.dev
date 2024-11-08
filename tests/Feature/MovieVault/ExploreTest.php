@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Livewire\MovieVault\Explore;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
-use App\Livewire\MovieVault\Explore;
-use Illuminate\Support\Facades\Http;
 
 beforeEach(function () {
     actingAs(
@@ -22,77 +22,77 @@ beforeEach(function () {
 
 it('can save new movie', function () {
     Http::fake([
-        "https://api.themoviedb.org/3/search/multi*" => Http::response([
+        'https://api.themoviedb.org/3/search/multi*' => Http::response([
             'results' => [
                 [
-                    "backdrop_path" => "/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg",
-                    "id" => 11528,
-                    "title" => "The Sandlot",
-                    "original_title" => "The Sandlot",
-                    "overview" => "During a summer of friendship and adventure, one boy becomes a part of the gang, nine boys become a team and their leader becomes a legend by confronting the team",
-                    "poster_path" => "/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg",
-                    "media_type" => "movie",
-                    "adult" => false,
-                    "original_language" => "en",
-                    "release_date" => "1993-04-07",
-                ]
-            ]
-        ], 200)
+                    'backdrop_path' => '/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg',
+                    'id' => 11528,
+                    'title' => 'The Sandlot',
+                    'original_title' => 'The Sandlot',
+                    'overview' => 'During a summer of friendship and adventure, one boy becomes a part of the gang, nine boys become a team and their leader becomes a legend by confronting the team',
+                    'poster_path' => '/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg',
+                    'media_type' => 'movie',
+                    'adult' => false,
+                    'original_language' => 'en',
+                    'release_date' => '1993-04-07',
+                ],
+            ],
+        ], 200),
     ]);
 
     Http::fake([
-        "https://api.themoviedb.org/3/movie/*",
+        'https://api.themoviedb.org/3/movie/*',
         Http::response([
             [
-                "backdrop_path" => "/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg",
-                "id" => 1234,
-                "title" => "The Sandlot",
-                "original_title" => "The Sandlot",
-                "overview" => "During a summer of friendship and adventure, one boy becomes a part of the gang, nine boys become a team and their leader becomes a legend by confronting the team",
-                "poster_path" => "/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg",
-                "media_type" => "movie",
-                "adult" => false,
-                "original_language" => "en",
-                "release_date" => "1993-04-07",
+                'backdrop_path' => '/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg',
+                'id' => 1234,
+                'title' => 'The Sandlot',
+                'original_title' => 'The Sandlot',
+                'overview' => 'During a summer of friendship and adventure, one boy becomes a part of the gang, nine boys become a team and their leader becomes a legend by confronting the team',
+                'poster_path' => '/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg',
+                'media_type' => 'movie',
+                'adult' => false,
+                'original_language' => 'en',
+                'release_date' => '1993-04-07',
                 'release_dates' => [
                     'results' => [
                         [
                             'iso_3166_1' => 'US',
                             'release_dates' => [
                                 [
-                                    'certification' => 'PG'
-                                ]
-                            ]
-                        ]
-                    ]
+                                    'certification' => 'PG',
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
                 'genres' => [
                     [
                         'id' => 1,
-                        'name' => 'Family'
+                        'name' => 'Family',
                     ],
                     [
                         'id' => 2,
-                        'name' => 'Comedy'
-                    ]
+                        'name' => 'Comedy',
+                    ],
                 ],
                 'runtime' => 101,
                 'credits' => [
                     'cast' => [
                         [
-                            'name' => 'Actor'
-                        ]
-                    ]
+                            'name' => 'Actor',
+                        ],
+                    ],
                 ],
                 'external_ids' => [
-                    'imdb_id' => '1234'
-                ]
-            ]
-        ], 200)
+                    'imdb_id' => '1234',
+                ],
+            ],
+        ], 200),
     ]);
 
     Http::withToken('test-key')
-        ->get("https://api.themoviedb.org/3/movie/*", [
+        ->get('https://api.themoviedb.org/3/movie/*', [
             'append_to_response' => 'release_dates',
         ]);
 
@@ -111,7 +111,7 @@ it('can save new movie', function () {
             'rating' => 'PG',
             'genres' => 'Drama,Space',
             'runtime' => 101,
-            'actors' =>  'Actor'
+            'actors' => 'Actor',
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();
@@ -119,76 +119,76 @@ it('can save new movie', function () {
 
 it('can save new tv show', function () {
     Http::fake([
-        "https://api.themoviedb.org/3/search/multi*" => Http::response([
+        'https://api.themoviedb.org/3/search/multi*' => Http::response([
             'results' => [
                 [
-                    "backdrop_path" => "/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg",
-                    "id" => 11528,
-                    "name" => "Psych",
-                    "original_name" => "Psych",
-                    "overview" => "Thanks to his police officer father's efforts, Shawn Spencer spent his childhood developing a keen eye for detail (and a lasting dislike of his dad). Years late",
-                    "poster_path" => "/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg",
-                    "media_type" => "tv",
-                    "adult" => false,
-                    "original_language" => "en",
-                    "first_air_date" => "2014-03-26",
-                ]
-            ]
-        ], 200)
+                    'backdrop_path' => '/wjxyKpUAZu6OVbKx9krhgI9KMl2.jpg',
+                    'id' => 11528,
+                    'name' => 'Psych',
+                    'original_name' => 'Psych',
+                    'overview' => "Thanks to his police officer father's efforts, Shawn Spencer spent his childhood developing a keen eye for detail (and a lasting dislike of his dad). Years late",
+                    'poster_path' => '/7PYqz0viEuW8qTvuGinUMjDWMnj.jpg',
+                    'media_type' => 'tv',
+                    'adult' => false,
+                    'original_language' => 'en',
+                    'first_air_date' => '2014-03-26',
+                ],
+            ],
+        ], 200),
     ]);
 
     Http::withToken('test-key')
-        ->get("https://api.themoviedb.org/3/search/multi*");
+        ->get('https://api.themoviedb.org/3/search/multi*');
 
     Http::fake([
-        "https://api.themoviedb.org/3/tv/*",
+        'https://api.themoviedb.org/3/tv/*',
         Http::response([
             [
-                "backdrop_path" => "/zHA6kd8INvqMfGR9vDrn1GATKxs.jpg",
-                "id" => 1234,
-                "name" => "Psych",
-                "original_name" => "Psych",
-                "overview" => "Thanks to his police officer father's efforts, Shawn Spencer spent his childhood developing a keen eye for detail (and a lasting dislike of his dad). Years late",
-                "poster_path" => "/fDI15gTVbtW5Sbv5QenqecRxWKJ.jpg",
-                "media_type" => "tv",
-                "adult" => false,
-                "original_language" => "en",
-                "first_air_date" => "2014-03-26",
+                'backdrop_path' => '/zHA6kd8INvqMfGR9vDrn1GATKxs.jpg',
+                'id' => 1234,
+                'name' => 'Psych',
+                'original_name' => 'Psych',
+                'overview' => "Thanks to his police officer father's efforts, Shawn Spencer spent his childhood developing a keen eye for detail (and a lasting dislike of his dad). Years late",
+                'poster_path' => '/fDI15gTVbtW5Sbv5QenqecRxWKJ.jpg',
+                'media_type' => 'tv',
+                'adult' => false,
+                'original_language' => 'en',
+                'first_air_date' => '2014-03-26',
                 'content_ratings' => [
                     'results' => [
                         [
                             'iso_3166_1' => 'US',
-                            'rating' => 'TV-PG'
-                        ]
-                    ]
+                            'rating' => 'TV-PG',
+                        ],
+                    ],
                 ],
                 'genres' => [
                     [
                         'id' => 1,
-                        'name' => 'Family'
+                        'name' => 'Family',
                     ],
                     [
                         'id' => 2,
-                        'name' => 'Comedy'
-                    ]
+                        'name' => 'Comedy',
+                    ],
                 ],
                 'seasons' => 8,
                 'credits' => [
                     'cast' => [
                         [
-                            'name' => 'Actor'
-                        ]
-                    ]
+                            'name' => 'Actor',
+                        ],
+                    ],
                 ],
                 'external_ids' => [
-                    'imdb_id' => '1234'
-                ]
-            ]
-        ], 200)
+                    'imdb_id' => '1234',
+                ],
+            ],
+        ], 200),
     ]);
 
     Http::withToken('test-key')
-        ->get("https://api.themoviedb.org/3/tv/*", [
+        ->get('https://api.themoviedb.org/3/tv/*', [
             'append_to_response' => 'content_ratings',
         ]);
 
@@ -207,7 +207,7 @@ it('can save new tv show', function () {
             'rating' => 'TV-PG',
             'genres' => 'Drama,Comedy',
             'seasons' => 8,
-            'actors' => "Actor"
+            'actors' => 'Actor',
         ])
         ->assertNoRedirect()
         ->assertHasNoErrors();
