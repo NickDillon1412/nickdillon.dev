@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Livewire\Volt\Volt;
 use App\Mail\ContactForm;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Volt\Volt;
 
 it('can fill out form and send email', function () {
     Mail::fake();

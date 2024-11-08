@@ -2,9 +2,9 @@
 
 use App\Livewire\MovieVault\Explore;
 use App\Livewire\MovieVault\MyVault;
+use App\Livewire\MovieVault\VaultDetails;
 use App\Livewire\MovieVault\Wishlist;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\MovieVault\VaultDetails;
 
 Route::view('/', 'portfolio')->name('portfolio');
 
@@ -27,4 +27,4 @@ Route::middleware(['auth'])->group(function () {
         });
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Actions\SignUp;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteController extends Controller
 {
@@ -39,7 +39,7 @@ class SocialiteController extends Controller
             'email' => $socialite_user->getEmail(),
             'provider' => $provider,
             'provider_id' => $socialite_user->getId(),
-            'provider_token' => $socialite_user->token
+            'provider_token' => $socialite_user->token,
         ]);
     }
 

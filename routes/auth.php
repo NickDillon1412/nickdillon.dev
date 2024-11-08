@@ -1,14 +1,14 @@
 <?php
 
-use Livewire\Volt\Volt;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
     Route::controller(SocialiteController::class)
         ->name('auth.')
         ->group(function () {
-            Route::get("{provider}/auth/redirect", 'create')->name('redirect');
+            Route::get('{provider}/auth/redirect', 'create')->name('redirect');
 
             Route::get('{provider}/auth/callback', 'store')->name('callback');
         });
