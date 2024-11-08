@@ -19,7 +19,7 @@ class SignUp
 		$validator = Validator::make($attributes, [
 			'name' => ['required', 'string', 'max:255'],
 			'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-			'password' => [new RequiredIf(!isset($attributes['provider_id'])), 'confirmed', Password::defaults()],
+			'password' => [new RequiredIf(! isset($attributes['provider_id'])), 'confirmed', Password::defaults()],
 			'provider' => ['string'],
 			'provider_id' => ['max:255'],
 			'provider_token' => [new RequiredIf(isset($attributes['provider_id'])), 'max:255'],
