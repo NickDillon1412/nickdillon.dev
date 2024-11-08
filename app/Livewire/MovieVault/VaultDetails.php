@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
-use Livewire\Component;
-use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Filament\Notifications\Notification;
+use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('layouts.app')]

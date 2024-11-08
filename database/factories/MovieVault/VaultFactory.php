@@ -26,7 +26,7 @@ class VaultFactory extends Factory
             'original_title' => 'Movie Title',
             'overview' => 'Movie Overview',
             'backdrop_path' => '',
-            'poster_path' => '/' . Str::uuid(),
+            'poster_path' => '/'.Str::uuid(),
             'release_date' => '2024-07-27',
             'first_air_date' => '',
             'rating' => 'PG',

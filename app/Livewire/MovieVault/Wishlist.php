@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
-use Livewire\Component;
-use Livewire\Attributes\On;
-use Livewire\WithPagination;
-use Livewire\Attributes\Layout;
 use App\Models\MovieVault\Vault;
 use App\Services\MovieVaultService;
-use Illuminate\Contracts\View\View;
 use Filament\Notifications\Notification;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class Wishlist extends Component
