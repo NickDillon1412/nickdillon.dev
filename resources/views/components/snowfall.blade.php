@@ -33,7 +33,7 @@
 
             init() {
                 const today = new Date();
-                const start = new Date(today.getFullYear(), 11, 1);
+                const start = new Date(today.getFullYear(), 10, 29);
                 const end = new Date(today.getFullYear(), 11, 25);
 
                 this.isChristmasSeason = today >= start && today <= end;
