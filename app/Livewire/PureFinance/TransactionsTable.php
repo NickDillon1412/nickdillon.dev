@@ -21,7 +21,14 @@ class TransactionsTable extends Component
 
     public string $search = '';
 
+    public string $status = 'all';
+
     public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedStatus(): void
     {
         $this->resetPage();
     }
@@ -30,7 +37,10 @@ class TransactionsTable extends Component
     {
         return $transactions
             ->with(['account:id,name', 'category:id,name'])
-            ->when(strlen($this->search) >= 1, function (Builder $query) {
+            ->when($this->status !== 'all', function (Builder $query): void {
+                $query->where('status', $this->status === 'cleared' ? true : false);
+            })
+            ->when(strlen($this->search) >= 1, function (Builder $query): void {
                 $query->where(function (Builder $query) {
                     $query->whereRelation('category', 'name', 'like', "%{$this->search}%")
                         ->orWhere('description', 'like', "%{$this->search}%")
