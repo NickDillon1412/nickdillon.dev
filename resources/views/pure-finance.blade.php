@@ -8,7 +8,7 @@
                 Pure Finance
             </h1>
 
-            <div class="flex justify-center mt-4">
+            <div x-cloak class="flex justify-center mt-4">
                 <div
                     class="relative p-[3px] border rounded-lg bg-slate-200/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 w-fit">
                     <div class="absolute w-32 h-[30px] transition-all duration-300 bg-white dark:bg-slate-700 rounded-md shadow top-[3px] left-[3px]"
@@ -42,7 +42,7 @@
             </div>
 
             <div x-cloak x-show="activeTab === 'transactions'">
-                @livewire('pure-finance.transactions')
+                @livewire('pure-finance.transactions-table')
             </div>
         </div>
     </div>
