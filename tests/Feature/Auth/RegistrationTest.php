@@ -19,8 +19,8 @@ test('new users can sign up', function () {
     $component = Volt::test('pages.auth.sign-up')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')
-        ->set('password', 'password')
-        ->set('password_confirmation', 'password');
+        ->set('password', 'Password')
+        ->set('password_confirmation', 'Password');
 
     $component->call('signup');
 
