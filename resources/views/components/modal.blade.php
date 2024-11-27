@@ -21,22 +21,22 @@
             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             x-on:close-modal.window="modalOpen = false"
             class="relative w-10/12 py-6 bg-white border rounded-lg dark:bg-slate-800 sm:w-full px-7 sm:max-w-lg border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between pb-4">
+            <div class="flex items-center justify-between px-2 pb-4">
                 <div class="flex items-center space-x-2">
                     <flux:icon icon="{{ $icon }}" variant="outline" @class([
                         'stroke-indigo-500' => $attributes->has('info'),
                         'stroke-red-500' => $attributes->has('delete'),
                         'stroke-pink-500' => $attributes->has('contact'),
-                        '!h-8 !w-8',
+                        '!h-8 !w-8 -m-3',
                     ]) />
 
-                    <h3 class="text-lg font-semibold">
+                    <h3 class="pl-2.5 text-lg font-semibold">
                         {{ $title }}
                     </h3>
                 </div>
 
                 <flux:button icon="x-mark" x-on:click="modalOpen = false"
-                    class="!h-8 !w-8 !border-none hover:!bg-slate-200 dark:hover:!bg-slate-700 !shadow-none" />
+                    class="!h-8 !w-8 !-mr-4 !border-none hover:!bg-slate-200 dark:hover:!bg-slate-700 !shadow-none" />
             </div>
 
             <form {{ $attributes->whereStartsWith('wire:submit') }}>
@@ -49,7 +49,13 @@
                         </flux:button>
 
                         <flux:button variant="{{ $variant }}" class="!px-5" type="submit">
-                            {{ $attributes->has('contact') ? 'Send' : 'Confirm' }}
+                            @if (request()->routeIs('pure-finance.*'))
+                                Submit
+                            @elseif ($attributes->has('contact'))
+                                Send
+                            @else
+                                Confirm
+                            @endif
                         </flux:button>
                     </div>
                 </div>
