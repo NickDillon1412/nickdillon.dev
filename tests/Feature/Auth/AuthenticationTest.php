@@ -16,7 +16,7 @@ test('users can authenticate using the login screen', function () {
 
     $component = Volt::test('pages.auth.login')
         ->set('form.email', $user->email)
-        ->set('form.password', 'password');
+        ->set('form.password', 'Password');
 
     $component->call('login');
 
