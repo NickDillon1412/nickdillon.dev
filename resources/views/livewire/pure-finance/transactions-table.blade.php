@@ -1,12 +1,4 @@
-<div class="flex flex-col pt-5" x-data="{
-    tabs: ['all', 'cleared', 'pending'],
-    activeTab: $wire.entangle('status'),
-    transactionCounts: {
-        all: '{{ $transactions->count() }}',
-        cleared: '{{ $transactions->where('status', true)->count() }}',
-        pending: '{{ $transactions->where('status', false)->count() }}'
-    }
-}">
+<div class="flex flex-col pt-5">
     <div
         class="bg-white border divide-y rounded-lg shadow-sm border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-700">
         <div class="flex items-center justify-between px-5 py-3">
@@ -44,74 +36,55 @@
                 </div>
             </div>
 
-            <div x-cloak class="flex justify-center">
-                <div
-                    class="relative p-[3px] border rounded-lg bg-slate-200/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 w-fit">
-                    <div class="absolute w-24 h-[28px] transition-all duration-300 bg-white dark:bg-slate-700 rounded-md shadow top-[3px] left-[3px]"
-                        :style="'transform: translateX(' + (activeTab === 'all' ? '0%' : activeTab === 'cleared' ?
-                            '100%' :
-                            activeTab === 'pending' ? '200%' : '300%') + ')'">
-                    </div>
-
-                    <div class="relative z-10 flex gap-0">
-                        <template x-for="(tab, index) in tabs" :key="index">
-                            <button x-on:click="$wire.set('status', tab)"
-                                class="w-24 h-[28px] text-sm font-medium transition rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 focus:outline-none duration-200 ease-in-out flex items-center text-center justify-center"
-                                :class="activeTab === tab ? 'text-slate-800 dark:text-white' : ''">
-                                <span x-text="tab.charAt(0).toUpperCase() + tab.slice(1)"></span>
-
-                                <span class="ml-1.5 text-slate-400" x-text="transactionCounts[tab]"></span>
-                            </button>
-                        </template>
-                    </div>
-                </div>
-            </div>
+            <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
         </div>
 
         <div class="overflow-x-auto">
             <table class="w-full divide-y table-auto divide-slate-200 dark:divide-slate-700">
                 <thead class="bg-slate-100/75 dark:bg-slate-700">
                     <tr>
-                        {{-- <th scope="col" class="px-4 py-3 pe-0">
-                                <div class="flex items-center h-4">
-                                    <input id="hs-table-search-checkbox-all" type="checkbox"
-                                        class="text-indigo-600 rounded border-slate-200 focus:ring-indigo-500 dark:bg-slate-700 dark:border-slate-500 dark:checked:bg-indigo-500 dark:checked:border-indigo-500 dark:focus:ring-offset-slate-800" />
-                                    <label for="hs-table-search-checkbox-all" class="sr-only">
-                                        Checkbox
-                                    </label>
-                                </div>
-                            </th> --}}
-
                         @unless ($account)
                             <th scope="col"
                                 class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                                Account
+                                <x-sortable-column column="account" :$sort_col :$sort_asc>
+                                    Account
+                                </x-sortable-column>
                             </th>
                         @endunless
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                            Category
+                            <x-sortable-column column="category" :$sort_col :$sort_asc>
+                                Category
+                            </x-sortable-column>
                         </th>
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                            Amount
+                            <x-sortable-column column="amount" :$sort_col :$sort_asc>
+                                Amount
+                            </x-sortable-column>
                         </th>
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                            Description
+                            <x-sortable-column column="description" :$sort_col :$sort_asc>
+                                Description
+                            </x-sortable-column>
                         </th>
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                            Date
+                            <x-sortable-column column="date" :$sort_col :$sort_asc>
+                                Date
+                            </x-sortable-column>
                         </th>
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
-                            Status
+                            <x-sortable-column column="status" :$sort_col :$sort_asc>
+                                Status
+                            </x-sortable-column>
                         </th>
 
                         <th scope="col"
@@ -124,16 +97,6 @@
                 <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
                     @forelse ($transactions as $transaction)
                         <tr>
-                            {{-- <td class="py-3 ps-4">
-                                    <div class="flex items-center h-5">
-                                        <input id="hs-table-search-checkbox-1" type="checkbox"
-                                            class="text-indigo-600 rounded border-slate-200 focus:ring-indigo-500 dark:bg-slate-800 dark:border-slate-700 dark:checked:bg-indigo-500 dark:checked:border-indigo-500 dark:focus:ring-offset-slate-800" />
-                                        <label for="hs-table-search-checkbox-1" class="sr-only">
-                                            Checkbox
-                                        </label>
-                                    </div>
-                                </td> --}}
-
                             @unless ($account)
                                 <td
                                     class="px-6 py-4 text-sm font-medium text-slate-800 whitespace-nowrap dark:text-slate-200">
