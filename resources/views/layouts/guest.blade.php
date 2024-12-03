@@ -23,7 +23,7 @@
 <body class="font-sans antialiased text-gray-900">
     <div class="fixed top-2 right-2 bg-gray-50 sm:right-5 sm:top-5 dark:bg-gray-900">
         <x-mary-theme-toggle
-            class="transition-all duration-200 ease-in-out btn btn-circle btn-ghost hover:text-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:hover:text-slate-200" />
+            class="p-3 transition-all duration-200 ease-in-out rounded-full btn-ghost hover:text-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:hover:text-slate-200" />
     </div>
 
     <div class="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
