@@ -51,9 +51,9 @@ new #[Layout('layouts.guest')] class extends Component {
                     <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="form.password" class="block w-full rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" required />
 
                     <button x-cloak x-on:click="showPassword = !showPassword" class="absolute inset-y-0 top-0 flex items-center end-4" type="button">
-                        <flux:icon x-show="!showPassword && $wire.form.password.length" icon="eye" variant="outline" class="w-5 h-5" />
+                        <flux:icon x-show="!showPassword && $wire.form.password.length" icon="eye" variant="outline" class="w-5 h-5 dark:text-slate-300" />
 
-                        <flux:icon x-show="showPassword && $wire.form.password.length" icon="eye-slash" variant="outline" class="w-5 h-5" />
+                        <flux:icon x-show="showPassword && $wire.form.password.length" icon="eye-slash" variant="outline" class="w-5 h-5 dark:text-slate-300" />
                     </button>
                 </div>
 
