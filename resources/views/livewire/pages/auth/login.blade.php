@@ -23,13 +23,13 @@ new #[Layout('layouts.guest')] class extends Component {
     }
 }; ?>
 
-<div>
+<div x-data="{ showPassword: false }">
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <x-auth-card submit="login">
         <x-slot:header>
-            <h1 class="flex justify-center mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-100">
+            <h1 class="flex justify-center mb-6 text-2xl font-semibold text-slate-700 dark:text-slate-100">
                 Login
             </h1>
         </x-slot:header>
@@ -46,8 +46,17 @@ new #[Layout('layouts.guest')] class extends Component {
             <!-- Password -->
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
-                <x-text-input wire:model="form.password" id="password" class="block w-full mt-1" type="password"
-                    name="password" required autocomplete="current-password" />
+
+                <div class="relative pt-0.5">
+                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="form.password" class="block w-full rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" required />
+
+                    <button x-cloak x-on:click="showPassword = !showPassword" class="absolute inset-y-0 top-0 flex items-center end-4" type="button">
+                        <flux:icon x-show="!showPassword && $wire.form.password.length" icon="eye" variant="outline" class="w-5 h-5" />
+
+                        <flux:icon x-show="showPassword && $wire.form.password.length" icon="eye-slash" variant="outline" class="w-5 h-5" />
+                    </button>
+                </div>
+
                 <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
             </div>
 
@@ -56,9 +65,9 @@ new #[Layout('layouts.guest')] class extends Component {
                 <div>
                     <label for="remember" class="flex items-center">
                         <input wire:model="form.remember" id="remember" type="checkbox"
-                            class="text-indigo-600 border-gray-300 rounded shadow-sm dark:bg-gray-900 dark:border-gray-700 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                            class="text-indigo-600 rounded shadow-sm border-slate-300 dark:bg-slate-900 dark:border-slate-700 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-slate-800"
                             name="remember">
-                        <span class="text-sm text-gray-600 ms-2 dark:text-gray-400">
+                        <span class="text-sm text-slate-600 ms-2 dark:text-slate-400">
                             {{ __('Remember me') }}
                         </span>
                     </label>
@@ -66,10 +75,10 @@ new #[Layout('layouts.guest')] class extends Component {
 
                 <!-- Forgot Password -->
                 @if (Route::has('password.request'))
-                    <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                        href="{{ route('password.request') }}" wire:navigate>
-                        {{ __('Forgot your password?') }}
-                    </a>
+                <a class="text-sm underline rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-800"
+                    href="{{ route('password.request') }}" wire:navigate>
+                    {{ __('Forgot your password?') }}
+                </a>
                 @endif
             </div>
         </x-slot:content>
