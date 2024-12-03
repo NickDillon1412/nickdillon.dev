@@ -6,7 +6,8 @@
                 top: '-10px',
                 fontSize: `${snowflake.size}rem`,
                 animation: `fall ${snowflake.speed}s linear infinite`,
-                animationDelay: `-${snowflake.delay}s`
+                animationDelay: `-${snowflake.delay}s`,
+                color: 'white'
             }"
             x-text="snowflake.design" />
     </template>
