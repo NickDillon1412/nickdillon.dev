@@ -11,6 +11,10 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\PureFinance\CategoryFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);

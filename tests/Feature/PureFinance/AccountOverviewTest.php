@@ -23,7 +23,7 @@ test('can see account form', function () {
 
 test('can see transactions table', function () {
     livewire(AccountOverview::class, ['account' => Account::first()])
-        ->assertSeeLivewire('pure-finance.transactions-table')
+        ->assertSeeLivewire('pure-finance.transaction-table')
         ->assertHasNoErrors();
 });
 

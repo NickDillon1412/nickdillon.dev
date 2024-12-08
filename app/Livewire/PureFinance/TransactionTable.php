@@ -9,12 +9,14 @@ use Livewire\WithPagination;
 use App\Models\PureFinance\Account;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Category;
+use App\Models\PureFinance\Transaction;
+use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-class TransactionsTable extends Component
+class TransactionTable extends Component
 {
     use WithPagination;
 
@@ -69,7 +71,7 @@ class TransactionsTable extends Component
                     ->limit(1),
                 $direction
             ),
-            'amount', 'description', 'date', 'status' => $query->orderBy($this->sort_col, $direction),
+            'type', 'amount', 'description', 'date', 'status' => $query->orderBy($this->sort_col, $direction),
             default => $query
         };
     }
@@ -82,10 +84,11 @@ class TransactionsTable extends Component
                 $query->where('status', $this->status === 'cleared' ? true : false);
             })
             ->when(strlen($this->search) >= 1, function (Builder $query): void {
-                $query->where(function (Builder $query) {
+                $query->where(function (Builder $query): void {
                     $query->whereRelation('category', 'name', 'like', "%{$this->search}%")
                         ->orWhere('description', 'like', "%{$this->search}%")
-                        ->orWhere('amount', 'like', "%{$this->search}%");
+                        ->orWhere('amount', 'like', "%{$this->search}%")
+                        ->orWhere('transactions.type', 'like', "%{$this->search}%");
 
                     if (!$this->account) {
                         $query->orWhereRelation('account', 'name', 'like', "%{$this->search}%");
@@ -97,6 +100,18 @@ class TransactionsTable extends Component
             ->paginate(25);
     }
 
+    public function delete(Transaction $transaction): void
+    {
+        $transaction->delete();
+
+        Notification::make()
+            ->title("Successfully deleted transaction")
+            ->success()
+            ->send();
+
+        $this->dispatch('close-modal');
+    }
+
     public function render(): View
     {
         $transactions = $this->account
@@ -106,7 +121,7 @@ class TransactionsTable extends Component
         $this->cleared_total = $transactions->clone()->where('status', true)->count();
         $this->pending_total = $transactions->clone()->where('status', false)->count();
 
-        return view('livewire.pure-finance.transactions-table', [
+        return view('livewire.pure-finance.transaction-table', [
             'transactions' => $this->filterTransactions($transactions)
         ]);
     }
