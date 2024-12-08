@@ -19,6 +19,6 @@
             </div>
         </div>
 
-        <livewire:pure-finance.transactions-table :$account />
+        <livewire:pure-finance.transaction-table :$account />
     </div>
 </div>

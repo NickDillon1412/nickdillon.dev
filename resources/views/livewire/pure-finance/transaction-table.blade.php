@@ -61,6 +61,13 @@
 
                         <th scope="col"
                             class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
+                            <x-sortable-column column="type" :$sort_col :$sort_asc>
+                                Type
+                            </x-sortable-column>
+                        </th>
+
+                        <th scope="col"
+                            class="px-6 py-3 text-xs font-medium uppercase text-slate-600 text-start dark:text-slate-200">
                             <x-sortable-column column="amount" :$sort_col :$sort_asc>
                                 Amount
                             </x-sortable-column>
@@ -113,6 +120,10 @@
                             </td>
 
                             <td class="px-6 py-4 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                {{ $transaction->type->label() }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
                                 ${{ Number::format($transaction->amount, 2) }}
                             </td>
 
@@ -143,10 +154,21 @@
                                         class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
                                 </button>
 
-                                <button type="button">
-                                    <x-heroicon-o-trash
-                                        class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                </button>
+                                <x-modal icon="information-circle" delete variant="danger"
+                                    wire:submit="delete({{ $transaction->id }})">
+                                    <x-slot:button>
+                                        <x-heroicon-o-trash
+                                            class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                    </x-slot:button>
+
+                                    <x-slot:title>
+                                        Delete Transaction
+                                    </x-slot:title>
+
+                                    <x-slot:body>
+                                        Are you sure you want to delete this transaction?
+                                    </x-slot:body>
+                                </x-modal>
                             </td>
                         </tr>
                     @empty

@@ -6,17 +6,23 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use App\Models\PureFinance\Account;
 use Illuminate\Support\Facades\URL;
+use App\Models\PureFinance\Category;
 use function Pest\Livewire\livewire;
 use App\Models\PureFinance\Transaction;
-use App\Livewire\PureFinance\TransactionsTable;
+use App\Livewire\PureFinance\TransactionTable;
 
 beforeEach(function () {
+    if (Category::count() === 0) {
+        Category::factory()->count(5)->create();
+    }
+
     $this->actingAs(
         User::factory()
-            ->hasAccounts(
+            ->has(
                 Account::factory()
-                    ->hasTransactions(
-                        Transaction::factory()->count(100)
+                    ->has(
+                        Transaction::factory()->count(10),
+                        'transactions'
                     )
             )
             ->create()
@@ -24,7 +30,7 @@ beforeEach(function () {
 });
 
 it('can update search', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->set('search', 'Test')
         ->assertHasNoErrors();
 
@@ -33,7 +39,7 @@ it('can update search', function () {
 });
 
 it('can update status', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->set('status', 'cleared')
         ->assertHasNoErrors();
 
@@ -42,7 +48,7 @@ it('can update status', function () {
 });
 
 it('can sort by account name', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->call('sortBy', 'account')
         ->assertHasNoErrors();
 
@@ -51,7 +57,7 @@ it('can sort by account name', function () {
 });
 
 it('can sort by category name', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->call('sortBy', 'category')
         ->assertHasNoErrors();
 
@@ -59,8 +65,17 @@ it('can sort by category name', function () {
         ->toBeFalse();
 });
 
+it('can sort by type', function () {
+    livewire(TransactionTable::class)
+        ->call('sortBy', 'type')
+        ->assertHasNoErrors();
+
+    expect(Str::contains(URL::current(), '?page'))
+        ->toBeFalse();
+});
+
 it('can sort by amount', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->call('sortBy', 'amount')
         ->assertHasNoErrors();
 
@@ -69,7 +84,7 @@ it('can sort by amount', function () {
 });
 
 it('can sort by description', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->call('sortBy', 'description')
         ->assertHasNoErrors();
 
@@ -78,7 +93,7 @@ it('can sort by description', function () {
 });
 
 it('can sort by date', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->call('sortBy', 'date')
         ->assertHasNoErrors();
 
@@ -87,7 +102,7 @@ it('can sort by date', function () {
 });
 
 it('can sort by status', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->set('sort_col', 'status')
         ->call('sortBy', 'status')
         ->assertHasNoErrors();
@@ -96,12 +111,18 @@ it('can sort by status', function () {
         ->toBeFalse();
 });
 
+it('can delete a transaction', function () {
+    livewire(TransactionTable::class)
+        ->call('delete', Transaction::first()->id)
+        ->assertHasNoErrors();
+});
+
 test('component can render with account', function () {
-    livewire(TransactionsTable::class, ['account' => Account::first()])
+    livewire(TransactionTable::class, ['account' => Account::first()])
         ->assertHasNoErrors();
 });
 
 test('component can render', function () {
-    livewire(TransactionsTable::class)
+    livewire(TransactionTable::class)
         ->assertHasNoErrors();
 });

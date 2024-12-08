@@ -37,7 +37,7 @@
             </div>
 
             <div x-cloak x-show="activeTab === 'transactions'">
-                @livewire('pure-finance.transactions-table')
+                @livewire('pure-finance.transaction-table')
             </div>
         </div>
     </div>
