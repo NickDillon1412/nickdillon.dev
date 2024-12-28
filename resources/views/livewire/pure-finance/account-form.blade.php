@@ -1,7 +1,7 @@
 @use('App\Enums\PureFinance\AccountType', 'AccountType')
 
 <div x-cloak x-on:account-saved="accountFormModalOpen = false">
-    <div class="fixed inset-0 z-50 transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
+    <div class="fixed inset-0 z-[99] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
         x-show="accountFormModalOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"
@@ -9,13 +9,14 @@
     </div>
 
     <div id="accountFormModalOpen-modal"
-        class="fixed inset-0 z-50 flex items-center justify-center px-4 my-4 overflow-hidden sm:px-6" role="dialog"
+        class="fixed inset-0 z-[99] flex items-center justify-center px-4 my-4 overflow-hidden sm:px-6" role="dialog"
         aria-modal="true" x-show="accountFormModalOpen" x-transition:enter="transition ease-in-out duration-200"
         x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in-out duration-200" x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-4" style="display: none;">
         <div class="w-full max-w-lg max-h-full overflow-auto bg-white border rounded-lg shadow-lg dark:bg-slate-800 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-700"
-            x-on:click.outside="accountFormModalOpen = false" x-on:keydown.escape.window="accountFormModalOpen = false">
+            x-on:click.outside="accountFormModalOpen = false" x-on:keydown.escape.window="accountFormModalOpen = false"
+            x-trap.inert.noscroll="accountFormModalOpen">
             <div class="px-5 py-2.5 border-b border-slate-200 dark:border-slate-700">
                 <div class="flex items-center justify-between">
                     <div class="text-lg font-semibold">

@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire\PureFinance;
 
+use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use Illuminate\Support\Collection;
 use App\Models\PureFinance\Account;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Category;
+use App\Services\PureFinanceService;
 use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -30,9 +34,28 @@ class TransactionTable extends Component
 
     public int $pending_total;
 
-    public string $sort_col = '';
+    public string $transaction_type = '';
+
+    public Collection $accounts;
+
+    public array $selected_accounts = [];
+
+    public Collection $categories;
+
+    public array $selected_categories = [];
+
+    public string $date = '';
+
+    public string $sort_col = 'date';
 
     public bool $sort_asc = false;
+
+    public function mount(PureFinanceService $service): void
+    {
+        if (!$this->account) $this->accounts = $service->getAccounts();
+
+        $this->categories = $service->getCategories();
+    }
 
     public function updatedSearch(): void
     {
@@ -42,6 +65,12 @@ class TransactionTable extends Component
     public function updatedStatus(): void
     {
         $this->resetPage();
+    }
+
+    #[On('clear-filters')]
+    public function clearFilters(): void
+    {
+        $this->reset(['transaction_type', 'selected_categories', 'selected_accounts', 'date']);
     }
 
     public function sortBy(string $column): void
@@ -96,7 +125,26 @@ class TransactionTable extends Component
                 });
             })
             ->when($this->sort_col, fn(Builder $query): Builder => $this->applyColumnSorting($query))
-            ->latest()
+            ->when($this->transaction_type, function (Builder $query): void {
+                $query->where('transactions.type', $this->transaction_type);
+            })
+            ->when(!empty($this->selected_accounts), function (Builder $query): void {
+                $query->where(function (Builder $query): void {
+                    foreach ($this->selected_accounts as $account) {
+                        $query->orWhereRelation('account', 'name', 'like', "%{$account}%");
+                    }
+                });
+            })
+            ->when(!empty($this->selected_categories), function (Builder $query): void {
+                $query->where(function (Builder $query): void {
+                    foreach ($this->selected_categories as $category) {
+                        $query->orWhereRelation('category', 'name', 'like', "%{$category}%");
+                    }
+                });
+            })
+            ->when($this->date, function (Builder $query): void {
+                $query->whereBetween('date', [Carbon::parse($this->date)->toDateString(), now()->toDateString()]);
+            })
             ->paginate(25);
     }
 
