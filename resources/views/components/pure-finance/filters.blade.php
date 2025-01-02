@@ -20,16 +20,11 @@
     },
 }" class="relative z-50 w-auto h-auto">
     <div class="relative inline-block">
-        <button
-            class="py-1.5 px-2 flex space-x-1.5 items-center text-center duration-200 ease-in-out bg-white border rounded-md shadow-sm hover:bg-slate-200 dark:bg-slate-900 border-slate-300 dark:hover:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
-            x-on:click="slideOverOpen = true">
-            <x-feathericon-filter class="!w-[18px] !h-[18px] dark:stroke-slate-200 stroke-slate-700" />
-
-            <span class="text-sm font-medium dark:text-slate-200 text-slate-700">Filters</span>
-        </button>
+        <flux:button icon="funnel" variant="subtle" x-on:click="slideOverOpen = true"
+            class="!h-8 !w-8 hover:!bg-white hover:!text-slate-500 dark:hover:!bg-slate-800 dark:hover:!text-slate-300" />
 
         <span x-cloak x-show="totalFilters() > 0"
-            class="absolute top-0 right-0 flex items-center justify-center w-[17px] h-[17px] -mt-2 -mr-2 text-xs bg-indigo-500 rounded-full text-slate-200"
+            class="absolute top-0 right-0 flex items-center justify-center w-fit min-w-[18px] -mt-2 -mr-3 text-xs rounded-md border border-indigo-500 text-indigo-500 dark:border-indigo-500 dark:text-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/10"
             x-text="totalFilters()">
         </span>
     </div>

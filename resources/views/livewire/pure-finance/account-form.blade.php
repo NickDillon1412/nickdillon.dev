@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <form class="p-5 space-y-5" wire:submit='submit'">
+            <form class="p-5 space-y-5" wire:submit='submit' x-on:submit="$dispatch('account-updated')">
                 <div class="space-y-3">
                     <div>
                         <div class="flex space-x-1">

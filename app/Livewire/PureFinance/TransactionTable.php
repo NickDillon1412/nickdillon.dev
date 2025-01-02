@@ -44,6 +44,16 @@ class TransactionTable extends Component
 
     public array $selected_categories = [];
 
+    public array $columns = [
+        'date',
+        'account',
+        'category',
+        'type',
+        'amount',
+        'description',
+        'status'
+    ];
+
     public string $date = '';
 
     public string $sort_col = 'date';
@@ -55,6 +65,13 @@ class TransactionTable extends Component
         if (!$this->account) $this->accounts = $service->getAccounts();
 
         $this->categories = $service->getCategories();
+
+        if (!is_null($this->account)) {
+            $this->columns = collect($this->columns)
+                ->reject(fn(string $column): bool => $column === 'account')
+                ->values()
+                ->toArray();
+        }
     }
 
     public function updatedSearch(): void
@@ -65,6 +82,11 @@ class TransactionTable extends Component
     public function updatedStatus(): void
     {
         $this->resetPage();
+    }
+
+    public function updatingColumns(string $column): void
+    {
+        unset($this->columns[$column]);
     }
 
     #[On('clear-filters')]

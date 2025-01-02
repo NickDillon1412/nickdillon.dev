@@ -10,7 +10,7 @@
     }
 }">
     <div
-        class="p-[3.5px] border rounded-lg bg-slate-200/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 w-fit">
+        class="p-[3.5px] -ml-0.5 border rounded-lg bg-slate-200/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 w-fit">
         <div class="flex">
             <template x-for="(tab, index) in tabs" :key="index">
                 <button x-on:click="$wire.set('status', tab)"
