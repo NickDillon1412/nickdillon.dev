@@ -66,7 +66,7 @@ class TransactionTable extends Component
 
         $this->categories = $service->getCategories();
 
-        if (!is_null($this->account)) {
+        if ($this->account) {
             $this->columns = collect($this->columns)
                 ->reject(fn(string $column): bool => $column === 'account')
                 ->values()
