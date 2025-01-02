@@ -111,7 +111,7 @@
                                 </td>
                             @endif
 
-                            @unless ($account || !in_array('account', $columns))
+                            @if (!$account && in_array('account', $columns))
                                 <td
                                     class="py-3.5 first:pl-5 text-sm font-medium text-slate-800 whitespace-nowrap dark:text-slate-200">
                                     <a class="text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
@@ -120,7 +120,7 @@
                                         {{ $transaction->account->name }}
                                     </a>
                                 </td>
-                            @endunless
+                            @endif
 
                             @if (in_array('category', $columns))
                                 <td
