@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3 pt-5">
     <div class="flex items-center justify-between w-full">
-        <h1 class="text-2xl font-semibold text-slate-800">
+        <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
             Transactions
         </h1>
 
@@ -11,11 +11,11 @@
 
     <div
         class="bg-white border divide-y rounded-lg shadow-sm border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
-        <div class="flex justify-between px-5 py-3">
+        <div class="flex justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
-            <div class="flex items-center justify-between space-x-2">
-                <div class="relative w-40 sm:w-64">
+            <div class="flex items-center justify-between space-x-1">
+                <div class="relative w-40 pr-2 sm:w-64">
                     <label for="search" class="sr-only">
                         Search
                     </label>
@@ -40,60 +40,62 @@
                     </button>
                 </div>
 
-                <x-pure-finance.filters :account="$account ?: null" :$accounts :$categories />
+                <x-pure-finance.filters :$account :$accounts :$categories />
+
+                <x-pure-finance.columns :$columns />
             </div>
         </div>
 
         <div class="overflow-x-auto">
             <table class="w-full divide-y table-auto divide-slate-200 dark:divide-slate-600">
+                <div x-cloak x-show="$wire.sort_col !== 'date'"
+                    class="flex items-center px-5 py-2 space-x-2 text-sm border-b border-slate-200 dark:border-slate-600">
+                    <p>Sort By:</p>
+
+                    <div
+                        class="flex px-2 py-1 space-x-1 overflow-hidden text-xs font-medium border rounded-md w-fit border-rose-500 text-rose-500 dark:border-rose-500 dark:text-rose-500 bg-rose-500/10 dark:bg-rose-500/10">
+                        <span class="font-medium text-rose-500">
+                            {{ Str::title($sort_col) }}
+                        </span>
+
+                        <button class="!text-rose-500" wire:click="$set('sort_col', 'date')">
+                            <x-heroicon-s-x-mark class="!w-4 !h-4" />
+                        </button>
+                    </div>
+                </div>
+
                 <thead class="bg-slate-100/75 dark:bg-slate-700">
                     <tr>
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="date" :$sort_col :$sort_asc>
-                                Date
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('date', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="date" />
+                        @endif
 
-                        @unless ($account)
-                            <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                                <x-sortable-column column="account" :$sort_col :$sort_asc>
-                                    Account
-                                </x-sortable-column>
-                            </th>
-                        @endunless
+                        @if (!$account && in_array('account', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="account" :$account />
+                        @endif
 
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="category" :$sort_col :$sort_asc>
-                                Category
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('category', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="category" />
+                        @endif
 
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="type" :$sort_col :$sort_asc>
-                                Type
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('type', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="type" />
+                        @endif
 
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="amount" :$sort_col :$sort_asc>
-                                Amount
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('amount', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="amount" />
+                        @endif
 
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="description" :$sort_col :$sort_asc>
-                                Description
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('description', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="description" />
+                        @endif
 
-                        <th scope="col" class="py-3 pl-6 text-xs text-slate-600 dark:text-slate-200">
-                            <x-sortable-column column="status" :$sort_col :$sort_asc>
-                                Status
-                            </x-sortable-column>
-                        </th>
+                        @if (in_array('status', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="status" />
+                        @endif
 
                         <th scope="col"
-                            class="px-6 py-3 text-xs font-semibold uppercase text-slate-600 text-end dark:text-slate-200">
+                            class="py-3 pr-5 text-xs font-semibold uppercase text-slate-600 text-end dark:text-slate-200">
                             Actions
                         </th>
                     </tr>
@@ -101,14 +103,17 @@
 
                 <tbody class="divide-y divide-slate-200 dark:divide-slate-600">
                     @forelse ($transactions as $transaction)
-                        <tr class="even:bg-slate-50 even:dark:bg-slate-700">
-                            <td class="py-4 pl-6 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                {{ Carbon\Carbon::parse($transaction->date)->format('M j, Y') }}
-                            </td>
-
-                            @unless ($account)
+                        <tr>
+                            @if (in_array('date', $columns))
                                 <td
-                                    class="py-3.5 pl-6 text-sm font-medium text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    class="py-4 text-sm first:pl-5 text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    {{ Carbon\Carbon::parse($transaction->date)->format('M j, Y') }}
+                                </td>
+                            @endif
+
+                            @unless ($account || !in_array('account', $columns))
+                                <td
+                                    class="py-3.5 first:pl-5 text-sm font-medium text-slate-800 whitespace-nowrap dark:text-slate-200">
                                     <a class="text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400"
                                         href="{{ route('pure-finance.account.overview', $transaction->account) }}"
                                         wire:navigate>
@@ -117,46 +122,68 @@
                                 </td>
                             @endunless
 
-                            <td class="py-3.5 pl-6 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                {{ $transaction->category->name }}
-                            </td>
+                            @if (in_array('category', $columns))
+                                <td
+                                    class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    {{ $transaction->category->name }}
+                                </td>
+                            @endif
 
-                            <td class="py-3.5 pl-6 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                {{ $transaction->type->label() }}
-                            </td>
+                            @if (in_array('type', $columns))
+                                <td
+                                    class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    {{ $transaction->type->label() }}
+                                </td>
+                            @endif
 
-                            <td class="py-3.5 pl-6 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                ${{ Number::format($transaction->amount, 2) }}
-                            </td>
+                            @if (in_array('amount', $columns))
+                                <td
+                                    class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    ${{ Number::format($transaction->amount, 2) }}
+                                </td>
+                            @endif
 
-                            <td class="py-3.5 pl-6 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                {{ $transaction->description }}
-                            </td>
+                            @if (in_array('description', $columns))
+                                <td
+                                    class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
+                                    {{ $transaction->description }}
+                                </td>
+                            @endif
 
-                            <td class="pl-6 whitespace-nowrap">
-                                <div class="flex items-center">
-                                    <div @class([
-                                        'border-emerald-500 text-emerald-500 dark:border-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
-                                            $transaction->status,
-                                        'border-amber-500 text-amber-500 dark:border-amber-500 dark:text-amber-500 bg-amber-500/10 dark:bg-amber-500/10' => !$transaction->status,
-                                        'inline-flex px-2 py-1 overflow-hidden text-xs font-medium border rounded-md w-fit',
-                                    ])>
-                                        {{ $transaction->status ? 'Cleared' : 'Pending' }}
+                            @if (in_array('status', $columns))
+                                <td class="first:pl-5 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div @class([
+                                            'border-emerald-500 text-emerald-500 dark:border-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
+                                                $transaction->status,
+                                            'border-amber-500 text-amber-500 dark:border-amber-500 dark:text-amber-500 bg-amber-500/10 dark:bg-amber-500/10' => !$transaction->status,
+                                            'inline-flex items-center space-x-0.5 px-2 py-1 overflow-hidden text-xs font-medium border rounded-md w-fit',
+                                        ])>
+                                            @if ($transaction->status)
+                                                <x-heroicon-s-check-badge class="w-[16px] h-[16px] text-emerald-500" />
+                                            @else
+                                                <x-heroicon-s-arrow-path class="w-[16px] h-[16px] text-amber-500" />
+                                            @endif
+
+                                            <span class="pl-0.5">
+                                                {{ $transaction->status ? 'Cleared' : 'Pending' }}
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                            @endif
 
-                            <td class="flex items-center justify-end py-3.5 pr-6 text-sm font-medium whitespace-nowrap">
+                            <td class="flex items-center justify-end py-3.5 pr-5 text-sm font-medium whitespace-nowrap">
                                 <button type="button">
                                     <x-heroicon-o-pencil-square
-                                        class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-600" />
+                                        class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
                                 </button>
 
                                 <x-modal icon="information-circle" delete variant="danger"
                                     wire:submit="delete({{ $transaction->id }})">
                                     <x-slot:button>
                                         <x-heroicon-o-trash
-                                            class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-600" />
+                                            class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
                                     </x-slot:button>
 
                                     <x-slot:title>

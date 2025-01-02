@@ -9,7 +9,6 @@ use Livewire\WithPagination;
 use Livewire\Attributes\Layout;
 use App\Models\PureFinance\Account;
 use Illuminate\Contracts\View\View;
-use App\Enums\PureFinance\AccountType;
 
 #[Layout('layouts.app')]
 class AccountOverview extends Component
