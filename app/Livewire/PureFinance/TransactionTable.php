@@ -15,10 +15,7 @@ use App\Models\PureFinance\Category;
 use App\Services\PureFinanceService;
 use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class TransactionTable extends Component
 {
@@ -127,10 +124,26 @@ class TransactionTable extends Component
         };
     }
 
-    public function filterTransactions(HasManyThrough|HasMany $transactions): LengthAwarePaginator
+    public function delete(Transaction $transaction): void
     {
-        return $transactions
-            ->with(['account:id,name', 'category:id,name'])
+        $transaction->delete();
+
+        Notification::make()
+            ->title("Successfully deleted transaction")
+            ->success()
+            ->send();
+
+        $this->dispatch('close-modal');
+    }
+
+    public function render(): View
+    {
+        $transactions = Transaction::query()
+            ->with(['account:id,name,user_id', 'category:id,name'])
+            ->whereRelation('account', 'user_id', auth()->id())
+            ->when($this->account, function (Builder $query): void {
+                $query->whereRelation('account', 'name', $this->account->name);
+            })
             ->when($this->status !== 'all', function (Builder $query): void {
                 $query->where('status', $this->status === 'cleared' ? true : false);
             })
@@ -166,33 +179,13 @@ class TransactionTable extends Component
             })
             ->when($this->date, function (Builder $query): void {
                 $query->whereBetween('date', [Carbon::parse($this->date)->toDateString(), now()->toDateString()]);
-            })
-            ->paginate(25);
-    }
+            });
 
-    public function delete(Transaction $transaction): void
-    {
-        $transaction->delete();
-
-        Notification::make()
-            ->title("Successfully deleted transaction")
-            ->success()
-            ->send();
-
-        $this->dispatch('close-modal');
-    }
-
-    public function render(): View
-    {
-        $transactions = $this->account
-            ? $this->account->transactions()
-            : auth()->user()->transactions();
-
-        $this->cleared_total = $transactions->clone()->where('status', true)->count();
-        $this->pending_total = $transactions->clone()->where('status', false)->count();
+        $this->cleared_total = (clone $transactions)->where('status', true)->count();
+        $this->pending_total = (clone $transactions)->where('status', false)->count();
 
         return view('livewire.pure-finance.transaction-table', [
-            'transactions' => $this->filterTransactions($transactions)
+            'transactions' => $transactions->paginate(25)
         ]);
     }
 }
