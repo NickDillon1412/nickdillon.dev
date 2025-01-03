@@ -175,6 +175,11 @@
 
                             <td class="flex items-center justify-end py-3.5 pr-5 text-sm font-medium whitespace-nowrap">
                                 <button type="button">
+                                    <x-heroicon-o-paper-clip
+                                        class="w-[25px] h-[25px] p-1 duration-100 ease-in-out rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                </button>
+
+                                <button type="button">
                                     <x-heroicon-o-pencil-square
                                         class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
                                 </button>
