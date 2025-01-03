@@ -7,9 +7,9 @@
 
     <div x-cloak x-show="columnsModalOpen" x-on:keydown.window.escape="columnsModalOpen = false"
         x-on:click.away="columnsModalOpen = false"
-        class="p-5 bg-white rounded-lg z-[99] w-[250px] border shadow-sm border-slate-200 dark:border-slate-600"
+        class="p-5 bg-white dark:bg-slate-800 rounded-lg z-10 w-[275px] border shadow-md border-slate-200 dark:border-slate-600"
         x-anchor.bottom-end="$refs.columns">
-        <h1 class="mb-1 font-semibold text-slate-800">
+        <h1 class="mb-1 font-semibold text-slate-800 dark:text-slate-200">
             Columns
         </h1>
 
