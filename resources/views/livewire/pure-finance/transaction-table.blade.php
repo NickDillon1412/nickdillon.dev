@@ -4,8 +4,7 @@
             Transactions
         </h1>
 
-        <flux:button href="{{ route('pure-finance.transaction-form') }}" variant="indigo" icon="plus" size="sm"
-            class="w-full sm:w-auto">
+        <flux:button variant="indigo" icon="plus" size="sm" class="w-full sm:w-auto">
             New Transaction
         </flux:button>
     </div>
@@ -104,7 +103,7 @@
 
                 <tbody class="divide-y divide-slate-200 dark:divide-slate-600">
                     @forelse ($transactions as $transaction)
-                        <tr wire:key='{{ $transaction->id }}'>
+                        <tr>
                             @if (in_array('date', $columns))
                                 <td
                                     class="py-4 text-sm first:pl-5 text-slate-800 whitespace-nowrap dark:text-slate-200">
@@ -180,10 +179,10 @@
                                         class="w-[25px] h-[25px] p-1 duration-100 ease-in-out rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" />
                                 </button>
 
-                                <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}">
+                                <button type="button">
                                     <x-heroicon-o-pencil-square
                                         class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                </a>
+                                </button>
 
                                 <x-modal icon="information-circle" delete variant="danger"
                                     wire:submit="delete({{ $transaction->id }})">

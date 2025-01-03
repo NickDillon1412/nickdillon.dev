@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\PureFinance\Accounts;
 use App\Livewire\MovieVault\VaultDetails;
 use App\Livewire\PureFinance\AccountOverview;
-use App\Livewire\PureFinance\TransactionForm;
 
 Route::view('/', 'portfolio')->name('portfolio');
 
@@ -37,8 +36,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('accounts', Accounts::class)->name('accounts');
 
             Route::get('account/{account}/overview', AccountOverview::class)->name('account.overview');
-
-            Route::get('transaction-form/{transaction?}', TransactionForm::class)->name('transaction-form');
         });
 });
 

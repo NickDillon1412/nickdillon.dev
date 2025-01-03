@@ -10,7 +10,6 @@
         "blade-ui-kit/blade-heroicons": "^2.4",
         "brunocfalcao/blade-feather-icons": "^4.0",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
-        "filament/forms": "^3.2",
         "filament/notifications": "^3.2",
         "laravel/framework": "^11.34.2",
         "laravel/socialite": "^5.16",
