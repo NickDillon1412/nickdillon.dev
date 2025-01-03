@@ -34,7 +34,7 @@
                     </div>
 
                     <button x-cloak x-show="$wire.search.length > 0" wire:click="$set('search', '')"
-                        class="absolute inset-0 left-auto pr-2" type="submit" aria-label="Search">
+                        class="absolute inset-0 left-auto pr-4" type="submit" aria-label="Search">
                         <x-heroicon-s-x-mark
                             class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
                     </button>
