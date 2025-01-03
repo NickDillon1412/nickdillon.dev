@@ -30,7 +30,8 @@ class Transaction extends Model
     protected function casts(): array
     {
         return [
-            'type' => TransactionType::class
+            'type' => TransactionType::class,
+            'status' => 'bool'
         ];
     }
 
