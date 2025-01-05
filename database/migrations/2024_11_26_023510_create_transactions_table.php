@@ -21,6 +21,8 @@ return new class extends Migration
             $table->float('amount');
             $table->text('description');
             $table->date('date');
+            $table->text('notes')->nullable();
+            $table->json('attachments')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

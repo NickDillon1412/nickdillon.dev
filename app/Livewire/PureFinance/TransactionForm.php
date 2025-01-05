@@ -37,6 +37,10 @@ class TransactionForm extends Component
 
     public string $date = '';
 
+    public string $notes = '';
+
+    public array $files = [];
+
     public bool $status = false;
 
     protected function rules(): array
@@ -48,6 +52,7 @@ class TransactionForm extends Component
             'amount' => ['required'],
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
+            'notes' => ['nullable', 'string'],
             'status' => ['required', 'boolean'],
         ];
     }
@@ -61,6 +66,7 @@ class TransactionForm extends Component
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
             $this->date = $this->transaction->date;
+            $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
         }
     }

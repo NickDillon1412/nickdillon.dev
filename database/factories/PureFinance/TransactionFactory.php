@@ -31,6 +31,7 @@ class TransactionFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 0, 100),
             'description' => $this->faker->text(30),
             'date' => $this->faker->date(),
+            'notes' => $this->faker->paragraph(5),
             'status' => Arr::random([true, false])
         ];
     }
