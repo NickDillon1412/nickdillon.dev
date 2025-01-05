@@ -12,6 +12,7 @@ use Livewire\Attributes\Modelable;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Computed;
 
 class FileUploader extends Component
 {
@@ -34,12 +35,25 @@ class FileUploader extends Component
         $this->uploaded_files = collect();
     }
 
+    public function formatFileSize(int $bytes): string
+    {
+        return match (true) {
+            $bytes >= 1073741824 => round($bytes / 1073741824, 2) . ' GB',
+            $bytes >= 1048576 => round($bytes / 1048576, 2) . ' MB',
+            $bytes >= 1024 => round($bytes / 1024, 2) . ' KB',
+            default => $bytes . ' Bytes',
+        };
+    }
+
     public function updatedFiles(): void
     {
         $this->validateOnly('files');
 
         foreach ($this->files as $file) {
-            $this->uploaded_files->push($file->getClientOriginalName());
+            $this->uploaded_files->push([
+                'name' => $file->getClientOriginalName(),
+                'size' => $this->formatFileSize($file->getSize()),
+            ]);
 
             $file->storePubliclyAs(
                 'pure-finance/files',
@@ -51,6 +65,12 @@ class FileUploader extends Component
         $this->files = [];
     }
 
+    #[Computed]
+    public function getS3Path(string $file_name): string
+    {
+        return Storage::disk('s3')->url("{$this->s3_path}/{$file_name}");
+    }
+
     public function removeFile(string $file_name): void
     {
         if (Storage::disk('s3')->exists("{$this->s3_path}/{$file_name}")) {
@@ -58,7 +78,7 @@ class FileUploader extends Component
         }
 
         $this->uploaded_files = $this->uploaded_files
-            ->reject(fn(string $file): bool => $file === $file_name)
+            ->reject(fn(array $file): bool => $file['name'] === $file_name)
             ->values();
 
         $this->dispatch('file-deleted');
