@@ -146,7 +146,7 @@
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
-                <livewire:file-uploader :files="$transaction->attachments" />
+                <livewire:file-uploader :files="$transaction?->attachments" />
             </div>
         </div>
 
