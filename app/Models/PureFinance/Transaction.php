@@ -19,6 +19,8 @@ class Transaction extends Model
         'amount',
         'description',
         'date',
+        'notes',
+        'attachments',
         'status'
     ];
 
@@ -31,6 +33,7 @@ class Transaction extends Model
     {
         return [
             'type' => TransactionType::class,
+            'attachments' => 'array',
             'status' => 'bool'
         ];
     }

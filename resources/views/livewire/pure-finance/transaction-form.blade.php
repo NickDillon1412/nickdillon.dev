@@ -5,112 +5,148 @@
         {{ $transaction ? 'Edit' : 'New' }} Transaction
     </h1>
 
-    <form
-        class="p-5 space-y-5 bg-white border rounded-lg shadow-sm dark:bg-slate-800 dark:border-slate-600 border-slate-200"
+    <form class="p-5 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200"
         wire:submit='submit'>
-        <div class="space-y-4">
-            @if (!$transaction)
+        <div class="grid items-start grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="space-y-5">
+                @if (!$transaction)
+                    <div>
+                        <div class="flex space-x-1">
+                            <x-input-label for="account_id" :value="__('Account')" />
+
+                            <span class="text-rose-500">*</span>
+                        </div>
+
+                        <select wire:model='account_id' id="account_id" required
+                            class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            <option value="">-- Select an account --</option>
+
+                            @foreach ($accounts as $key => $value)
+                                <option value="{{ $key }}">
+                                    {{ $value }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <x-input-error :messages="$errors->get('account_id')" class="mt-2" />
+                    </div>
+                @endif
+
                 <div>
                     <div class="flex space-x-1">
-                        <x-input-label for="account_id" :value="__('Account')" />
+                        <x-input-label for="type" :value="__('Type')" />
 
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <select wire:model='account_id' id="account_id" required
-                        class="flex w-full mt-1.5 text-sm rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                        <option value="">-- Select an account --</option>
+                    <select wire:model='type' id="type" required
+                        class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                        <option value="">-- Select a type --</option>
 
-                        @foreach ($accounts as $key => $value)
+                        @foreach (TransactionType::cases() as $transaction_type)
+                            <option value="{{ $transaction_type->value }}">
+                                {{ $transaction_type->label() }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                </div>
+
+                <div>
+                    <div class="flex space-x-1">
+                        <x-input-label for="category_id" :value="__('Category')" />
+
+                        <span class="text-rose-500">*</span>
+                    </div>
+
+                    <select wire:model='category_id' id="category_id" required
+                        class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                        <option value="">-- Select a category --</option>
+
+                        @foreach ($categories as $key => $value)
                             <option value="{{ $key }}">
                                 {{ $value }}
                             </option>
                         @endforeach
                     </select>
 
-                    <x-input-error :messages="$errors->get('account_id')" class="mt-2" />
-                </div>
-            @endif
-
-            <div>
-                <div class="flex space-x-1">
-                    <x-input-label for="description" :value="__('Description')" />
-
-                    <span class="text-rose-500">*</span>
+                    <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                 </div>
 
-                <x-text-input wire:model="description" id="description" class="block w-full mt-1 text-sm" type="text"
-                    name="description" required autocomplete="description" />
+                <div>
+                    <x-input-label for="notes" :value="__('Notes')" />
 
-                <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes"
+                        class="w-full rounded-lg mt-1.5 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 text-sm resize-none"></textarea>
+
+                    <x-input-error :messages="$errors->get('notes')" class="mt-2" />
+                </div>
+
+                <div>
+                    <label class="space-y-1.5" for="status">
+                        <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                            Status
+                        </p>
+
+                        <div class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="status" name="status" wire:model="status"
+                                class="sr-only peer" />
+
+                            <div
+                                class="relative w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-600">
+                            </div>
+
+                            <span class="text-sm italic ms-2.5 text-slate-500 dark:text-slate-400"
+                                x-text="$wire.status ? 'Cleared' : 'Pending'"></span>
+                        </div>
+                    </label>
+                </div>
             </div>
 
-            <div>
-                <div class="flex space-x-1">
-                    <x-input-label for="amount" :value="__('Amount')" />
+            <div class="mb-5 space-y-5">
+                <div>
+                    <div class="flex space-x-1">
+                        <x-input-label for="description" :value="__('Description')" />
 
-                    <span class="text-rose-500">*</span>
+                        <span class="text-rose-500">*</span>
+                    </div>
+
+                    <x-text-input wire:model="description" id="description"
+                        class="block !rounded-lg w-full mt-1 text-sm" type="text" name="description" required
+                        autocomplete="description" />
+
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
-                <x-text-input wire:model="amount" id="amount" class="block w-full mt-1 text-sm" type="number"
-                    name="amount" required autocomplete="amount" placeholder="100.00" step="0.01" />
+                <div>
+                    <div class="flex space-x-1">
+                        <x-input-label for="amount" :value="__('Amount')" />
 
-                <x-input-error :messages="$errors->get('amount')" class="mt-2" />
-            </div>
+                        <span class="text-rose-500">*</span>
+                    </div>
 
-            <div>
-                <div class="flex space-x-1">
-                    <x-input-label for="type" :value="__('Type')" />
+                    <x-text-input wire:model="amount" id="amount" class="block !rounded-lg w-full mt-1 text-sm"
+                        type="number" name="amount" required autocomplete="amount" placeholder="100.00"
+                        step="0.01" />
 
-                    <span class="text-rose-500">*</span>
+                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                 </div>
 
-                <select wire:model='type' id="type" required
-                    class="flex w-full mt-1.5 text-sm rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                    <option value="">-- Select a type --</option>
+                <div>
+                    <div class="flex space-x-1">
+                        <x-input-label for="date" :value="__('Date')" />
 
-                    @foreach (TransactionType::cases() as $transaction_type)
-                        <option value="{{ $transaction_type->value }}">
-                            {{ $transaction_type->label() }}
-                        </option>
-                    @endforeach
-                </select>
+                        <span class="text-rose-500">*</span>
+                    </div>
 
-                <x-input-error :messages="$errors->get('type')" class="mt-2" />
-            </div>
+                    <x-text-input wire:model="date" id="date" class="block !rounded-lg w-full mt-1 text-sm"
+                        type="date" name="date" required autocomplete="date" />
 
-            <div>
-                <div class="flex space-x-1">
-                    <x-input-label for="category_id" :value="__('Category')" />
-
-                    <span class="text-rose-500">*</span>
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
-                <select wire:model='category_id' id="category_id" required
-                    class="flex w-full mt-1.5 text-sm rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                    <option value="">-- Select a category --</option>
-
-                    @foreach ($categories as $key => $value)
-                        <option value="{{ $key }}">
-                            {{ $value }}
-                        </option>
-                    @endforeach
-                </select>
-
-                <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
-            </div>
-
-            <div>
-                <div class="flex space-x-1">
-                    <x-input-label for="date" :value="__('Date')" />
-
-                    <span class="text-rose-500">*</span>
-                </div>
-
-                <x-text-input wire:model="date" id="date" class="block w-full mt-1 text-sm" type="date"
-                    name="date" required autocomplete="date" />
-
-                <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                <livewire:file-uploader wire:model='files' />
             </div>
         </div>
 
