@@ -104,7 +104,7 @@
                 </div>
             </div>
 
-            <div class="mb-5 space-y-5">
+            <div class="space-y-5">
                 <div>
                     <div class="flex space-x-1">
                         <x-input-label for="description" :value="__('Description')" />
