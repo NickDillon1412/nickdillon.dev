@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Collection;
@@ -39,7 +40,7 @@ class TransactionForm extends Component
 
     public string $notes = '';
 
-    public array $files = [];
+    public ?array $attachments = [];
 
     public bool $status = false;
 
@@ -53,6 +54,7 @@ class TransactionForm extends Component
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
             'notes' => ['nullable', 'string'],
+            'attachments' => ['nullable', 'array'],
             'status' => ['required', 'boolean'],
         ];
     }
@@ -69,6 +71,12 @@ class TransactionForm extends Component
             $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
         }
+    }
+
+    #[On('file-uploaded')]
+    public function pushToAttachments(array $file): void
+    {
+        $this->attachments[] = $file;
     }
 
     public function submit(): RedirectResponse|Redirector

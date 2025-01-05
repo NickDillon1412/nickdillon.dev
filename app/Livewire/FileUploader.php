@@ -7,22 +7,21 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
-use Livewire\Attributes\Modelable;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Attributes\Computed;
 
 class FileUploader extends Component
 {
     use WithFileUploads;
 
-    #[Modelable, Validate([
+    #[Validate([
         'files' => ['required', 'array'],
-        'files.*' => ['image', 'mimes:jpg,jpeg,png,heic,svg,avif,webp']
+        'files.*' => ['file', 'mimes:jpg,jpeg,png,heic,svg,avif,webp']
     ])]
-    public array $files = [];
+    public ?array $files = [];
 
     public Collection $uploaded_files;
 
@@ -30,9 +29,22 @@ class FileUploader extends Component
 
     public string $s3_path = 'pure-finance/files';
 
+    protected function messages(): array
+    {
+        return [
+            'files.*' => 'File must be of type: jpg, jpeg, png, heic, svg, avif, webp/'
+        ];
+    }
+
     public function mount(): void
     {
         $this->uploaded_files = collect();
+
+        if ($this->files) {
+            foreach ($this->files as $file) {
+                $this->uploaded_files[] = $file;
+            }
+        }
     }
 
     public function formatFileSize(int $bytes): string
@@ -47,7 +59,7 @@ class FileUploader extends Component
 
     public function updatedFiles(): void
     {
-        $this->validateOnly('files');
+        $this->validate();
 
         foreach ($this->files as $file) {
             $this->uploaded_files->push([
@@ -60,9 +72,12 @@ class FileUploader extends Component
                 $file->getClientOriginalName(),
                 's3'
             );
-        }
 
-        $this->files = [];
+            $this->dispatch('file-uploaded', file: [
+                'name' => $file->getClientOriginalName(),
+                'size' => $this->formatFileSize($file->getSize()),
+            ]);
+        }
     }
 
     #[Computed]
