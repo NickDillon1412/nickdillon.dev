@@ -27,8 +27,11 @@
         Alpine.data('datepicker', () => {
             return {
                 flatpickr: null,
+                closeCalendar: null,
 
                 init() {
+                    this.closeCalendar = () => this.flatpickr.close();
+
                     this.flatpickr = flatpickr(this.$refs.datepicker, {
                         wrap: true,
                         dateFormat: 'n/d/Y',
@@ -36,6 +39,12 @@
                         defaultDate: this.$wire.get('{{ $field }}'),
                         prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
                         nextArrow: '<svg class="fill-current" width="7" height="11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',
+                        onOpen: () => {
+                            document.addEventListener('wheel', this.closeCalendar);
+                        },
+                        onClose: () => {
+                            document.removeEventListener('wheel', this.closeCalendar);
+                        }
                     });
                 },
             }
