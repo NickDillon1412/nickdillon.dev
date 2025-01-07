@@ -7,7 +7,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
@@ -42,7 +41,7 @@ class FileUploader extends Component
 
         if ($this->files) {
             foreach ($this->files as $file) {
-                $this->uploaded_files[] = $file;
+                $this->uploaded_files->push($file);
             }
         }
     }
@@ -80,12 +79,6 @@ class FileUploader extends Component
         }
     }
 
-    #[Computed]
-    public function getS3Path(string $file_name): string
-    {
-        return Storage::disk('s3')->url("{$this->s3_path}/{$file_name}");
-    }
-
     public function removeFile(string $file_name): void
     {
         if (Storage::disk('s3')->exists("{$this->s3_path}/{$file_name}")) {
@@ -97,11 +90,6 @@ class FileUploader extends Component
             ->values();
 
         $this->dispatch('file-deleted');
-    }
-
-    public function viewFile(int $index): void
-    {
-        $this->selected_file = $this->uploaded_files[$index]->getClientOriginalName() ?? null;
     }
 
     #[On('file-deleted')]

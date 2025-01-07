@@ -30,8 +30,8 @@ class TransactionFactory extends Factory
             'type' => Arr::random(TransactionType::cases()),
             'amount' => $this->faker->randomFloat(2, 0, 100),
             'description' => $this->faker->text(30),
-            'date' => $this->faker->date(),
-            'notes' => $this->faker->paragraph(5),
+            'date' => $this->faker->dateTimeBetween('-2 years', 'now')->format('Y-m-d'),
+            'notes' => $this->faker->paragraph(4),
             'status' => Arr::random([true, false])
         ];
     }

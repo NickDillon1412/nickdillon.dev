@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\PureFinance;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
@@ -67,7 +68,7 @@ class TransactionForm extends Component
             $this->type = $this->transaction->type;
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
-            $this->date = $this->transaction->date;
+            $this->date = Carbon::parse($this->transaction->date)->format('n/d/Y');
             $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
         }
@@ -81,7 +82,18 @@ class TransactionForm extends Component
 
     public function submit(): RedirectResponse|Redirector
     {
+        $this->date = Carbon::parse($this->date)->format('Y-m-d');
+
         $validated_data = $this->validate();
+
+        if ($this->transaction) {
+            $validated_data['attachments'] = [
+                ...$this->transaction->attachments ?? [],
+                ...$this->attachments ?? []
+            ];
+        } else {
+            $validated_data['attachments'] = $this->attachments;
+        }
 
         $this->transaction
             ? $this->transaction->update($validated_data)

@@ -4,6 +4,7 @@
 @import "tailwindcss/components";
 
 @import "utility-patterns.css";
+@import "flatpickr.css";
 
 @import "tailwindcss/utilities";
 @import "tailwindcss/variants";

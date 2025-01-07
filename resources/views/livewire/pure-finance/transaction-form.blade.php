@@ -5,9 +5,9 @@
         {{ $transaction ? 'Edit' : 'New' }} Transaction
     </h1>
 
-    <form class="p-5 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200"
-        wire:submit='submit'>
-        <div class="grid items-start grid-cols-1 gap-4 sm:grid-cols-2">
+    <form wire:submit='submit' class="space-y-4">
+        <div
+            class="grid items-start grid-cols-1 gap-4 p-6 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200 sm:grid-cols-2">
             <div class="space-y-5">
                 @if (!$transaction)
                     <div>
@@ -140,12 +140,21 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="date" id="date" class="block !rounded-lg w-full mt-1 text-sm"
-                        type="date" name="date" required autocomplete="date" />
+                    <x-datepicker field="date" />
 
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
+            </div>
+        </div>
 
+        <div class="bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200">
+            <div class="px-6 py-3.5 border-b border-slate-200 dark:border-slate-700">
+                <h1 class="text-lg font-semibold text-slate-800 dark:text-slate-200">
+                    Attachments
+                </h1>
+            </div>
+
+            <div class="p-6">
                 <livewire:file-uploader :files="$transaction?->attachments" />
             </div>
         </div>
