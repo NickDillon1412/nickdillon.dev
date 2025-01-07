@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col justify-center p-5 space-y-3">
+            <div class="flex flex-col justify-center p-5 space-y-5">
                 @foreach ($attachments as $attachment)
                     <img src="{{ PureFinanceService::getS3Path($attachment['name']) }}" alt="{{ $attachment['name'] }}"
                         class="rounded-md max-h-[550px]" />
