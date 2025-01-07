@@ -29,13 +29,19 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('snowfall', () => ({
             snowflakes: [],
-            snowflakeDesigns: ['❄', '❅', '❆'],
+            snowflakeDesigns: ['❅', '❆', '✵'],
             isChristmasSeason: false,
 
             init() {
                 const today = new Date();
                 const start = new Date(today.getFullYear(), 10, 29);
-                const end = new Date(today.getFullYear(), 11, 25);
+                const end = new Date(today.getFullYear(), 0, 31);
+
+                if (today.getMonth() === 0) {
+                    start.setFullYear(today.getFullYear() - 1);
+                } else {
+                    end.setFullYear(today.getFullYear() + 1);
+                }
 
                 this.isChristmasSeason = today >= start && today <= end;
 
