@@ -15,7 +15,7 @@
         <div class="flex justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
-            <div class="flex items-center justify-between space-x-1">
+            <div class="flex items-center justify-between -mr-1.5 space-x-1">
                 <div class="relative w-40 pr-2 sm:w-64">
                     <label for="search" class="sr-only">
                         Search
@@ -152,7 +152,7 @@
                             @endif
 
                             @if (in_array('status', $columns))
-                                <td class="first:pl-5 whitespace-nowrap">
+                                <td class="py-3.5 first:pl-5 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div @class([
                                             'border-emerald-500 text-emerald-500 dark:border-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
@@ -174,32 +174,34 @@
                                 </td>
                             @endif
 
-                            <td class="flex items-center justify-end py-3.5 pr-5 text-sm font-medium whitespace-nowrap">
-                                <button type="button">
-                                    <x-heroicon-o-paper-clip
-                                        class="w-[25px] h-[25px] p-1 duration-100 ease-in-out rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                </button>
+                            <td
+                                class="py-1 pr-5 text-sm font-medium whitespace-nowrap text-slate-800 dark:text-slate-200">
+                                <div class="flex items-center justify-end space-x-1">
+                                    @if ($transaction->attachments)
+                                        <x-pure-finance.attachments-modal :attachments="$transaction->attachments" />
+                                    @endif
 
-                                <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}">
-                                    <x-heroicon-o-pencil-square
-                                        class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                </a>
+                                    <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}">
+                                        <x-heroicon-o-pencil-square
+                                            class="p-1 text-indigo-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                    </a>
 
-                                <x-modal icon="information-circle" delete variant="danger"
-                                    wire:submit="delete({{ $transaction->id }})">
-                                    <x-slot:button>
-                                        <x-heroicon-o-trash
-                                            class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                    </x-slot:button>
+                                    <x-modal icon="information-circle" delete variant="danger"
+                                        wire:submit="delete({{ $transaction->id }})">
+                                        <x-slot:button>
+                                            <x-heroicon-o-trash
+                                                class="p-1 -mr-2 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                        </x-slot:button>
 
-                                    <x-slot:title>
-                                        Delete Transaction
-                                    </x-slot:title>
+                                        <x-slot:title>
+                                            Delete Transaction
+                                        </x-slot:title>
 
-                                    <x-slot:body>
-                                        Are you sure you want to delete this transaction?
-                                    </x-slot:body>
-                                </x-modal>
+                                        <x-slot:body>
+                                            Are you sure you want to delete this transaction?
+                                        </x-slot:body>
+                                    </x-modal>
+                                </div>
                             </td>
                         </tr>
                     @empty

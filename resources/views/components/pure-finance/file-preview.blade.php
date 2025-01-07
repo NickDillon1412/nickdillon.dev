@@ -1,9 +1,11 @@
 @props(['file'])
+@use('App\Services\PureFinanceService', 'PureFinanceService')
 
 <div x-cloak x-data="{ filePreviewModalOpen: false }" x-on:keydown.escape.window="filePreviewModalOpen = false"
     class="relative w-auto h-auto z-60">
-    <div x-on:click="filePreviewModalOpen = true" class="w-10 h-10 cursor-pointer">
-        <img src="{{ $this->getS3Path($file['name']) }}" alt="{{ $file['name'] }}" class="w-10 h-10 rounded-md" />
+    <div x-on:click="filePreviewModalOpen = true" class="cursor-pointer">
+        <img src="{{ PureFinanceService::getS3Path($file['name']) }}" alt="{{ $file['name'] }}"
+            class="w-8 h-8 rounded-md " />
     </div>
 
     <div class="fixed inset-0 z-[99] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
@@ -34,7 +36,7 @@
             </div>
 
             <div class="flex justify-center p-5">
-                <img src="{{ $this->getS3Path($file['name']) }}" alt="{{ $file['name'] }}"
+                <img src="{{ PureFinanceService::getS3Path($file['name']) }}" alt="{{ $file['name'] }}"
                     class="rounded-md max-h-[550px]" />
             </div>
         </div>
