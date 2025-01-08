@@ -18,8 +18,13 @@
             <flux:icon.arrow-up-to-line wire:target='files' wire:loading.remove
                 class="!h-6 !w-6 !mb-3 !text-slate-400" />
 
-            <flux:icon.loader-circle wire:target='files' wire:loading
-                class="!w-6 !h-6 !mb-3 animate-spin !text-slate-500" />
+            <div class="flex items-center justify-center mb-3.5 space-x-1.5 text-sm italic font-medium text-slate-500"
+                wire:target='files' wire:loading.flex>
+                <span>Uploading files</span>
+
+                <flux:icon.loader-circle wire:target='files' wire:loading
+                    class="!w-5 !h-5 !mb-0.5 animate-spin !text-slate-500" />
+            </div>
 
             <p class="mb-2 text-sm text-slate-500 dark:text-slate-400">
                 <span class="font-semibold text-indigo-500">
