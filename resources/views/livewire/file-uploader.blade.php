@@ -11,7 +11,7 @@
         }
     }" x-on:dragenter.prevent="isDragging = true" x-on:dragleave.prevent="isDragging = false"
         x-on:dragover.prevent x-on:drop="handleDrop($event)" class="relative">
-        <label for="files"
+        {{-- <label for="files"
             class="flex flex-col items-center justify-center w-full h-48 transition-colors border border-dashed rounded-lg cursor-pointer bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-500 dark:hover:border-indigo-600 hover:border-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-950/50"
             :class="isDragging ? '!border-indigo-500 !bg-indigo-50 dark:!bg-indigo-950/50' :
                 'border-slate-300 dark:border-slate-700'">
@@ -40,7 +40,17 @@
 
             <input id="files" name="files" type="file" x-ref="input" wire:model="files"
                 accept=".jpg, .jpeg, .png, .heic, .svg, .avif, .webp" class="hidden cursor-pointer" multiple />
-        </label>
+        </label> --}}
+
+        <x-filepond::upload wire:model="files" multiple
+            placeholder="
+        <p class='text-sm text-slate-500 dark:text-slate-400'>
+            <span class='font-medium text-indigo-500 duration-200 ease-in-out cursor-pointer hover:text-indigo-600 dark:text-indigo-600 dark:hover:text-indigo-500'>
+                Click to upload
+            </span>
+
+            or drag and drop
+            </p>" />
 
         @if ($uploaded_files)
             <div class="space-y-2.5">

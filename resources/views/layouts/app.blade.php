@@ -57,6 +57,7 @@
 
     @filamentScripts
     @fluxScripts
+    @filepondScripts
     @livewireScriptConfig
 </body>
 

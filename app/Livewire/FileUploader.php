@@ -11,10 +11,11 @@ use Livewire\Attributes\Validate;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Storage;
+use Spatie\LivewireFilepond\WithFilePond;
 
 class FileUploader extends Component
 {
-    use WithFileUploads;
+    use WithFilePond;
 
     #[Validate([
         'files' => ['required', 'array'],
@@ -54,6 +55,13 @@ class FileUploader extends Component
             $bytes >= 1024 => round($bytes / 1024, 2) . ' KB',
             default => $bytes . ' Bytes',
         };
+    }
+
+    public function validateUploadedFile()
+    {
+        $this->validate();
+
+        return true;
     }
 
     public function updatedFiles(): void
