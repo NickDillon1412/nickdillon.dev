@@ -1,4 +1,5 @@
 @use('App\Enums\PureFinance\TransactionType', 'TransactionType')
+@use('App\Enums\PureFinance\RecurringFrequency', 'RecurringFrequency')
 
 <div class="w-full max-w-4xl p-4 mx-auto space-y-5 overflow-y-hidden sm:py-8 sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
@@ -7,7 +8,7 @@
 
     <form wire:submit='submit' class="space-y-4">
         <div
-            class="grid items-start grid-cols-1 gap-4 p-6 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200 sm:grid-cols-2">
+            class="grid items-start grid-cols-1 gap-5 p-6 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200 sm:grid-cols-2">
             <div class="space-y-5">
                 @if (!$transaction)
                     <div>
@@ -75,6 +76,12 @@
                 </div>
 
                 <div>
+                    <x-pure-finance.tags-multi-select :$tags />
+
+                    <x-input-error :messages="$errors->get('tags')" class="mt-2" />
+                </div>
+
+                <div>
                     <x-input-label for="notes" :value="__('Notes')" />
 
                     <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes"
@@ -84,7 +91,7 @@
                 </div>
 
                 <div>
-                    <label class="space-y-1.5" for="status">
+                    <label class="space-y-2" for="status">
                         <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
                             Status
                         </p>
@@ -143,6 +150,57 @@
                     <x-datepicker field="date" />
 
                     <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                </div>
+
+                <div>
+                    <label class="space-y-2" for="is_recurring">
+                        <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                            Recurring?
+                        </p>
+
+                        <div class="flex items-center cursor-pointer w-fit">
+                            <input type="checkbox" id="is_recurring" name="is_recurring" x-model="$wire.is_recurring"
+                                class="sr-only peer" />
+
+                            <div
+                                class="relative w-11 h-6 bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-600">
+                            </div>
+
+                            <span class="text-sm italic ms-2.5 text-slate-500 dark:text-slate-400"
+                                x-text="$wire.is_recurring ? 'Yes' : 'No'"></span>
+                        </div>
+                    </label>
+                </div>
+
+                <div x-cloak x-show="$wire.is_recurring" x-collapse class="space-y-5">
+                    <div>
+                        <div class="flex space-x-1">
+                            <x-input-label for="frequency" :value="__('Frequency')" />
+
+                            <span class="text-rose-500">*</span>
+                        </div>
+
+                        <select wire:model='frequency' id="frequency"
+                            class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            <option value="">-- Select a frequency --</option>
+
+                            @foreach (RecurringFrequency::cases() as $frequency)
+                                <option value="{{ $frequency->value }}">
+                                    Every {{ $frequency->label() }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <x-input-error :messages="$errors->get('frequency')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="recurring_end" :value="__('End Date')" />
+
+                        <x-datepicker field="recurring_end" />
+
+                        <x-input-error :messages="$errors->get('recurring_end')" class="mt-2" />
+                    </div>
                 </div>
             </div>
         </div>

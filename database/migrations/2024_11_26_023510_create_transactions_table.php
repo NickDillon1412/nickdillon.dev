@@ -24,6 +24,9 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->json('attachments')->nullable();
             $table->boolean('status')->default(false);
+            $table->boolean('is_recurring')->default(false);
+            $table->string('frequency')->nullable();
+            $table->date('recurring_end')->nullable();
             $table->timestamps();
         });
     }
