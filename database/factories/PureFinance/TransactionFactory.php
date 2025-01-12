@@ -20,6 +20,12 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
+        $transaction_date = $this->faker->dateTimeBetween('-2 years', 'now');
+
+        $frequency = Arr::random(['month', 'year']);
+
+        $recurring_end = (clone $transaction_date)->modify("+1 {$frequency}");
+
         return [
             'account_id' => Account::count() > 0
                 ? Account::inRandomOrder()->first()->id
@@ -30,9 +36,12 @@ class TransactionFactory extends Factory
             'type' => Arr::random(TransactionType::cases()),
             'amount' => $this->faker->randomFloat(2, 0, 100),
             'description' => $this->faker->text(30),
-            'date' => $this->faker->dateTimeBetween('-2 years', 'now')->format('Y-m-d'),
+            'date' => $transaction_date->format('Y-m-d'),
             'notes' => $this->faker->paragraph(4),
-            'status' => Arr::random([true, false])
+            'status' => Arr::random([true, false]),
+            'is_recurring' => Arr::random([true, false]),
+            'frequency' => $frequency,
+            'recurring_end' => $recurring_end->format('Y-m-d')
         ];
     }
 }
