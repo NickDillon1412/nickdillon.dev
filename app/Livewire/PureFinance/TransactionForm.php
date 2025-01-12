@@ -40,6 +40,10 @@ class TransactionForm extends Component
 
     public string $date = '';
 
+    public array $user_tags = [];
+
+    public array $tags = [];
+
     public string $notes = '';
 
     public ?array $attachments = [];
@@ -48,9 +52,9 @@ class TransactionForm extends Component
 
     public bool $is_recurring = false;
 
-    public RecurringFrequency $frequency;
+    public ?RecurringFrequency $frequency = null;
 
-    public string $recurring_end = '';
+    public ?string $recurring_end = null;
 
     protected function rules(): array
     {
@@ -61,25 +65,26 @@ class TransactionForm extends Component
             'amount' => ['required'],
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
+            'tags' => ['nullable', 'array'],
             'notes' => ['nullable', 'string'],
             'attachments' => ['nullable', 'array'],
             'status' => ['required', 'boolean'],
             'is_recurring' => ['required', 'boolean'],
             'frequency' => ['nullable', 'required_if:is_recurring,true', Rule::enum(RecurringFrequency::class)],
-            'recurring_end' => [
+            'recurring_end' => array_filter([
                 'nullable',
                 'date',
-                new FrequencyIntervalRule(
-                    $this->date,
-                    $this->recurring_end,
-                    $this->frequency
-                ),
-            ],
+                $this->is_recurring ?
+                    new FrequencyIntervalRule($this->date, $this->recurring_end, $this->frequency) :
+                    null,
+            ]),
         ];
     }
 
     public function mount(): void
     {
+        $this->user_tags = auth()->user()->tags->select(['id', 'name'])->toArray();
+
         if ($this->transaction) {
             $this->account_id = $this->transaction->account_id;
             $this->description = $this->transaction->description;
@@ -87,11 +92,12 @@ class TransactionForm extends Component
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
             $this->date = $this->transaction->date->format('n/d/Y');
+            $this->tags = $this->transaction->tags->toArray();
             $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
             $this->is_recurring = $this->transaction->is_recurring;
             $this->frequency = $this->transaction->frequency;
-            $this->recurring_end = $this->transaction->recurring_end->format('n/d/Y');
+            $this->recurring_end = $this->transaction->recurring_end?->format('n/d/Y');
         }
     }
 
@@ -114,9 +120,17 @@ class TransactionForm extends Component
             $validated_data['attachments'] = $this->attachments;
         }
 
-        $this->transaction
-            ? $this->transaction->update($validated_data)
-            : auth()->user()->transactions()->create($validated_data);
+        $current_tags = collect($this->tags)->pluck('id')->toArray();
+
+        if ($this->transaction) {
+            $this->transaction->tags()->sync($current_tags);
+
+            $this->transaction->update($validated_data);
+        } else {
+            $new_transaction = auth()->user()->transactions()->create($validated_data);
+
+            $new_transaction->tags()->sync($current_tags);
+        }
 
         Notification::make()
             ->title("Transaction successfully " . ($this->transaction ? "updated" : "created"))
