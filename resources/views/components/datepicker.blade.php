@@ -14,7 +14,7 @@
         </svg>
     </div>
 
-    <div x-cloak x-show="$wire.date" class="absolute inset-0 left-auto flex items-center mr-4">
+    <div x-cloak x-show="$wire.{{ $field }}" class="absolute inset-0 left-auto flex items-center mr-4">
         <button type="button" x-on:click="flatpickr.clear()" class="focus:outline-none">
             <x-heroicon-s-x-mark
                 class="w-6 h-6 p-0.5 -mr-2 text-red-500 duration-100 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
@@ -35,7 +35,7 @@
                     this.flatpickr = flatpickr(this.$refs.datepicker, {
                         wrap: true,
                         dateFormat: 'n/d/Y',
-                        monthSelectorType: 'static',
+                        monthSelectorType: 'dropdown',
                         defaultDate: this.$wire.get('{{ $field }}'),
                         prevArrow: '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
                         nextArrow: '<svg class="fill-current" width="7" height="11"><path d="M1.4 10.8L0 9.4l4-4-4-4L1.4 0l5.4 5.4z" /></svg>',

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire\PureFinance;
 
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
@@ -16,6 +15,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
 use App\Enums\PureFinance\TransactionType;
+use App\Enums\PureFinance\RecurringFrequency;
+use App\Rules\PureFinance\FrequencyIntervalRule;
 use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('layouts.app')]
@@ -45,6 +46,12 @@ class TransactionForm extends Component
 
     public bool $status = false;
 
+    public bool $is_recurring = false;
+
+    public RecurringFrequency $frequency;
+
+    public string $recurring_end = '';
+
     protected function rules(): array
     {
         return [
@@ -57,6 +64,17 @@ class TransactionForm extends Component
             'notes' => ['nullable', 'string'],
             'attachments' => ['nullable', 'array'],
             'status' => ['required', 'boolean'],
+            'is_recurring' => ['required', 'boolean'],
+            'frequency' => ['nullable', 'required_if:is_recurring,true', Rule::enum(RecurringFrequency::class)],
+            'recurring_end' => [
+                'nullable',
+                'date',
+                new FrequencyIntervalRule(
+                    $this->date,
+                    $this->recurring_end,
+                    $this->frequency
+                ),
+            ],
         ];
     }
 
@@ -68,9 +86,12 @@ class TransactionForm extends Component
             $this->type = $this->transaction->type;
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
-            $this->date = Carbon::parse($this->transaction->date)->format('n/d/Y');
+            $this->date = $this->transaction->date->format('n/d/Y');
             $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
+            $this->is_recurring = $this->transaction->is_recurring;
+            $this->frequency = $this->transaction->frequency;
+            $this->recurring_end = $this->transaction->recurring_end->format('n/d/Y');
         }
     }
 
@@ -82,8 +103,6 @@ class TransactionForm extends Component
 
     public function submit(): RedirectResponse|Redirector
     {
-        $this->date = Carbon::parse($this->date)->format('Y-m-d');
-
         $validated_data = $this->validate();
 
         if ($this->transaction) {
