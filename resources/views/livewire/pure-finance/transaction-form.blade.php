@@ -76,6 +76,12 @@
                 </div>
 
                 <div>
+                    <x-pure-finance.tags-multi-select :$tags />
+
+                    <x-input-error :messages="$errors->get('tags')" class="mt-2" />
+                </div>
+
+                <div>
                     <x-input-label for="notes" :value="__('Notes')" />
 
                     <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes"
@@ -174,7 +180,7 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <select wire:model='frequency' id="frequency" required
+                        <select wire:model='frequency' id="frequency"
                             class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">-- Select a frequency --</option>
 
