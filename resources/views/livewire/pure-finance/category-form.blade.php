@@ -35,13 +35,13 @@
             <div class="space-y-5">
                 <div class="pt-5 px-5">
                     <div class="flex space-x-1">
-                        <x-input-label for="name" :value="__('Name')" />
+                        <x-input-label for="category-name" :value="__('Name')" />
 
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="name" id="name" class="block w-full mt-1 text-sm" type="text"
-                        name="name" autocomplete="name" />
+                    <x-text-input wire:model="name" id="category-name" class="block w-full mt-1 text-sm" type="text"
+                        name="category-name" autocomplete="name" />
 
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>

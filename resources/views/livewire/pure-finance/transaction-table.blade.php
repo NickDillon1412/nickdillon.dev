@@ -22,7 +22,7 @@
                     </label>
 
                     <input type="text" wire:model.live.debounce.300ms='search' name="search" id="search"
-                        class="block w-full px-3 py-1.5 text-sm rounded-md shadow-sm border-slate-300 ps-9 focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400 dark:placeholder-slate-500 dark:focus:ring-indigo-600"
+                        class="block w-full px-3 py-1.5 text-sm rounded-lg shadow-sm border-slate-300 ps-9 focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400 dark:placeholder-slate-500 dark:focus:ring-indigo-600"
                         placeholder="Search transactions..." />
 
                     <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
@@ -37,7 +37,7 @@
                     <button x-cloak x-show="$wire.search.length > 0" wire:click="$set('search', '')"
                         class="absolute inset-0 left-auto pr-4" type="submit" aria-label="Search">
                         <x-heroicon-s-x-mark
-                            class="w-5 h-5 duration-200 ease-in-out text-slate-500 hover:text-slate-600 dark:hover:text-slate-400" />
+                            class="w-6 h-6 p-0.5 text-rose-500 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
                     </button>
                 </div>
 

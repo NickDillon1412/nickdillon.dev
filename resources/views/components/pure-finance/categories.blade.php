@@ -14,9 +14,11 @@
         return category ? category.name : 'Select a category';
     }
 }" wire:ignore>
-    <div class="cursor-default block text-sm font-medium text-slate-700 dark:text-slate-300">
+    <p class="cursor-default block text-sm font-medium text-slate-700 dark:text-slate-300">
         Category
-    </div>
+
+        <span class="text-rose-500">*</span>
+    </p>
 
     <div class="relative inline-flex w-full">
         <div class="flex items-stretch w-full mt-2">
@@ -42,11 +44,11 @@
             x-transition:leave-end="opacity-0" style="display: none;">
             <div class="text-sm font-medium text-slate-600 dark:text-slate-300">
                 <div class="relative mb-1 border-b border-slate-300 dark:border-slate-700">
-                    <label for="search" class="sr-only">
+                    <label for="category-search" class="sr-only">
                         Search
                     </label>
 
-                    <input type="text" x-model="search" name="search" id="search"
+                    <input type="text" x-model="search" name="category-search" id="category-search"
                         class="block w-full px-3 py-1.5 my-0.5 text-sm shadow-xs border-none ps-9 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:text-slate-400 dark:placeholder-slate-500 focus:ring-0"
                         placeholder="Search categories..." />
 
@@ -62,21 +64,21 @@
                     <div class="absolute flex items-center -space-x-0.5 pr-1 inset-0 left-auto">
                         <button x-cloak x-show="search.length > 0" x-on:click="search = ''" type="button" aria-label="Search">
                             <x-heroicon-s-x-mark
-                                class="w-6 h-6 p-0.5 text-rose-500 duration-100 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                class="w-6 h-6 p-0.5 text-rose-500 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
                         </button>
 
                         <livewire:pure-finance.category-form />
                     </div>
                 </div>
 
-                <div class="px-1 overflow-y-scroll max-h-[200px]">
+                <div class="px-1 overflow-y-scroll max-h-[250px]">
                     <template x-for="(category, index) in filteredCategories" :key="index">
                         <button type="button" x-on:click="category_id = category.id; search = ''"
                             class="flex items-center w-full px-3 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 justify-between" :class="{ 'bg-slate-100 dark:bg-slate-800': selectedCategoryName === category.name }">
                             <span class="text-sm capitalize" x-text="category.name"></span>
 
                             <div x-cloak x-show="selectedCategoryName === category.name">
-                                <flux:icon.check class="h-5 pr-0 w-5 p-0.5 text-slate-600 dark:text-slate-400" />
+                                <flux:icon.check class="h-5 -mr-1.5 w-5 p-0.5 text-slate-600 stroke-indigo-600 stroke-2 dark:text-slate-400" />
                             </div>
                         </button>
                     </template>
