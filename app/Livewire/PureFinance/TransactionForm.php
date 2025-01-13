@@ -10,7 +10,6 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
-use App\Models\PureFinance\Category;
 use Illuminate\Http\RedirectResponse;
 use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
@@ -26,11 +25,13 @@ class TransactionForm extends Component
 
     public Collection $accounts;
 
-    public Collection $categories;
+    public array $categories = [];
 
     public int $account_id;
 
     public string $description = '';
+
+    public array $transaction_types = [];
 
     public TransactionType $type;
 
@@ -83,7 +84,10 @@ class TransactionForm extends Component
 
     public function mount(): void
     {
-        $this->user_tags = auth()->user()->tags->select(['id', 'name'])->toArray();
+        $this->getAccounts()
+            ->getCategories()
+            ->getTransactionTypes()
+            ->getUserTags();
 
         if ($this->transaction) {
             $this->account_id = $this->transaction->account_id;
@@ -101,10 +105,54 @@ class TransactionForm extends Component
         }
     }
 
-    #[On('tag-saved')]
-    public function refreshTags(): void
+    public function getAccounts(): self
     {
-        $this->user_tags = auth()->user()->tags->select(['id', 'name'])->toArray();
+        $this->accounts = auth()
+            ->user()
+            ->accounts()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+
+        return $this;
+    }
+
+    #[On('category-saved')]
+    public function getCategories(): self
+    {
+        $this->categories = auth()
+            ->user()
+            ->categories()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        return $this;
+    }
+
+    public function getTransactionTypes(): self
+    {
+        $this->transaction_types = collect(TransactionType::cases())
+            ->sortBy('value')
+            ->values()
+            ->all();
+
+        return $this;
+    }
+
+    #[On('tag-saved')]
+    public function getUserTags(): self
+    {
+        $this->user_tags = auth()
+            ->user()
+            ->tags()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        return $this;
     }
 
     #[On('file-uploaded')]
@@ -148,10 +196,6 @@ class TransactionForm extends Component
 
     public function render(): View
     {
-        $this->accounts = auth()->user()->accounts->pluck('name', 'id');
-
-        $this->categories = Category::pluck('name', 'id');
-
         return view('livewire.pure-finance.transaction-form');
     }
 }
