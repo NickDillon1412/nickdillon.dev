@@ -101,6 +101,12 @@ class TransactionForm extends Component
         }
     }
 
+    #[On('tag-saved')]
+    public function refreshTags(): void
+    {
+        $this->user_tags = auth()->user()->tags->select(['id', 'name'])->toArray();
+    }
+
     #[On('file-uploaded')]
     public function pushToAttachments(array $file): void
     {

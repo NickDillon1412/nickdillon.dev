@@ -16,7 +16,7 @@ new class extends Component {
 }; ?>
 
 <nav
-    class="sticky top-0 z-30 w-full transition-all duration-200 ease-in-out bg-white border-b lg:rounded-br-2xl border-slate-200/60 dark:bg-slate-800 dark:border-slate-700/10">
+    class="sticky top-0 w-full transition-all duration-200 ease-in-out bg-white border-b lg:rounded-br-2xl border-slate-200/60 dark:bg-slate-800 dark:border-slate-700/10">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">

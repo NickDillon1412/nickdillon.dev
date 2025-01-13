@@ -1,4 +1,4 @@
-@props(['tags'])
+@props(['tags', 'transaction' => null])
 
 <div x-data="{
     showDropdown: false,
@@ -18,38 +18,36 @@
     </button>
 
     <div class="relative inline-flex w-full">
-        <div
-            class="flex items-center w-full mt-2 text-sm text-left rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-            <button type="button" x-ref="multiselect" class="flex items-center justify-between w-full"
-                aria-label="Select date range" aria-haspopup="true" x-on:click="showDropdown = true"
-                :aria-expanded="showDropdown" aria-expanded="false">
-                <div class="flex items-center gap-1">
-                    <p class="px-1.5" x-cloak x-show="tags.length === 0">
-                        -- Select tags --
-                    </p>
+        <div class="flex items-stretch w-full mt-2">
+            <div
+                class="flex items-center w-full text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-[9px] dark:text-slate-300 z-10"
+                :class="{ '!border-indigo-500 dark:!border-indigo-600 ring-1 !ring-indigo-500 dark:!ring-indigo-600': showDropdown }">
+                <button type="button" x-ref="multiselect" class="flex items-center justify-between py-0 w-full"
+                    aria-label="Select date range" aria-haspopup="true" x-on:click="showDropdown = true"
+                    :aria-expanded="showDropdown" aria-expanded="false">
+                    <div class="flex-wrap flex items-center gap-1">
+                        <p class="-my-[1px] text-slate-600 dark:text-slate-300" x-cloak x-show="tags.length === 0">
+                            Select tags
+                        </p>
 
-                    <template x-for="(value, index) in tags" :key="index">
-                        <div
-                            class="rounded px-1.5 text-xs text-indigo-400 dark:text-indigo-500 bg-indigo-100 dark:bg-indigo-900/50 border border-indigo-400 dark:border-indigo-500 flex items-center justify-between space-x-0.5">
-                            <p x-text="value.name"></p>
+                        <template x-for="(value, index) in tags" :key="index">
+                            <div
+                                class="rounded px-1.5 text-xs text-indigo-400 dark:text-indigo-500 bg-indigo-100 dark:bg-indigo-900/50 border border-indigo-400 dark:border-indigo-500 flex items-center justify-between space-x-0.5">
+                                <p x-text="value.name"></p>
 
-                            <button type="button" x-on:click="tags.splice(index, 1); search = ''"
-                                class="focus:outline-none">
-                                <x-heroicon-s-x-mark class="w-3 h-3" />
-                            </button>
-                        </div>
-                    </template>
-                </div>
+                                <button type="button" x-on:click="tags.splice(index, 1); search = ''"
+                                    class="focus:outline-none">
+                                    <x-heroicon-s-x-mark class="w-3 h-3" />
+                                </button>
+                            </div>
+                        </template>
+                    </div>
 
-                <svg class="mx-1 fill-current shrink-0 text-slate-500" width="11" height="7" viewBox="0 0 11 7">
-                    <path d="M5.4 6.8L0 1.4 1.4 0l4 4 4-4 1.4 1.4z"></path>
-                </svg>
-            </button>
-
-            <button type="button" class="border-l border-slate-300 dark:border-slate-700">
-                <x-heroicon-o-plus
-                    class="w-6 h-6 p-0.5 text-slate-500 rounded-r-lg duration-100 ease-in-out hover:bg-slate-200 dark:hover:bg-slate-700" />
-            </button>
+                    <svg class="ml-1 fill-current shrink-0 text-slate-500" width="11" height="7" viewBox="0 0 11 7">
+                        <path d="M5.4 6.8L0 1.4 1.4 0l4 4 4-4 1.4 1.4z"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div class="absolute left-0 z-10 w-full pb-1 mt-1 overflow-hidden bg-white border rounded-lg shadow-lg dark:bg-slate-900 top-full border-slate-200 dark:border-slate-700"
@@ -77,14 +75,17 @@
                         </svg>
                     </div>
 
-                    <button x-cloak x-show="search.length > 0" x-on:click="search = ''"
-                        class="absolute inset-0 left-auto pr-2" type="button" aria-label="Search">
-                        <x-heroicon-s-x-mark
-                            class="w-6 h-6 p-0.5 text-slate-500 duration-100 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
-                    </button>
+                    <div class="absolute flex items-center -space-x-0.5 pr-1 inset-0 left-auto">
+                        <button x-cloak x-show="search.length > 0" x-on:click="search = ''" type="button" aria-label="Search">
+                            <x-heroicon-s-x-mark
+                                class="w-6 h-6 p-0.5 text-rose-500 duration-100 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
+                        </button>
+
+                        <livewire:pure-finance.tag-form :$transaction />
+                    </div>
                 </div>
 
-                <div class="px-1">
+                <div class="px-1 overflow-y-scroll max-h-[200px]">
                     <template x-for="(value, index) in filteredTags" :key="index">
                         <button type="button" :for="value.name" x-on:click="tags.push(value); search = ''"
                             class="flex items-center w-full px-3 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
