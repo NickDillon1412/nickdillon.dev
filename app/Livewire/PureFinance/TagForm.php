@@ -49,8 +49,6 @@ class TagForm extends Component
             ->title("Tag successfully " . ($this->tag ? "updated" : "created"))
             ->success()
             ->send();
-
-        $this->dispatch('tag-saved');
     }
 
     public function render(): View
