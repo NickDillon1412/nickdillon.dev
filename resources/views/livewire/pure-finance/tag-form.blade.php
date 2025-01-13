@@ -1,8 +1,7 @@
-<div x-cloak x-data="{ tagFormModalOpen: $wire.entangle('modal_open').live }" x-on:keydown.escape.window="tagFormModalOpen = false"
-    class="relative w-auto h-auto">
-    <button x-on:click="tagFormModalOpen = true" type="button" class="dark:bg-slate-900 m-0.5 p-0.5 duration-100 ease-in-out hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md">
-        <x-heroicon-o-plus
-            class="w-5 h-5 text-slate-600 dark:text-slate-500" />
+<div x-cloak x-data="{ tagFormModalOpen: $wire.entangle('modal_open').live }" x-on:keydown.escape.window="tagFormModalOpen = false" class="relative w-auto h-auto">
+    <button x-on:click="tagFormModalOpen = true" type="button"
+        class="dark:bg-slate-900 m-0.5 p-0.5 duration-100 ease-in-out hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md">
+        <x-heroicon-o-plus class="w-5 h-5 text-slate-600 dark:text-slate-500" />
     </button>
 
     <div class="fixed inset-0 z-[90] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
@@ -33,14 +32,14 @@
             </div>
 
             <div class="space-y-5">
-                <div class="pt-5 px-5">
+                <div class="px-5 pt-5">
                     <div class="flex space-x-1">
                         <x-input-label for="tag-name" :value="__('Name')" />
 
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="name" id="tag-name" class="block w-full mt-1 text-sm" type="text"
+                    <x-text-input wire:model="name" id="tag-name" class="block w-full mt-2 text-sm" type="text"
                         name="tag-name" autocomplete="name" />
 
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -52,7 +51,8 @@
                             Cancel
                         </flux:button>
 
-                        <flux:button variant="indigo" class="!px-5" type="button" wire:click='submit' x-on:click="$dispatch('tag-saved')">
+                        <flux:button variant="indigo" class="!px-5" type="button" wire:click='submit'
+                            x-on:click="$dispatch('tag-saved')">
                             Submit
                         </flux:button>
                     </div>
