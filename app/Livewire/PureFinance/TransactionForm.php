@@ -6,8 +6,8 @@ namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -71,7 +71,11 @@ class TransactionForm extends Component
             'attachments' => ['nullable', 'array'],
             'status' => ['required', 'boolean'],
             'is_recurring' => ['required', 'boolean'],
-            'frequency' => ['nullable', 'required_if:is_recurring,true', Rule::enum(RecurringFrequency::class)],
+            'frequency' => [
+                'nullable',
+                'required_if:is_recurring,true',
+                Rule::enum(RecurringFrequency::class)
+            ],
             'recurring_end' => array_filter([
                 'nullable',
                 'date',
