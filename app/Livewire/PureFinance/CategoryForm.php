@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\PureFinance;
 
-use App\Models\PureFinance\Category;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Illuminate\Contracts\View\View;
+use App\Models\PureFinance\Category;
 use Filament\Notifications\Notification;
 
 class CategoryForm extends Component

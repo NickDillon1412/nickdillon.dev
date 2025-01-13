@@ -1,20 +1,21 @@
-@props(['tags', 'transaction' => null])
+@props(['transaction' => null])
 
 <div x-data="{
     showDropdown: false,
     tags: $wire.entangle('tags'),
+    user_tags: $wire.entangle('user_tags'),
     search: '',
     get filteredTags() {
-        return $wire.user_tags.filter(function(user_tag) {
+        return this.user_tags.filter(function(user_tag) {
             return !this.tags.some(function(tag) {
                 return tag.id === user_tag.id;
             }) && user_tag.name.toLowerCase().includes(this.search.toLowerCase());
         }.bind(this));
     }
 }" wire:ignore>
-    <div class="cursor-default block text-sm font-medium text-slate-700 dark:text-slate-300">
+    <p class="cursor-default block text-sm font-medium text-slate-700 dark:text-slate-300">
         Tags
-    </div>
+    </p>
 
     <div class="relative inline-flex w-full">
         <div class="flex items-stretch w-full mt-2">
@@ -56,11 +57,11 @@
             x-transition:leave-end="opacity-0" style="display: none;">
             <div class="text-sm font-medium text-slate-600 dark:text-slate-300">
                 <div class="relative mb-1 border-b border-slate-300 dark:border-slate-700">
-                    <label for="search" class="sr-only">
+                    <label for="tag-search" class="sr-only">
                         Search
                     </label>
 
-                    <input type="text" x-model="search" name="search" id="search"
+                    <input type="text" x-model="search" name="tag-search" id="tag-search"
                         class="block w-full px-3 py-1.5 my-0.5 text-sm shadow-xs border-none ps-9 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:text-slate-400 dark:placeholder-slate-500 focus:ring-0"
                         placeholder="Search tags..." />
 
@@ -76,14 +77,14 @@
                     <div class="absolute flex items-center -space-x-0.5 pr-1 inset-0 left-auto">
                         <button x-cloak x-show="search.length > 0" x-on:click="search = ''" type="button" aria-label="Search">
                             <x-heroicon-s-x-mark
-                                class="w-6 h-6 p-0.5 text-rose-500 duration-100 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                class="w-6 h-6 p-0.5 text-rose-500 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
                         </button>
 
                         <livewire:pure-finance.tag-form :$transaction />
                     </div>
                 </div>
 
-                <div class="px-1 overflow-y-scroll max-h-[200px]">
+                <div class="px-1 overflow-y-scroll max-h-[250px]">
                     <template x-for="(value, index) in filteredTags" :key="index">
                         <button type="button" :for="value.name" x-on:click="tags.push(value); search = ''"
                             class="flex items-center w-full px-3 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">

@@ -55,30 +55,13 @@
                 </div>
 
                 <div>
-                    {{-- <div class="flex space-x-1">
-                        <x-input-label for="category_id" :value="__('Category')" />
-
-                        <span class="text-rose-500">*</span>
-                    </div> --}}
-
-                    {{-- <select wire:model='category_id' id="category_id" required
-                        class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                        <option value="">Select a category</option>
-
-                        @foreach ($categories as $key => $value)
-                            <option value="{{ $key }}">
-                                {{ $value }}
-                            </option>
-                        @endforeach
-                    </select> --}}
-
                     <x-pure-finance.categories />
 
                     <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-pure-finance.tags-multi-select :$tags :transaction="$transaction ?? null" />
+                    <x-pure-finance.tags-multi-select :transaction="$transaction ?? null" />
 
                     <x-input-error :messages="$errors->get('tags')" class="mt-2" />
                 </div>
