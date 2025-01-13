@@ -22,9 +22,9 @@
                             class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select an account</option>
 
-                            @foreach ($accounts as $key => $value)
-                                <option value="{{ $key }}">
-                                    {{ $value }}
+                            @foreach ($accounts as $account)
+                                <option value="{{ $account->id }}">
+                                    {{ $account->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -44,7 +44,7 @@
                         class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select a type</option>
 
-                        @foreach (TransactionType::cases() as $transaction_type)
+                        @foreach ($transaction_types as $transaction_type)
                             <option value="{{ $transaction_type->value }}">
                                 {{ $transaction_type->label() }}
                             </option>
@@ -55,13 +55,13 @@
                 </div>
 
                 <div>
-                    <div class="flex space-x-1">
+                    {{-- <div class="flex space-x-1">
                         <x-input-label for="category_id" :value="__('Category')" />
 
                         <span class="text-rose-500">*</span>
-                    </div>
+                    </div> --}}
 
-                    <select wire:model='category_id' id="category_id" required
+                    {{-- <select wire:model='category_id' id="category_id" required
                         class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select a category</option>
 
@@ -70,7 +70,9 @@
                                 {{ $value }}
                             </option>
                         @endforeach
-                    </select>
+                    </select> --}}
+
+                    <x-pure-finance.categories />
 
                     <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                 </div>
@@ -101,7 +103,7 @@
                                 class="sr-only peer" />
 
                             <div
-                                class="relative w-11 h-6 bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-emerald-500">
+                                class="relative z-0 w-11 h-6 bg-amber-500 dark:bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-emerald-500 dark:peer-checked:bg-emerald-600">
                             </div>
 
                             <span class="text-sm italic ms-2.5 text-slate-500 dark:text-slate-400"
@@ -163,7 +165,7 @@
                                 class="sr-only peer" />
 
                             <div
-                                class="relative w-11 h-6 bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-600">
+                                class="relative w-11 h-6 bg-amber-500 dark:bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-500 dark:peer-checked:bg-indigo-600">
                             </div>
 
                             <span class="text-sm italic ms-2.5 text-slate-500 dark:text-slate-400"
