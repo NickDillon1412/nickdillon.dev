@@ -82,6 +82,13 @@ class TransactionForm extends Component
         ];
     }
 
+    protected function messages(): array
+    {
+        return [
+            'category_id.required' => 'The category field is required.'
+        ];
+    }
+
     public function mount(): void
     {
         $this->getAccounts()
