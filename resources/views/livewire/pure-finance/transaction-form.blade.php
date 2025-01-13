@@ -20,7 +20,7 @@
 
                         <select wire:model='account_id' id="account_id" required
                             class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                            <option value="">-- Select an account --</option>
+                            <option value="">Select an account</option>
 
                             @foreach ($accounts as $key => $value)
                                 <option value="{{ $key }}">
@@ -42,7 +42,7 @@
 
                     <select wire:model='type' id="type" required
                         class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                        <option value="">-- Select a type --</option>
+                        <option value="">Select a type</option>
 
                         @foreach (TransactionType::cases() as $transaction_type)
                             <option value="{{ $transaction_type->value }}">
@@ -63,7 +63,7 @@
 
                     <select wire:model='category_id' id="category_id" required
                         class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                        <option value="">-- Select a category --</option>
+                        <option value="">Select a category</option>
 
                         @foreach ($categories as $key => $value)
                             <option value="{{ $key }}">
@@ -76,7 +76,7 @@
                 </div>
 
                 <div>
-                    <x-pure-finance.tags-multi-select :$tags />
+                    <x-pure-finance.tags-multi-select :$tags :transaction="$transaction ?? null" />
 
                     <x-input-error :messages="$errors->get('tags')" class="mt-2" />
                 </div>
@@ -101,7 +101,7 @@
                                 class="sr-only peer" />
 
                             <div
-                                class="relative w-11 h-6 bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-600">
+                                class="relative w-11 h-6 bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-emerald-500">
                             </div>
 
                             <span class="text-sm italic ms-2.5 text-slate-500 dark:text-slate-400"
@@ -182,7 +182,7 @@
 
                         <select wire:model='frequency' id="frequency"
                             class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                            <option value="">-- Select a frequency --</option>
+                            <option value="">Select a frequency</option>
 
                             @foreach (RecurringFrequency::cases() as $frequency)
                                 <option value="{{ $frequency->value }}">
