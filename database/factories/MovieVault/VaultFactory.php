@@ -4,6 +4,7 @@ namespace Database\Factories\MovieVault;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MovieVault\Vault>
@@ -18,7 +19,7 @@ class VaultFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1,
+            'user_id' => User::factory(),
             'vault_id' => 1234,
             'imdb_id' => 'tt0108037',
             'vault_type' => 'movie',

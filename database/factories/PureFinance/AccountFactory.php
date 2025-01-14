@@ -5,6 +5,7 @@ namespace Database\Factories\PureFinance;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Enums\PureFinance\AccountType;
 use Illuminate\Support\Arr;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Account>
@@ -19,7 +20,7 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1,
+            'user_id' => User::factory(),
             'type' => Arr::random(AccountType::cases()),
             'name' => Arr::random(['Cash', 'Checking', 'Credit Card', 'Savings']),
             'balance' => $this->faker->randomFloat(2, 500, 50000),

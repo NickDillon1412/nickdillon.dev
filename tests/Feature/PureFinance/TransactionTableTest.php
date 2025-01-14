@@ -12,21 +12,18 @@ use App\Models\PureFinance\Transaction;
 use App\Livewire\PureFinance\TransactionTable;
 
 beforeEach(function () {
+    $user = User::factory()->create();
+
     if (Category::count() === 0) {
-        Category::factory()->count(5)->create();
+        Category::factory()->for($user)->count(5)->create();
     }
 
-    $this->actingAs(
-        User::factory()
-            ->has(
-                Account::factory()
-                    ->has(
-                        Transaction::factory()->count(10),
-                        'transactions'
-                    )
-            )
-            ->create()
-    );
+    Account::factory()
+        ->for($user)
+        ->has(Transaction::factory()->count(10))
+        ->create();
+
+    $this->actingAs($user);
 });
 
 it('can update search', function () {
