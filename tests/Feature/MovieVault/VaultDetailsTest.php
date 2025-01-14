@@ -12,7 +12,7 @@ use function Pest\Livewire\livewire;
 beforeEach(function () {
     actingAs(
         User::factory()
-            ->hasVaults(1)
+            ->hasVaults(Vault::factory())
             ->create()
     );
 });

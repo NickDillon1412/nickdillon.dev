@@ -11,7 +11,7 @@
     </div>
 
     <div
-        class="bg-white border divide-y rounded-lg shadow-sm border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
+        class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
         <div class="flex justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 

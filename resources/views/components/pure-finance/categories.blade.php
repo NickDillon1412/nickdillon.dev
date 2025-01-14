@@ -73,15 +73,17 @@
                 </div>
 
                 <div class="px-1 overflow-y-scroll max-h-[250px]">
-                    <template x-for="(category, index) in filteredCategories" :key="index">
+                    <template x-for="category in filteredCategories" :key="category.id">
                         <button type="button" x-on:click="category_id = category.id; search = ''"
                             class="flex items-center justify-between w-full px-3 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                            :class="{ 'bg-slate-100 dark:bg-slate-800': selectedCategoryName === category.name }">
-                            <span class="text-sm capitalize" x-text="category.name"></span>
+                            :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
+                            <span class="text-sm capitalize"
+                                :class="{ 'text-indigo-600 font-medium': category_id === category.id }"
+                                x-text="category.name"></span>
 
-                            <div x-cloak x-show="selectedCategoryName === category.name">
+                            <div x-cloak x-show="category_id === category.id">
                                 <flux:icon.check
-                                    class="h-5 -mr-1.5 w-5 p-0.5 text-slate-600 stroke-indigo-600 stroke-2 dark:text-slate-400" />
+                                    class="h-5 -mr-1.5 w-5 p-0.5 stroke-indigo-600 stroke-2 dark:text-slate-400" />
                             </div>
                         </button>
                     </template>
