@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-use App\Enums\PureFinance\RecurringFrequency;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
 use App\Models\PureFinance\Account;
 use App\Models\PureFinance\Category;
 use function Pest\Livewire\livewire;
 use App\Models\PureFinance\Transaction;
 use App\Enums\PureFinance\TransactionType;
+use App\Enums\PureFinance\RecurringFrequency;
 use App\Livewire\PureFinance\TransactionForm;
 
 beforeEach(function () {
@@ -49,7 +50,7 @@ it('can edit a transaction', function () {
         ->assertHasNoErrors();
 });
 
-it('can make transaction recurring', function () {
+it('can make transaction recurring by month', function () {
     livewire(TransactionForm::class, [
         'transaction' => auth()->user()->transactions->first()
     ])
@@ -58,6 +59,42 @@ it('can make transaction recurring', function () {
         ->set('frequency', RecurringFrequency::MONTHLY)
         ->set('recurring_end', now()->addMonth())
         ->call('submit')
+        ->assertHasNoErrors();
+});
+
+it('can make transaction recurring by year', function () {
+    livewire(TransactionForm::class, [
+        'transaction' => auth()->user()->transactions->first()
+    ])
+        ->set('date', now())
+        ->set('is_recurring', true)
+        ->set('frequency', RecurringFrequency::YEARLY)
+        ->set('recurring_end', now()->addYear())
+        ->call('submit')
+        ->assertHasNoErrors();
+});
+
+it('can see validation error if end date is before start date', function () {
+    livewire(TransactionForm::class, [
+        'transaction' => auth()->user()->transactions->first()
+    ])
+        ->set('date', now())
+        ->set('is_recurring', true)
+        ->set('frequency', RecurringFrequency::MONTHLY)
+        ->set('recurring_end', now()->subWeek())
+        ->call('submit')
+        ->assertSee('The end date must be after the start date.')
+        ->assertHasErrors();
+});
+
+it('can push to attachments', function () {
+    $file = UploadedFile::fake()->image('pure-finance/files/logo.png');
+
+    livewire(TransactionForm::class)
+        ->call('pushToAttachments', [
+            'name' => 'logo.png',
+            'size' => $file->getSize()
+        ])
         ->assertHasNoErrors();
 });
 

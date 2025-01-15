@@ -31,7 +31,7 @@ class FileUploader extends Component
     protected function messages(): array
     {
         return [
-            'files.*' => 'File must be of type: jpg, jpeg, png, heic, svg, avif, webp/'
+            'files.*' => 'File must be of type: jpg, jpeg, png, heic, svg, avif, webp'
         ];
     }
 

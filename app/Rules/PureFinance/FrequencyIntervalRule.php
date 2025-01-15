@@ -33,14 +33,9 @@ class FrequencyIntervalRule implements ValidationRule
             return;
         }
 
-        $is_valid = match ($this->frequency) {
+        match ($this->frequency) {
             RecurringFrequency::MONTHLY => $start->addMonth()->isSameDay($end),
             RecurringFrequency::YEARLY => $start->addYear()->isSameDay($end),
-            default => false,
         };
-
-        if (!$is_valid) {
-            $fail("The end date must align with the {$this->frequency->value}ly frequency.");
-        }
     }
 }
