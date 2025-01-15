@@ -18,4 +18,9 @@ export default defineConfig({
             ],
         }),
     ],
+    // expose vite to the host - this allows vite to work
+    // from docker containers
+    server: {
+        host: true
+    }
 });

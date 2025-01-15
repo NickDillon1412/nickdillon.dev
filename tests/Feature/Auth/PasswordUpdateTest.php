@@ -3,8 +3,8 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {
     $user = User::factory()->create();
@@ -12,7 +12,7 @@ test('password can be updated', function () {
     $this->actingAs($user);
 
     $component = Volt::test('profile.update-password-form')
-        ->set('current_password', 'password')
+        ->set('current_password', 'Password')
         ->set('password', 'new-password')
         ->set('password_confirmation', 'new-password')
         ->call('updatePassword');

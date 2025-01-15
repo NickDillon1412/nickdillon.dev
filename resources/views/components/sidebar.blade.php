@@ -19,10 +19,10 @@
             </button>
 
             <a class="flex items-center justify-center w-full mt-1 space-x-1 text-slate-700 dark:text-slate-50"
-                href="{{ route('portfolio') }}">
+                href="{{ route('portfolio') }}" wire:navigate>
                 <x-heroicon-o-home class="w-6 h-6" />
 
-                <span x-show="sidebarExpanded || sidebarOpen" class="text-xl font-bold">
+                <span x-cloak x-show="sidebarExpanded || sidebarOpen" class="text-xl font-bold">
                     {{ config('app.name') }}
                 </span>
             </a>
@@ -43,6 +43,12 @@
                 <ul class="mt-3">
                     <x-sidebar-link title="Movie Vault" route="movie-vault.my-vault">
                         <x-heroicon-o-film />
+                    </x-sidebar-link>
+                </ul>
+
+                <ul class="mt-3">
+                    <x-sidebar-link title="Pure Finance" route="pure-finance.index">
+                        <x-heroicon-o-credit-card />
                     </x-sidebar-link>
                 </ul>
             </div>

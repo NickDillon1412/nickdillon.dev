@@ -11,7 +11,7 @@
     <a @class([
         'block text-slate-800 dark:text-slate-100 truncate transition',
         'hover:text-slate-900 dark:hover:text-white' => !$route_contains,
-    ])" href="{{ route($route) }}">
+    ])" href="{{ route($route) }}" wire:navigate>
         <div class="flex items-center">
             <div @class([
                 'w-5 h-5 shrink-0 text-slate-400 dark:text-slate-500',
