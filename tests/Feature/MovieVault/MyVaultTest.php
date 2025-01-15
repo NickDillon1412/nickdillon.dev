@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Livewire\MovieVault\MyVault;
-use App\Models\MovieVault\Vault;
 use App\Models\User;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use App\Models\MovieVault\Vault;
+use Illuminate\Support\Facades\URL;
+use App\Livewire\MovieVault\MyVault;
 
 use function Pest\Laravel\actingAs;
 use function Pest\Livewire\livewire;
