@@ -39,7 +39,7 @@
                     class="!h-8 !w-8 !-mr-4 !border-none hover:!bg-slate-200 dark:hover:!bg-slate-700 !shadow-none" />
             </div>
 
-            <form {{ $attributes->whereStartsWith('wire:submit') }}>
+            <form {{ $attributes->whereStartsWith('wire:submit') }} class="text-wrap">
                 {{ $body }}
 
                 <div class="flex justify-end mt-5">

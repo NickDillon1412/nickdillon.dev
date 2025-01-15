@@ -11,7 +11,26 @@
     </div>
 
     <div class="flex flex-col w-full pt-5">
-        <div class="inline-block min-w-full align-middle">
+        <div class="space-y-3">
+            @forelse ($accounts as $account)
+                <a href="{{ route('pure-finance.account.overview', $account) }}" wire:navigate class="bg-white block dark:bg-slate-800 rounded-xl border shadow-sm border-slate-200 dark:border-slate-600 px-3 py-2.5 w-full dark:text-slate-200">
+                    <p class="font-medium">{{ $account->name }}</p>
+
+                    <div class="flex items-center text-sm justify-between">
+                        <p>Balance</p>
+
+                        <p>${{ Number::format($account->balance, 2) }}</p>
+                    </div>
+                </a>
+            @empty
+                <div
+                    class="p-3 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">
+                    No accounts found...
+                </div>
+            @endforelse
+        </div>
+
+        <div class="hidden sm:inline-block min-w-full align-middle">
             <div class="overflow-x-auto border rounded-lg shadow-xs dark:border-slate-700">
                 <table class="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
                     <thead class="bg-slate-100/75 dark:bg-slate-700">
