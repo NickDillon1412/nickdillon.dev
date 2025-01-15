@@ -2,16 +2,12 @@
 
 use App\Livewire\MovieVault\Explore;
 use App\Livewire\MovieVault\MyVault;
-use App\Livewire\MovieVault\VaultDetails;
 use App\Livewire\MovieVault\Wishlist;
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-=======
 use App\Livewire\PureFinance\Accounts;
 use App\Livewire\MovieVault\VaultDetails;
 use App\Livewire\PureFinance\AccountOverview;
 use App\Livewire\PureFinance\TransactionForm;
->>>>>>> ac530820eb27da6531ec848ef84fc8321dc2e2c6
 
 Route::view('/', 'portfolio')->name('portfolio');
 
@@ -46,4 +42,4 @@ Route::middleware(['auth'])->group(function () {
         });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
