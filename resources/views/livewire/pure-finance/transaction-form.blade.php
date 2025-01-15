@@ -204,7 +204,7 @@
 
         <div class="flex justify-end">
             <div class="space-x-1 text-sm text-white">
-                <flux:button href="{{ route('pure-finance.index') }}" variant="outline" class="!px-5">
+                <flux:button href="{{ route('pure-finance.index') }}" wire:navigate variant="outline" class="!px-5">
                     Cancel
                 </flux:button>
 
