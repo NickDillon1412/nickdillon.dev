@@ -11,7 +11,7 @@
     </div>
 
     <div class="flex flex-col w-full pt-5">
-        <div class="space-y-3">
+        <div class="flex flex-col sm:hidden space-y-3">
             @forelse ($accounts as $account)
                 <a href="{{ route('pure-finance.account.overview', $account) }}" wire:navigate class="bg-white block dark:bg-slate-800 rounded-xl border shadow-sm border-slate-200 dark:border-slate-600 px-3 py-2.5 w-full dark:text-slate-200">
                     <p class="font-medium">{{ $account->name }}</p>
