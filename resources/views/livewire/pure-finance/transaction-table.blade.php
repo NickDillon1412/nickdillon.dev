@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-3 pt-5">
-    <div class="flex items-center justify-between w-full">
+    <div class="sm:flex space-y-2 sm:space-y-0 items-center justify-between w-full">
         <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
             Transactions
         </h1>
@@ -12,11 +12,11 @@
 
     <div
         class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
-        <div class="flex justify-between items-center px-5 py-3.5">
+        <div class="flex sm:flex-row flex-col-reverse sm:flex-auto sm:space-y-0 justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
-            <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                <div class="relative w-40 pr-2 sm:w-64">
+            <div class="flex items-center justify-between mb-3 sm:mb-0 -mr-1.5 space-x-1">
+                <div class="relative w-64 pr-2">
                     <label for="search" class="sr-only">
                         Search
                     </label>
