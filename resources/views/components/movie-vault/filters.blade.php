@@ -20,7 +20,7 @@
         <button
             class="p-2 duration-200 ease-in-out bg-white border rounded-md shadow-sm hover:bg-slate-200 dark:bg-slate-900 border-slate-300 dark:hover:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
             x-on:click="slideOverOpen = true">
-            <x-feathericon-filter />
+            <x-feathericon-filter class="!w-5 !h-5" />
         </button>
 
         <span x-cloak x-show="totalFilters() > 0"

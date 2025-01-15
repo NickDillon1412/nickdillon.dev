@@ -21,7 +21,7 @@ test('password can be confirmed', function () {
     $this->actingAs($user);
 
     $component = Volt::test('pages.auth.confirm-password')
-        ->set('password', 'password');
+        ->set('password', 'Password');
 
     $component->call('confirmPassword');
 

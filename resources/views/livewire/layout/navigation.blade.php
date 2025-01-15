@@ -16,7 +16,7 @@ new class extends Component {
 }; ?>
 
 <nav
-    class="sticky top-0 z-30 w-full transition-all duration-200 ease-in-out bg-white border-b lg:rounded-br-2xl border-slate-200/60 dark:bg-slate-800 dark:border-slate-700/10">
+    class="sticky top-0 w-full transition-all duration-200 ease-in-out bg-white border-b lg:rounded-br-2xl border-slate-200/60 dark:bg-slate-800 dark:border-slate-700/10">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -38,7 +38,7 @@ new class extends Component {
             <!-- Settings Dropdown -->
             <div class="flex items-center ms-6">
                 <x-mary-theme-toggle
-                    class="transition-all duration-200 ease-in-out btn btn-circle btn-ghost hover:text-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:hover:text-slate-200" />
+                    class="p-3 transition-all duration-200 ease-in-out rounded-full btn-ghost hover:text-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:hover:text-slate-200" />
 
                 @if (!auth()->user())
                 <a href="{{ route('login') }}"

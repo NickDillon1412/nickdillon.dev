@@ -23,8 +23,8 @@ test('profile information can be updated', function () {
     $this->actingAs($user);
 
     $component = Volt::test('profile.update-profile-information-form')
-        ->set('name', 'Test User')
-        ->set('email', 'test@example.com')
+        ->set('name', 'Nick Dillon')
+        ->set('email', 'nickhds@gmail.com')
         ->call('updateProfileInformation');
 
     $component
@@ -33,9 +33,9 @@ test('profile information can be updated', function () {
 
     $user->refresh();
 
-    $this->assertSame('Test User', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
+    $this->assertSame('Nick Dillon', $user->name);
+    $this->assertSame('nickhds@gmail.com', $user->email);
+    $this->assertNotNull($user->email_verified_at);
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
@@ -44,7 +44,7 @@ test('email verification status is unchanged when the email address is unchanged
     $this->actingAs($user);
 
     $component = Volt::test('profile.update-profile-information-form')
-        ->set('name', 'Test User')
+        ->set('name', 'Nick Dillon')
         ->set('email', $user->email)
         ->call('updateProfileInformation');
 
@@ -61,7 +61,7 @@ test('user can delete their account', function () {
     $this->actingAs($user);
 
     $component = Volt::test('profile.delete-user-form')
-        ->set('password', 'password')
+        ->set('password', 'Password')
         ->call('deleteUser');
 
     $component

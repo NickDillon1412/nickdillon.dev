@@ -134,7 +134,7 @@
                                     </x-slot:title>
 
                                     <x-slot:body>
-                                        <div class="ml-5">
+                                        <div>
                                             Are you sure you want to add
 
                                             <span class="font-semibold text-indigo-500">
@@ -158,7 +158,7 @@
                                     </x-slot:title>
 
                                     <x-slot:body>
-                                        <div class="ml-5">
+                                        <div>
                                             Are you sure you want to remove
 
                                             <span class="font-semibold text-red-500">
