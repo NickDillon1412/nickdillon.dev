@@ -7,6 +7,13 @@ services:
                 RUN chmod +x /usr/local/bin/install-php-extensions
                 RUN install-php-extensions @composer bcmath pdo_mysql gd pcov zip intl pcntl
                 CMD php artisan serve --host=0.0.0.0 --port=8000
+                RUN cat <<EOF > /usr/local/etc/php/php.ini
+                    file_uploads = On
+                    max_execution_time = 90
+                    max_file_uploads = 5
+                    post_max_size = 12M
+                    upload_max_filesize = 12M
+                EOF
         container_name: web
         working_dir: /var/www/html
         ports:
