@@ -88,7 +88,6 @@ return [
         ],
         'max_upload_time' => 5, // Max duration (in minutes) before an upload is invalidated...
         'cleanup' => true, // Should cleanup temporary uploads older than 24 hrs...
-        'scheme' => env('APP_ENV') === 'production' ? 'https' : 'http'
     ],
 
     /*
@@ -143,7 +142,7 @@ return [
 
     'navigate' => [
         'show_progress_bar' => true,
-        'progress_bar_color' => '#2299dd',
+        'progress_bar_color' => '#6466F1',
     ],
 
     /*
