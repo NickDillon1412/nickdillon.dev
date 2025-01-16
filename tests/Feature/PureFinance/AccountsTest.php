@@ -13,7 +13,7 @@ beforeEach(function () {
 
 test('can see accounts', function () {
     Account::factory()
-        ->hasUser(User::first())
+        ->for(User::first())
         ->create();
 
     livewire(Accounts::class)

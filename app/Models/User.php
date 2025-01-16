@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\PureFinance\Tag;
 use App\Models\MovieVault\Vault;
 use App\Models\PureFinance\Account;
+use App\Models\PureFinance\Category;
 use App\Models\PureFinance\Transaction;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -58,5 +60,15 @@ class User extends Authenticatable
     public function transactions(): HasManyThrough
     {
         return $this->hasManyThrough(Transaction::class, Account::class);
+    }
+
+    public function categories(): HasMany
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
     }
 }

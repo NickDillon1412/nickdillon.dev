@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Livewire\MovieVault;
 
-use Livewire\Component;
-use Livewire\Attributes\Lazy;
-use GuzzleHttp\Promise\Promise;
-use Livewire\Attributes\Layout;
-use Illuminate\Http\Client\Pool;
-use Livewire\Attributes\Computed;
 use App\Data\MovieVault\VaultData;
-use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
+use GuzzleHttp\Promise\Promise;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Client\Pool;
+use Illuminate\Support\Facades\Http;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Lazy;
+use Livewire\Component;
 
 #[Layout('layouts.app'), Lazy]
 class Explore extends Component
@@ -24,7 +24,9 @@ class Explore extends Component
 
     public function mount(?string $query = null): void
     {
-        if ($query) $this->search = $query;
+        if ($query) {
+            $this->search = $query;
+        }
     }
 
     protected function extractRating(string $media_type, array $detail_response): string
@@ -45,7 +47,9 @@ class Explore extends Component
     #[Computed]
     public function searchResults(): array
     {
-        if (strlen($this->search) < 1) return [];
+        if (strlen($this->search) < 1) {
+            return [];
+        }
 
         $results = Http::withToken(config('services.movie-api.token'))
             ->get("https://api.themoviedb.org/3/search/multi?query={$this->search}&include_adult=false&language=en-US")
@@ -138,7 +142,7 @@ class Explore extends Component
             Notification::make()
                 ->title(
                     "Successfully added {$media} to your {$page}. 
-                    <a href='" . route('movie-vault.details', $user_vaults->latest()->first()->id) . "' class='text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400'>View details &rarr;</a>"
+                    <a href='".route('movie-vault.details', $user_vaults->latest()->first()->id)."' class='text-sm font-medium text-indigo-500 duration-200 ease-in-out hover:text-indigo-600 dark:hover:text-indigo-400'>View details &rarr;</a>"
                 )
                 ->success()
                 ->seconds(10)

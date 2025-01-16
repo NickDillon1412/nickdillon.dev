@@ -19,7 +19,7 @@
             </button>
 
             <a class="flex items-center justify-center w-full mt-1 space-x-1 text-slate-700 dark:text-slate-50"
-                href="{{ route('portfolio') }}">
+                href="{{ route('portfolio') }}" wire:navigate>
                 <x-heroicon-o-home class="w-6 h-6" />
 
                 <span x-cloak x-show="sidebarExpanded || sidebarOpen" class="text-xl font-bold">

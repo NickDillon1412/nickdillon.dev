@@ -2,8 +2,10 @@
 
 namespace App\Models\PureFinance;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\PureFinance\RecurringFrequency;
 use App\Enums\PureFinance\TransactionType;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,7 +23,10 @@ class Transaction extends Model
         'date',
         'notes',
         'attachments',
-        'status'
+        'status',
+        'is_recurring',
+        'frequency',
+        'recurring_end',
     ];
 
     /**
@@ -33,8 +38,12 @@ class Transaction extends Model
     {
         return [
             'type' => TransactionType::class,
+            'date' => 'date',
             'attachments' => 'array',
-            'status' => 'bool'
+            'status' => 'bool',
+            'is_recurring' => 'bool',
+            'frequency' => RecurringFrequency::class,
+            'recurring_end' => 'date',
         ];
     }
 
@@ -46,5 +55,10 @@ class Transaction extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

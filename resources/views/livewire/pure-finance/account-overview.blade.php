@@ -8,7 +8,7 @@
         </h1>
 
         <div
-            class="px-6 py-5 mt-4 space-y-2 bg-white border rounded-lg shadow-sm border-slate-200 dark:border-slate-700 dark:bg-slate-800 w-fit text-slate-800 dark:text-slate-200">
+            class="w-full px-6 py-5 mt-4 space-y-2 bg-white border shadow-sm rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 sm:w-fit text-slate-800 dark:text-slate-200">
             <div class="flex items-center justify-between space-x-8">
                 <h1 class="text-lg font-bold">
                     Account Details
@@ -45,7 +45,7 @@
                     Balance:
                 </span>
 
-                ${{ Number::format($account->balance) }}
+                ${{ Number::format($account->balance ?? 0) }}
             </p>
         </div>
 

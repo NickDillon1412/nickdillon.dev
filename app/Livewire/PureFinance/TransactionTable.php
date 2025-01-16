@@ -81,11 +81,6 @@ class TransactionTable extends Component
         $this->resetPage();
     }
 
-    public function updatingColumns(string $column): void
-    {
-        unset($this->columns[$column]);
-    }
-
     #[On('clear-filters')]
     public function clearFilters(): void
     {

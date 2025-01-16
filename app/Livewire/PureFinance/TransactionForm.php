@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Livewire\PureFinance;
 
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\On;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
-use App\Models\PureFinance\Category;
 use Illuminate\Http\RedirectResponse;
 use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
 use App\Enums\PureFinance\TransactionType;
+use App\Enums\PureFinance\RecurringFrequency;
+use App\Rules\PureFinance\FrequencyIntervalRule;
 use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('layouts.app')]
@@ -25,11 +25,13 @@ class TransactionForm extends Component
 
     public Collection $accounts;
 
-    public Collection $categories;
+    public array $categories = [];
 
     public int $account_id;
 
     public string $description = '';
+
+    public array $transaction_types = [];
 
     public TransactionType $type;
 
@@ -39,11 +41,21 @@ class TransactionForm extends Component
 
     public string $date = '';
 
+    public array $user_tags = [];
+
+    public array $tags = [];
+
     public string $notes = '';
 
     public ?array $attachments = [];
 
     public bool $status = false;
+
+    public bool $is_recurring = false;
+
+    public ?RecurringFrequency $frequency = null;
+
+    public ?string $recurring_end = null;
 
     protected function rules(): array
     {
@@ -54,24 +66,104 @@ class TransactionForm extends Component
             'amount' => ['required'],
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
+            'tags' => ['nullable', 'array'],
             'notes' => ['nullable', 'string'],
             'attachments' => ['nullable', 'array'],
             'status' => ['required', 'boolean'],
+            'is_recurring' => ['required', 'boolean'],
+            'frequency' => [
+                'nullable',
+                'required_if:is_recurring,true',
+                Rule::enum(RecurringFrequency::class)
+            ],
+            'recurring_end' => array_filter([
+                'nullable',
+                'date',
+                $this->is_recurring ?
+                    new FrequencyIntervalRule($this->date, $this->recurring_end, $this->frequency) :
+                    null,
+            ]),
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'category_id.required' => 'The category field is required.'
         ];
     }
 
     public function mount(): void
     {
+        $this->getAccounts()
+            ->getCategories()
+            ->getTransactionTypes()
+            ->getUserTags();
+
         if ($this->transaction) {
             $this->account_id = $this->transaction->account_id;
             $this->description = $this->transaction->description;
             $this->type = $this->transaction->type;
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
-            $this->date = Carbon::parse($this->transaction->date)->format('n/d/Y');
+            $this->date = $this->transaction->date->format('n/d/Y');
+            $this->tags = $this->transaction->tags->toArray();
             $this->notes = $this->transaction->notes;
             $this->status = $this->transaction->status;
+            $this->is_recurring = $this->transaction->is_recurring;
+            $this->frequency = $this->transaction->frequency;
+            $this->recurring_end = $this->transaction->recurring_end?->format('n/d/Y');
         }
+    }
+
+    public function getAccounts(): self
+    {
+        $this->accounts = auth()
+            ->user()
+            ->accounts()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get();
+
+        return $this;
+    }
+
+    #[On('category-saved')]
+    public function getCategories(): self
+    {
+        $this->categories = auth()
+            ->user()
+            ->categories()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        return $this;
+    }
+
+    public function getTransactionTypes(): self
+    {
+        $this->transaction_types = collect(TransactionType::cases())
+            ->sortBy('value')
+            ->values()
+            ->all();
+
+        return $this;
+    }
+
+    #[On('tag-saved')]
+    public function getUserTags(): self
+    {
+        $this->user_tags = auth()
+            ->user()
+            ->tags()
+            ->select(['id', 'name'])
+            ->orderBy('name')
+            ->get()
+            ->toArray();
+
+        return $this;
     }
 
     #[On('file-uploaded')]
@@ -82,8 +174,6 @@ class TransactionForm extends Component
 
     public function submit(): RedirectResponse|Redirector
     {
-        $this->date = Carbon::parse($this->date)->format('Y-m-d');
-
         $validated_data = $this->validate();
 
         if ($this->transaction) {
@@ -95,9 +185,17 @@ class TransactionForm extends Component
             $validated_data['attachments'] = $this->attachments;
         }
 
-        $this->transaction
-            ? $this->transaction->update($validated_data)
-            : auth()->user()->transactions()->create($validated_data);
+        $current_tags = collect($this->tags)->pluck('id')->toArray();
+
+        if ($this->transaction) {
+            $this->transaction->tags()->sync($current_tags);
+
+            $this->transaction->update($validated_data);
+        } else {
+            $new_transaction = auth()->user()->transactions()->create($validated_data);
+
+            $new_transaction->tags()->sync($current_tags);
+        }
 
         Notification::make()
             ->title("Transaction successfully " . ($this->transaction ? "updated" : "created"))
@@ -109,10 +207,6 @@ class TransactionForm extends Component
 
     public function render(): View
     {
-        $this->accounts = auth()->user()->accounts->pluck('name', 'id');
-
-        $this->categories = Category::pluck('name', 'id');
-
         return view('livewire.pure-finance.transaction-form');
     }
 }

@@ -36,7 +36,7 @@ class TransactionSeeder extends Seeder
         ];
 
         $categories = collect($categories)->map(function ($name) {
-            return Category::factory()->create(['name' => $name]);
+            return Category::factory()->for(User::first())->create(['name' => $name]);
         });
 
         Transaction::factory()

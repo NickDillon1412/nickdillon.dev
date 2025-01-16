@@ -2,13 +2,14 @@
     <div x-data="{
         tabs: ['accounts', 'transactions'],
         activeTab: 'accounts',
-    }" class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
+    }" class="w-full mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="p-4">
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">
                 Pure Finance
             </h1>
 
-            <div x-cloak class="flex justify-center">
+            <div x-cloak class="hidden sm:flex justify-center">
                 <div
                     class="p-[3px] border rounded-lg bg-slate-200/60 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 w-fit">
                     <div class="flex">
@@ -39,6 +40,25 @@
 
         <div x-cloak x-show="activeTab === 'transactions'">
             @livewire('pure-finance.transaction-table')
+        </div>
+    </div>
+
+        <div class="sm:hidden fixed bottom-0 rounded-t-xl border-t border-slate-200 dark:border-slate-600 shadow-sm w-full px-4 py-3 bg-white dark:bg-slate-800 flex justify-between items-center">
+            <button class="flex flex-col w-1/2 items-center" :class="activeTab === 'accounts' ? 'text-indigo-500' : ''" x-on:click="activeTab = 'accounts'">
+                <flux:icon.banknotes class="mr-1.5 !h-5 !w-5" />
+
+                <p class="text-sm">
+                    Accounts
+                </p>
+            </button>
+
+            <button class="flex w-1/2 flex-col items-center" :class="activeTab === 'transactions' ? 'text-indigo-500' : ''" x-on:click="activeTab = 'transactions'">
+                <flux:icon.document-text class="mr-1.5 !h-5 !w-5" />
+
+                <p class="text-sm">
+                    Transactions
+                </p>
+            </button>
         </div>
     </div>
 </x-app-layout>
