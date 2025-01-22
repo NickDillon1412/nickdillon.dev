@@ -141,7 +141,6 @@ class TransactionForm extends Component
             ->orderBy('name')
             ->get()
             ->toArray();
-        // dd($this->categories);
 
         return $this;
     }

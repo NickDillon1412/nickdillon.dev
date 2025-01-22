@@ -4,7 +4,7 @@
         <x-heroicon-o-plus class="w-5 h-5 text-slate-600 dark:text-slate-500" />
     </button>
 
-    <div class="fixed inset-0 z-[90] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
+    <div class="fixed inset-0 z-[99] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
         x-show="tagFormModalOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
         x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"
@@ -12,7 +12,7 @@
     </div>
 
     <div id="tagFormModalOpen-modal"
-        class="fixed inset-0 z-[91] flex items-center justify-center px-4 my-4 overflow-hidden sm:px-6" role="dialog"
+        class="fixed inset-0 z-[99] flex items-center justify-center px-4 my-4 overflow-hidden sm:px-6" role="dialog"
         aria-modal="true" x-show="tagFormModalOpen" x-transition:enter="transition ease-in-out duration-200"
         x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in-out duration-200" x-transition:leave-start="opacity-100 translate-y-0"

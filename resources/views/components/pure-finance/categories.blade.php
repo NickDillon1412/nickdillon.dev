@@ -1,42 +1,4 @@
-<div x-data="{
-    showDropdown: false,
-    category_id: $wire.entangle('category_id'),
-    categories: $wire.entangle('categories'),
-    search: '',
-    get filteredCategories() {
-        return this.categories
-            .map(parent => {
-                const matchesParent = parent.name.toLowerCase().includes(this.search.toLowerCase());
-
-                const filteredChildren = (parent.children || []).filter(child =>
-                    child.name.toLowerCase().includes(this.search.toLowerCase())
-                );
-
-                // Include the parent if it or its children match
-                if (matchesParent || filteredChildren.length > 0) {
-                    return {
-                        ...parent,
-                        children: filteredChildren,
-                    };
-                }
-
-                return null;
-            })
-            .filter(Boolean);
-    },
-    get selectedCategoryName() {
-        let category = this.categories.find(category => category.id === this.category_id);
-
-        if (!category) {
-            this.categories.forEach(parent => {
-                const child = parent.children.find(child => child.id === this.category_id);
-                if (child) category = child;
-            });
-        }
-
-        return category ? category.name : 'Select a category';
-    }
-}" wire:ignore>
+<div x-data="categories" wire:ignore>
     <p class="block text-sm font-medium cursor-default text-slate-700 dark:text-slate-300">
         Category
 
@@ -137,3 +99,49 @@
         </div>
     </div>
 </div>
+
+@script
+    <script>
+        Alpine.data('categories', () => {
+            return {
+                showDropdown: false,
+                category_id: $wire.entangle('category_id'),
+                categories: $wire.entangle('categories'),
+                search: '',
+                get filteredCategories() {
+                    return this.categories
+                        .map(parent => {
+                            const matchesParent = parent.name.toLowerCase().includes(this.search
+                                .toLowerCase());
+
+                            const filteredChildren = (parent.children || []).filter(child =>
+                                child.name.toLowerCase().includes(this.search.toLowerCase())
+                            );
+
+                            if (matchesParent || filteredChildren.length > 0) {
+                                return {
+                                    ...parent,
+                                    children: filteredChildren,
+                                };
+                            }
+
+                            return null;
+                        })
+                        .filter(Boolean);
+                },
+                get selectedCategoryName() {
+                    let category = this.categories.find(category => category.id === this.category_id);
+
+                    if (!category) {
+                        this.categories.forEach(parent => {
+                            const child = parent.children.find(child => child.id === this.category_id);
+                            if (child) category = child;
+                        });
+                    }
+
+                    return category ? category.name : 'Select a category';
+                }
+            };
+        })
+    </script>
+@endscript
