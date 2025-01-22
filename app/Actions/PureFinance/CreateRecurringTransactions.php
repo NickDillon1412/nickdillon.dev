@@ -22,11 +22,11 @@ class CreateRecurringTransactions
 
 	private function createRecurringTransactions(Transaction $transaction): void
 	{
-		$start_date = Carbon::parse($transaction->date);
+		$start_date = $transaction->date;
 
 		$start_date->add($this->frequencyToInterval($transaction->frequency));
 
-		while ($start_date->lte(Carbon::parse($transaction->recurring_end))) {
+		while ($start_date->lte($transaction->recurring_end)) {
 			Transaction::create([
 				'account_id' => $transaction->account->id,
 				'description' => $transaction->description,
