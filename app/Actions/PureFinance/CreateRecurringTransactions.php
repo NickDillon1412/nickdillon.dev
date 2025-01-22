@@ -13,7 +13,7 @@ class CreateRecurringTransactions
 	public function handle(Transaction $transaction): void
 	{
 		if ($transaction->is_recurring) {
-			defer(function () use ($transaction) {
+			defer(function () use ($transaction): void {
 				$this->createRecurringTransactions($transaction);
 			});
 		}

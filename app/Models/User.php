@@ -47,24 +47,6 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function booted(): void
-    {
-        // static::creating(function (User $user) {
-        //     $categories = collect([
-        //         'Paycheck',
-        //         'Mortgage',
-        //         'Rent',
-        //         'Groceries',
-        //         'Gas',
-        //         'Electric'
-        //     ]);
-
-        //     $categories->each(function (string $category) use ($user): void {
-        //         $user->categories()->create(['name' => $category]);
-        //     });
-        // });
-    }
-
     public function vaults(): HasMany
     {
         return $this->hasMany(Vault::class);

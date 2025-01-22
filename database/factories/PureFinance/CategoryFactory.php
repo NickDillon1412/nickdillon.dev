@@ -19,20 +19,7 @@ class CategoryFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => $this->faker->randomElement([
-                'Fast Food',
-                'Restaurants',
-                'Car Payment',
-                'Car Insurance',
-                'Gas & Fuel',
-                'Maintenance',
-                'Haircut',
-                'Paycheck',
-                'Coffee Shop',
-                'Dentist',
-                'Pharmacy',
-                'Health Insurance',
-            ]),
+            'name' => 'Coffee',
             'parent_id' => null
         ];
     }

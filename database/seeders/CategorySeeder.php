@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\PureFinance\Category;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 
 class CategorySeeder extends Seeder
 {
@@ -13,32 +13,66 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create();
+        User::factory()->create();
 
-        $categories = collect([
-            // 'Auto & Transport',
-            'Entertainment',
-            // 'Food',
-            // 'Home',
-            // 'Health',
-            // 'Maintenance',
-            // 'Personal Care',
-            // 'Personal Income',
-            // 'Pets',
-            // 'Shopping',
-            // 'Travel',
-            // 'Utilities',
+        $parent_categories = collect([
+            'Auto & Transport',
+            'Food',
+            'Home',
+            'Health',
+            'Personal Care',
+            'Personal Income',
+            'Pets',
+            'Shopping',
+            'Travel',
+            'Utilities',
         ]);
 
-        $categories->each(function (string $category) use ($user): void {
-            $parent_category = Category::factory()->for($user)->create(['name' => $category]);
+        $child_categories = collect([
+            'Car Insurance',
+            'Car Payment',
+            'Fast Food',
+            'Restaurants',
+            'Mortgage',
+            'Rent',
+            'Doctor',
+            'Pharmacy',
+            'Haircut',
+            'Laundry',
+            'Paycheck',
+            'Bonus',
+            'Pet Food',
+            'Veterinary',
+            'Clothing',
+            'Gifts',
+            'Hotel',
+            'Airfare',
+            'Gas',
+            'Electric',
+        ]);
 
-            Category::factory()
-                ->for($user)
-                ->count(2)
-                ->create([
-                    'parent_id' => $parent_category->id,
-                ]);
-        });
+        User::query()
+            ->with('categories')
+            ->get()
+            ->each(function (User $user) use ($parent_categories, $child_categories) {
+                $parent_categories = $parent_categories->map(function (string $parent) use ($user): Model {
+                    return $user->categories()->create(['name' => $parent]);
+                });
+
+                $parent_index = 0;
+
+                $child_categories->each(function (string $child, $index) use ($parent_categories, &$parent_index, $user): void {
+                    $parent = $parent_categories->get($parent_index);
+
+                    $user->categories()->create([
+                        'name' => $child,
+                        'parent_id' => $parent->id
+                    ]);
+
+                    if (($index + 1) % 2 === 0) {
+                        $parent_index++;
+                    }
+                });
+            });
     }
 }

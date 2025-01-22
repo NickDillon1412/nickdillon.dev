@@ -1,12 +1,13 @@
 <?php
 
-use App\Models\User;
+use App\Actions\PureFinance\CreateDefaultCategories;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use App\Models\User;
 
 new #[Layout('layouts.guest')] class extends Component
 {
@@ -18,7 +19,7 @@ new #[Layout('layouts.guest')] class extends Component
     /**
      * Handle an incoming registration request.
      */
-    public function signup(): void
+    public function signup(CreateDefaultCategories $action): void
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -29,6 +30,8 @@ new #[Layout('layouts.guest')] class extends Component
         $validated['password'] = Hash::make($validated['password']);
 
         event(new Registered($user = User::create($validated)));
+
+        $action->handle($user);
 
         Auth::login($user);
 
