@@ -16,33 +16,14 @@ class TransactionSeeder extends Seeder
     public function run(): void
     {
         $accounts = Account::factory()
-            ->for(User::factory())
+            ->for(User::first())
             ->count(4)
             ->create();
-
-        $categories = [
-            'Eating Out',
-            'Groceries',
-            'Rent',
-            'Mortgage',
-            'Utilities',
-            'Clothes',
-            'Entertainment',
-            'Travel',
-            'Car Insurance',
-            'Car Payment',
-            'Gas',
-            'Maintenance'
-        ];
-
-        $categories = collect($categories)->map(function ($name) {
-            return Category::factory()->for(User::first())->create(['name' => $name]);
-        });
 
         Transaction::factory()
             ->count(500)
             ->recycle($accounts)
-            ->recycle($categories)
+            ->recycle(Category::get())
             ->create();
     }
 }

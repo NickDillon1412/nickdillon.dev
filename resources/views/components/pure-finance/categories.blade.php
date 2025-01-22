@@ -4,12 +4,35 @@
     categories: $wire.entangle('categories'),
     search: '',
     get filteredCategories() {
-        return this.categories.filter(category =>
-            category.name.toLowerCase().includes(this.search.toLowerCase())
-        );
+        return this.categories
+            .map(parent => {
+                const matchesParent = parent.name.toLowerCase().includes(this.search.toLowerCase());
+
+                const filteredChildren = (parent.children || []).filter(child =>
+                    child.name.toLowerCase().includes(this.search.toLowerCase())
+                );
+
+                // Include the parent if it or its children match
+                if (matchesParent || filteredChildren.length > 0) {
+                    return {
+                        ...parent,
+                        children: filteredChildren,
+                    };
+                }
+
+                return null;
+            })
+            .filter(Boolean);
     },
     get selectedCategoryName() {
-        const category = this.categories.find(category => category.id === this.category_id);
+        let category = this.categories.find(category => category.id === this.category_id);
+
+        if (!category) {
+            this.categories.forEach(parent => {
+                const child = parent.children.find(child => child.id === this.category_id);
+                if (child) category = child;
+            });
+        }
 
         return category ? category.name : 'Select a category';
     }
@@ -71,18 +94,39 @@
 
                 <div class="px-1 overflow-y-scroll max-h-[250px]">
                     <template x-for="category in filteredCategories" :key="category.id">
-                        <button type="button" x-on:click="category_id = category.id; search = ''"
-                            class="flex items-center justify-between w-full px-3 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
-                            :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
-                            <span class="text-sm capitalize"
-                                :class="{ 'text-indigo-600 font-medium': category_id === category.id }"
-                                x-text="category.name"></span>
+                        <div>
+                            <button type="button" x-on:click="category_id = category.id; search = ''"
+                                class="flex items-center justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
+                                <span class="text-sm capitalize"
+                                    :class="{ 'text-indigo-600 font-medium': category_id === category.id }"
+                                    x-text="category.name">
+                                </span>
 
-                            <div x-cloak x-show="category_id === category.id">
-                                <flux:icon.check
-                                    class="h-5 -mr-1.5 w-5 p-0.5 stroke-indigo-600 stroke-2 dark:text-slate-400" />
+                                <div x-cloak x-show="category_id === category.id">
+                                    <flux:icon.check
+                                        class="h-5 -mr-1 w-5 p-0.5 stroke-indigo-600 stroke-2 dark:text-slate-400" />
+                                </div>
+                            </button>
+
+                            <div x-cloak x-show="category.children.length > 0" class="pl-4 my-0.5">
+                                <template x-for="child in category.children" :key="child.id">
+                                    <button type="button" x-on:click="category_id = child.id; search = ''"
+                                        class="flex items-center my-0.5 justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
+                                        :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === child.id }">
+                                        <span class="text-sm capitalize"
+                                            :class="{ 'text-indigo-600 font-medium': category_id === child.id }"
+                                            x-text="child.name">
+                                        </span>
+
+                                        <div x-cloak x-show="category_id === child.id">
+                                            <flux:icon.check
+                                                class="h-5 -mr-1 w-5 p-0.5 stroke-indigo-600 stroke-2 dark:text-slate-400" />
+                                        </div>
+                                    </button>
+                                </template>
                             </div>
-                        </button>
+                        </div>
                     </template>
 
                     <div x-cloak x-show="filteredCategories.length === 0">

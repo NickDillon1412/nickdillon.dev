@@ -135,10 +135,13 @@ class TransactionForm extends Component
         $this->categories = auth()
             ->user()
             ->categories()
-            ->select(['id', 'name'])
+            ->with('children')
+            ->select(['id', 'name', 'parent_id'])
+            ->whereNull('parent_id')
             ->orderBy('name')
             ->get()
             ->toArray();
+        // dd($this->categories);
 
         return $this;
     }

@@ -19,20 +19,21 @@ class CategoryFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => $this->faker->unique()->randomElement([
-                'Eating Out',
-                'Groceries',
-                'Rent',
-                'Mortgage',
-                'Utilities',
-                'Clothes',
-                'Entertainment',
-                'Travel',
-                'Car Insurance',
+            'name' => $this->faker->randomElement([
+                'Fast Food',
+                'Restaurants',
                 'Car Payment',
-                'Gas',
-                'Maintenance'
+                'Car Insurance',
+                'Gas & Fuel',
+                'Maintenance',
+                'Haircut',
+                'Paycheck',
+                'Coffee Shop',
+                'Dentist',
+                'Pharmacy',
+                'Health Insurance',
             ]),
+            'parent_id' => null
         ];
     }
 }
