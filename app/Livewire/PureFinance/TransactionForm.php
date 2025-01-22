@@ -17,6 +17,7 @@ use App\Enums\PureFinance\TransactionType;
 use App\Enums\PureFinance\RecurringFrequency;
 use App\Rules\PureFinance\FrequencyIntervalRule;
 use Livewire\Features\SupportRedirects\Redirector;
+use App\Actions\PureFinance\CreateRecurringTransactions;
 
 #[Layout('layouts.app')]
 class TransactionForm extends Component
@@ -172,7 +173,7 @@ class TransactionForm extends Component
         $this->attachments[] = $file;
     }
 
-    public function submit(): RedirectResponse|Redirector
+    public function submit(CreateRecurringTransactions $action): RedirectResponse|Redirector
     {
         $validated_data = $this->validate();
 
@@ -196,6 +197,8 @@ class TransactionForm extends Component
 
             $new_transaction->tags()->sync($current_tags);
         }
+
+        $action->handle($this->transaction ?: $new_transaction);
 
         Notification::make()
             ->title("Transaction successfully " . ($this->transaction ? "updated" : "created"))

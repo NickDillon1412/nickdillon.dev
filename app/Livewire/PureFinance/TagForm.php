@@ -7,7 +7,6 @@ namespace App\Livewire\PureFinance;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Illuminate\Contracts\View\View;
-use App\Models\PureFinance\Transaction;
 use Filament\Notifications\Notification;
 
 class TagForm extends Component
@@ -15,8 +14,6 @@ class TagForm extends Component
     public bool $modal_open = false;
 
     public ?array $tag = null;
-
-    public ?Transaction $transaction = null;
 
     #[Validate(
         'required_if:modal_open,true|string',

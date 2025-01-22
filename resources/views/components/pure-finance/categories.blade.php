@@ -28,10 +28,7 @@
                     x-on:click="showDropdown = true" :aria-expanded="showDropdown" aria-expanded="false">
                     <p class="-my-[1px] text-slate-600 dark:text-slate-300" x-text="selectedCategoryName"></p>
 
-                    <svg class="ml-1 fill-current shrink-0 text-slate-500" width="11" height="7"
-                        viewBox="0 0 11 7">
-                        <path d="M5.4 6.8L0 1.4 1.4 0l4 4 4-4 1.4 1.4z"></path>
-                    </svg>
+                    <flux:icon.chevrons-up-down class="!h-4 !w-4 !-mr-0.5 text-slate-500" />
                 </button>
             </div>
         </div>

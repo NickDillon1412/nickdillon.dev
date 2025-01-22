@@ -13,6 +13,8 @@ use App\Enums\PureFinance\RecurringFrequency;
 use App\Livewire\PureFinance\TransactionForm;
 
 beforeEach(function () {
+    $this->withoutDefer();
+
     $user = User::factory()->create();
 
     if (Category::count() === 0) {

@@ -5,6 +5,7 @@ namespace App\Models\PureFinance;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Enums\PureFinance\RecurringFrequency;
 use App\Enums\PureFinance\TransactionType;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,7 @@ class Transaction extends Model
         'is_recurring',
         'frequency',
         'recurring_end',
+        'parent_id'
     ];
 
     /**
@@ -60,5 +62,15 @@ class Transaction extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Transaction::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Transaction::class, 'parent_id');
     }
 }

@@ -1,5 +1,3 @@
-@props(['transaction' => null])
-
 <div x-data="{
     showDropdown: false,
     tags: $wire.entangle('tags'),
@@ -13,18 +11,17 @@
         }.bind(this));
     }
 }" wire:ignore>
-    <p class="cursor-default block text-sm font-medium text-slate-700 dark:text-slate-300">
+    <p class="block text-sm font-medium cursor-default text-slate-700 dark:text-slate-300">
         Tags
     </p>
 
     <div class="relative inline-flex w-full">
         <div class="flex items-stretch w-full mt-2">
-            <div
-                class="flex items-center w-full text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-[9px] dark:text-slate-300 z-30"
+            <div class="flex items-center w-full text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-[9px] dark:text-slate-300 z-30"
                 :class="{ '!border-indigo-500 dark:!border-indigo-600 ring-1 !ring-indigo-500 dark:!ring-indigo-600': showDropdown }">
-                <button type="button" class="flex items-center justify-between py-0 w-full" aria-haspopup="true" x-on:click="showDropdown = true"
-                    :aria-expanded="showDropdown" aria-expanded="false">
-                    <div class="flex-wrap flex items-center gap-1">
+                <button type="button" class="flex items-center justify-between w-full py-0" aria-haspopup="true"
+                    x-on:click="showDropdown = true" :aria-expanded="showDropdown" aria-expanded="false">
+                    <div class="flex flex-wrap items-center gap-1">
                         <p class="-my-[1px] text-slate-600 dark:text-slate-300" x-cloak x-show="tags.length === 0">
                             Select tags
                         </p>
@@ -42,9 +39,7 @@
                         </template>
                     </div>
 
-                    <svg class="ml-1 fill-current shrink-0 text-slate-500" width="11" height="7" viewBox="0 0 11 7">
-                        <path d="M5.4 6.8L0 1.4 1.4 0l4 4 4-4 1.4 1.4z"></path>
-                    </svg>
+                    <flux:icon.chevrons-up-down class="!h-4 !w-4 !-mr-0.5 text-slate-500" />
                 </button>
             </div>
         </div>
@@ -75,12 +70,13 @@
                     </div>
 
                     <div class="absolute flex items-center -space-x-0.5 pr-1 inset-0 left-auto">
-                        <button x-cloak x-show="search.length > 0" x-on:click="search = ''" type="button" aria-label="Search">
+                        <button x-cloak x-show="search.length > 0" x-on:click="search = ''" type="button"
+                            aria-label="Search">
                             <x-heroicon-s-x-mark
                                 class="w-6 h-6 p-0.5 text-rose-500 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
                         </button>
 
-                        <livewire:pure-finance.tag-form :$transaction />
+                        <livewire:pure-finance.tag-form />
                     </div>
                 </div>
 
