@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Actions\PureFinance;
 
-use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use App\Models\PureFinance\Transaction;
 use App\Enums\PureFinance\RecurringFrequency;
