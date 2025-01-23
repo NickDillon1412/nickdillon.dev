@@ -3,9 +3,9 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Livewire\Volt\Volt;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
-use Livewire\Volt\Volt;
 
 test('registration screen can be rendered', function () {
     $response = $this->get('/sign-up');
@@ -16,6 +16,8 @@ test('registration screen can be rendered', function () {
 });
 
 test('new users can sign up', function () {
+    $this->withoutDefer();
+
     $component = Volt::test('pages.auth.sign-up')
         ->set('name', 'Test User')
         ->set('email', 'test@example.com')

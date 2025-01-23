@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Livewire\FileUploader;
-
 use Illuminate\Http\UploadedFile;
 use function Pest\Livewire\livewire;
 use Illuminate\Support\Facades\Storage;
