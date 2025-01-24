@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center mt-6" class="flex justify-center mt-6" wire:loading.flex
+    <div class="flex justify-center mt-6" wire:loading.flex
         wire:target='search,type,selected_ratings,selected_genres,sort_direction'>
         <x-large-loading-spinner />
     </div>

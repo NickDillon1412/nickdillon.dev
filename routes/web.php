@@ -5,7 +5,9 @@ use App\Livewire\MovieVault\MyVault;
 use App\Livewire\MovieVault\Wishlist;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\PureFinance\Accounts;
+use App\Livewire\PureFinance\TagTable;
 use App\Livewire\MovieVault\VaultDetails;
+use App\Livewire\PureFinance\CategoryTable;
 use App\Livewire\PureFinance\AccountOverview;
 use App\Livewire\PureFinance\TransactionForm;
 
@@ -39,6 +41,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('account/{account}/overview', AccountOverview::class)->name('account.overview');
 
             Route::get('transaction-form/{transaction?}', TransactionForm::class)->name('transaction-form');
+
+            Route::get('categories', CategoryTable::class)->name('categories');
+
+            Route::get('tags', TagTable::class)->name('tags');
         });
 });
 

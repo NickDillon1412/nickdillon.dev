@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Validate;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Category;
@@ -16,10 +18,14 @@ class CategoryForm extends Component
 {
     public bool $modal_open = false;
 
-    public int $parent_id;
+    public ?int $parent_id = null;
 
     public ?array $category = null;
 
+    #[Validate(
+        'required_if:modal_open,true|string',
+        message: 'The name field is required.'
+    )]
     public string $name = '';
 
     protected function rules(): array
@@ -49,10 +55,13 @@ class CategoryForm extends Component
         ];
     }
 
-    public function mount(): void
+    #[On('open-category-edit-form')]
+    public function loadCategory(?array $category = null): void
     {
-        if ($this->category) {
+        if ($category) {
+            $this->category = $category;
             $this->name = $this->category['name'];
+            $this->parent_id = $this->category['parent_id'];
         }
     }
 

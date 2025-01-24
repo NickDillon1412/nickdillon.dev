@@ -29,7 +29,7 @@
             </div>
 
             <form class="p-5 space-y-5" wire:submit='submit' x-on:submit="$dispatch('account-updated')">
-                <div class="space-y-3">
+                <div class="space-y-5">
                     <div>
                         <div class="flex space-x-1">
                             <x-input-label for="name" :value="__('Name')" />
@@ -70,7 +70,7 @@
                                 <x-input-label for="balance" :value="__('Balance')" />
                             </div>
 
-                            <x-text-input wire:model="balance" id="balance" class="block w-full mt-1 text-sm"
+                            <x-text-input wire:model="balance" id="balance" class="block w-full mt-2 text-sm"
                                 type="number" name="balance" autocomplete="balance" placeholder="100.00"
                                 step="0.01" />
 

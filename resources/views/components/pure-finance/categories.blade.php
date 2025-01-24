@@ -50,7 +50,14 @@
                                 class="w-6 h-6 p-0.5 text-rose-500 duration-200 ease-in-out rounded-md hover:bg-slate-200 dark:hover:bg-slate-700" />
                         </button>
 
-                        <livewire:pure-finance.category-form />
+                        <div>
+                            <button x-on:click="$dispatch('open-category-create-form')" type="button"
+                                class="dark:bg-slate-900 m-0.5 p-0.5 duration-100 ease-in-out hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md">
+                                <x-heroicon-o-plus class="w-5 h-5 text-slate-600 dark:text-slate-500" />
+                            </button>
+
+                            <livewire:pure-finance.category-form />
+                        </div>
                     </div>
                 </div>
 

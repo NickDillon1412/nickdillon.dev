@@ -1,10 +1,7 @@
-<div x-cloak x-data="{ categoryFormModalOpen: $wire.entangle('modal_open').live }" x-on:keydown.escape.window="categoryFormModalOpen = false"
+<div x-cloak x-data="{ categoryFormModalOpen: $wire.entangle('modal_open').live, title: '' }" x-on:keydown.escape.window="categoryFormModalOpen = false"
+    x-on:open-category-create-form.window="categoryFormModalOpen = true; title = 'Create'"
+    x-on:open-category-edit-form.window="categoryFormModalOpen = true; $wire.loadCategory(); title = 'Edit'"
     class="relative w-auto h-auto">
-    <button x-on:click="categoryFormModalOpen = true" type="button"
-        class="dark:bg-slate-900 m-0.5 p-0.5 duration-100 ease-in-out hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md">
-        <x-heroicon-o-plus class="w-5 h-5 text-slate-600 dark:text-slate-500" />
-    </button>
-
     <div class="fixed inset-0 z-[99] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
         x-show="categoryFormModalOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -24,7 +21,7 @@
             <div class="px-5 py-2.5 border-b border-slate-200 dark:border-slate-700">
                 <div class="flex items-center justify-between">
                     <div class="text-lg font-semibold">
-                        {{ $category ? 'Edit' : 'Create' }} Category
+                        <span x-text="title"></span> Category
                     </div>
 
                     <flux:button icon="x-mark" x-on:click="categoryFormModalOpen = false"
@@ -32,7 +29,12 @@
                 </div>
             </div>
 
-            <div class="space-y-5">
+            <div x-cloak wire:loading.flex wire:target='loadCategory'
+                class="flex justify-center text-center py-[105px]">
+                <x-large-loading-spinner />
+            </div>
+
+            <form x-cloak wire:submit='submit' wire:loading.remove wire:target='loadCategory' class="w-full">
                 <div class="px-5 pt-4 space-y-5">
                     <div>
                         <div class="flex space-x-1">
@@ -41,8 +43,8 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <x-text-input wire:model="name" id="name" class="block w-full mt-2 text-sm" type="text"
-                            name="name" autocomplete="name" required />
+                        <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-1 text-sm"
+                            type="text" name="name" autocomplete="name" required />
 
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
@@ -53,7 +55,7 @@
                         </div>
 
                         <select wire:model='parent_id' id="parent_id" required
-                            class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            class="flex w-full mt-1.5 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select a category</option>
 
                             @foreach ($this->parent_categories as $parent)
@@ -67,7 +69,7 @@
                     </div>
                 </div>
 
-                <div class="flex justify-end px-5 pb-5">
+                <div class="flex justify-end p-5">
                     <div class="space-x-1 text-sm text-white">
                         <flux:button variant="outline" class="!px-5" x-on:click="categoryFormModalOpen = false">
                             Cancel
@@ -79,7 +81,7 @@
                         </flux:button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
