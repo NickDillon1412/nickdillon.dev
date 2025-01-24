@@ -5,8 +5,6 @@
         <x-heroicon-o-plus class="w-5 h-5 text-slate-600 dark:text-slate-500" />
     </button>
 
-
-
     <div class="fixed inset-0 z-[100] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
         x-show="categoryFormModalOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
