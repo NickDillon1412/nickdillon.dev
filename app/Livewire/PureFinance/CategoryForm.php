@@ -8,7 +8,6 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Category;
@@ -22,10 +21,6 @@ class CategoryForm extends Component
 
     public ?array $category = null;
 
-    #[Validate(
-        'required_if:modal_open,true|string',
-        message: 'The name field is required.'
-    )]
     public string $name = '';
 
     protected function rules(): array
