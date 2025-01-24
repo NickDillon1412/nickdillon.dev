@@ -53,6 +53,8 @@ class CategoryForm extends Component
     #[On('open-category-edit-form')]
     public function loadCategory(?array $category = null): void
     {
+        $this->resetValidation();
+
         if ($category) {
             $this->category = $category;
             $this->name = $this->category['name'];

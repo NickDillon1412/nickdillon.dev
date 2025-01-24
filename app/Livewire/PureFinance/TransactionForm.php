@@ -64,7 +64,7 @@ class TransactionForm extends Component
             'account_id' => ['required', 'int'],
             'description' => ['required', 'string'],
             'type' => ['required', Rule::enum(TransactionType::class)],
-            'amount' => ['required'],
+            'amount' => ['required', 'decimal:0,2', 'numeric'],
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
             'tags' => ['nullable', 'array'],
