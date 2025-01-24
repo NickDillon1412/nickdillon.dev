@@ -26,7 +26,7 @@ class AccountForm extends Component
         return [
             'name' => ['required', 'string'],
             'type' => ['required', Rule::enum(AccountType::class)],
-            'balance' => ['decimal:2', 'nullable'],
+            'balance' => ['nullable', 'decimal:0,2', 'numeric'],
         ];
     }
 
