@@ -11,7 +11,19 @@ beforeEach(function () {
     $user = User::factory()->create();
 
     if (Category::count() === 0) {
-        Category::factory()->for($user)->count(5)->create();
+        $categories = collect([
+            'Personal Income',
+            'Pets',
+            'Shopping',
+            'Travel',
+            'Utilities',
+        ]);
+
+        $categories->each(function (string $name) use ($user): void {
+            Category::factory()->for($user)->create([
+                'name' => $name
+            ]);
+        });
     }
 
     $this->actingAs($user);
@@ -23,6 +35,25 @@ it('can create a category', function () {
         ->call('submit')
         ->assertDispatched('category-saved')
         ->assertHasNoErrors();
+});
+
+it('can create a child category', function () {
+    $parent_category = User::first()->categories->whereNull('parent_id')->first();
+
+    livewire(CategoryForm::class)
+        ->set('parent_id', $parent_category->id)
+        ->set('name', 'Dog Food')
+        ->call('submit')
+        ->assertDispatched('category-saved')
+        ->assertHasNoErrors();
+});
+
+it('cannot create a duplicate category', function () {
+    livewire(CategoryForm::class)
+        ->set('name', 'Personal Income')
+        ->call('submit')
+        ->assertNotDispatched('category-saved')
+        ->assertHasErrors();
 });
 
 it('can edit a category', function () {

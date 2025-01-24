@@ -33,17 +33,38 @@
             </div>
 
             <div class="space-y-5">
-                <div class="px-5 pt-5">
-                    <div class="flex space-x-1">
-                        <x-input-label for="category-name" :value="__('Name')" />
+                <div class="px-5 pt-4 space-y-5">
+                    <div>
+                        <div class="flex space-x-1">
+                            <x-input-label for="name" :value="__('Name')" />
 
-                        <span class="text-rose-500">*</span>
+                            <span class="text-rose-500">*</span>
+                        </div>
+
+                        <x-text-input wire:model="name" id="name" class="block w-full mt-2 text-sm" type="text"
+                            name="name" autocomplete="name" required />
+
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
-                    <x-text-input wire:model="name" id="category-name" class="block w-full mt-2 text-sm" type="text"
-                        name="category-name" autocomplete="name" />
+                    <div>
+                        <div class="flex space-x-1">
+                            <x-input-label for="parent_id" :value="__('Parent')" />
+                        </div>
 
-                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        <select wire:model='parent_id' id="parent_id" required
+                            class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            <option value="">Select a category</option>
+
+                            @foreach ($this->parent_categories as $parent)
+                                <option value="{{ $parent->id }}">
+                                    {{ $parent->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <x-input-error :messages="$errors->get('parent_id')" class="mt-2" />
+                    </div>
                 </div>
 
                 <div class="flex justify-end px-5 pb-5">

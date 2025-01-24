@@ -18,6 +18,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('categories')
                 ->cascadeOnDelete();
+
+            $table->unique(['name', 'user_id']);
         });
     }
 

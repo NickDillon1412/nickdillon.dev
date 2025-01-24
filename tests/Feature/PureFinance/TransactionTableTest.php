@@ -16,7 +16,19 @@ beforeEach(function () {
     $user = User::factory()->create();
 
     if (Category::count() === 0) {
-        Category::factory()->for($user)->count(5)->create();
+        $categories = collect([
+            'Personal Income',
+            'Pets',
+            'Shopping',
+            'Travel',
+            'Utilities',
+        ]);
+
+        $categories->each(function (string $name) use ($user): void {
+            Category::factory()->for($user)->create([
+                'name' => $name
+            ]);
+        });
     }
 
     Account::factory()

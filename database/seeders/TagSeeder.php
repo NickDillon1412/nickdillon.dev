@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\PureFinance\Transaction;
 use App\Models\PureFinance\Tag;
 use Illuminate\Database\Seeder;
-use App\Models\PureFinance\Transaction;
+use App\Models\User;
 
 class TagSeeder extends Seeder
 {

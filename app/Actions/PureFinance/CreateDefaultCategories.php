@@ -74,7 +74,7 @@ class CreateDefaultCategories
 		$parent_index = 0;
 
 		$this->child_categories->each(
-			function (string $child, $index)
+			function (string $child, int $index)
 			use ($parent_categories, &$parent_index, $user): void {
 				$parent = $parent_categories->get($parent_index);
 
