@@ -30,7 +30,7 @@ class TransactionForm extends Component
 
     public int $account_id;
 
-    public string $description = '';
+    public string $payee = '';
 
     public array $transaction_types = [];
 
@@ -62,7 +62,7 @@ class TransactionForm extends Component
     {
         return [
             'account_id' => ['required', 'int'],
-            'description' => ['required', 'string'],
+            'payee' => ['required', 'string'],
             'type' => ['required', Rule::enum(TransactionType::class)],
             'amount' => ['required', 'decimal:0,2', 'numeric'],
             'category_id' => ['required', 'int'],
@@ -103,7 +103,7 @@ class TransactionForm extends Component
 
         if ($this->transaction) {
             $this->account_id = $this->transaction->account_id;
-            $this->description = $this->transaction->description;
+            $this->payee = $this->transaction->payee;
             $this->type = $this->transaction->type;
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;

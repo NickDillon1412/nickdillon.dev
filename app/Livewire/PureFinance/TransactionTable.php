@@ -47,7 +47,7 @@ class TransactionTable extends Component
         'category',
         'type',
         'amount',
-        'description',
+        'payee',
         'status'
     ];
 
@@ -114,7 +114,7 @@ class TransactionTable extends Component
                     ->limit(1),
                 $direction
             ),
-            'type', 'amount', 'description', 'date', 'status' => $query->orderBy($this->sort_col, $direction),
+            'type', 'amount', 'payee', 'date', 'status' => $query->orderBy($this->sort_col, $direction),
             default => $query
         };
     }
@@ -145,7 +145,7 @@ class TransactionTable extends Component
             ->when(strlen($this->search) >= 1, function (Builder $query): void {
                 $query->where(function (Builder $query): void {
                     $query->whereRelation('category', 'name', 'like', "%{$this->search}%")
-                        ->orWhere('description', 'like', "%{$this->search}%")
+                        ->orWhere('payee', 'like', "%{$this->search}%")
                         ->orWhere('amount', 'like', "%{$this->search}%")
                         ->orWhere('transactions.type', 'like', "%{$this->search}%");
 

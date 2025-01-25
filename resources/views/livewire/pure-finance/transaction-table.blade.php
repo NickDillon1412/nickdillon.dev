@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-5 pt-5 sm:gap-3">
+<div class="flex flex-col gap-5 pt-5 pb-14 sm:pb-0 sm:gap-3">
     <div class="flex flex-col w-full gap-2 sm:justify-between sm:items-center sm:flex-row">
         <h1 class="hidden text-2xl font-semibold sm:block text-slate-800 dark:text-slate-200">
             Transactions
@@ -87,8 +87,8 @@
                             <x-sortable-column :$sort_col :$sort_asc column="amount" />
                         @endif
 
-                        @if (in_array('description', $columns))
-                            <x-sortable-column :$sort_col :$sort_asc column="description" />
+                        @if (in_array('payee', $columns))
+                            <x-sortable-column :$sort_col :$sort_asc column="payee" />
                         @endif
 
                         @if (in_array('status', $columns))
@@ -144,10 +144,10 @@
                                 </td>
                             @endif
 
-                            @if (in_array('description', $columns))
+                            @if (in_array('payee', $columns))
                                 <td
                                     class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                    {{ $transaction->description }}
+                                    {{ $transaction->payee }}
                                 </td>
                             @endif
 

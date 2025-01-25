@@ -99,16 +99,15 @@
             <div class="space-y-5">
                 <div>
                     <div class="flex space-x-1">
-                        <x-input-label for="description" :value="__('Description')" />
+                        <x-input-label for="payee" :value="__('Payee')" />
 
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="description" id="description"
-                        class="block !rounded-lg w-full mt-1 text-sm" type="text" name="description" required
-                        autocomplete="description" />
+                    <x-text-input wire:model="payee" id="payee" class="block !rounded-lg w-full mt-1 text-sm"
+                        type="text" name="payee" required autocomplete="payee" />
 
-                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('payee')" class="mt-2" />
                 </div>
 
                 <div>
