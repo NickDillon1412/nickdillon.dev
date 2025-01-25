@@ -4,6 +4,7 @@ namespace App\Models\PureFinance;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Actions\PureFinance\RecalculateAccountBalance;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Enums\PureFinance\RecurringFrequency;
@@ -47,6 +48,23 @@ class Transaction extends Model
             'frequency' => RecurringFrequency::class,
             'recurring_end' => 'date',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        $action = app(RecalculateAccountBalance::class);
+
+        static::created(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction->account);
+        });
+
+        static::updated(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction->account);
+        });
+
+        static::deleted(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction->account);
+        });
     }
 
     public function account(): BelongsTo
