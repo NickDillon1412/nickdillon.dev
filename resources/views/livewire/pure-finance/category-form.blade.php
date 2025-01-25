@@ -11,7 +11,7 @@
 }" x-on:keydown.escape.window="categoryFormModalOpen = false; clearForm()"
     x-on:open-category-create-form.window="categoryFormModalOpen = true; title = 'Create'"
     x-on:open-category-edit-form.window="categoryFormModalOpen = true; $wire.loadCategory(); title = 'Edit'"
-    class="relative w-auto h-auto">
+    x-on:category-saved="categoryFormModalOpen = false; clearForm()" class="relative w-auto h-auto">
     <div class="fixed inset-0 z-[99] transition-opacity bg-slate-900 bg-opacity-40 dark:bg-opacity-60 backdrop-blur-sm"
         x-show="categoryFormModalOpen" x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -87,8 +87,7 @@
                             Cancel
                         </flux:button>
 
-                        <flux:button variant="indigo" class="!px-5" type="button" wire:click='submit'
-                            x-on:click="$dispatch('category-saved')">
+                        <flux:button variant="indigo" class="!px-5" type="button" wire:click='submit'>
                             Submit
                         </flux:button>
                     </div>

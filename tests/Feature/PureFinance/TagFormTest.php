@@ -24,9 +24,8 @@ it('can create a tag', function () {
 });
 
 it('can edit a tag', function () {
-    livewire(TagForm::class, [
-        'tag' => auth()->user()->tags->first()->toArray()
-    ])
+    livewire(TagForm::class)
+        ->call('loadTag', auth()->user()->tags->first()->toArray())
         ->set('name', 'Test tag updated')
         ->call('submit')
         ->assertDispatched('tag-saved')

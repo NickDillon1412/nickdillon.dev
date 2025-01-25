@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
-use Livewire\Attributes\Validate;
+use Livewire\Attributes\On;
+use App\Models\PureFinance\Tag;
 use Illuminate\Contracts\View\View;
 use Filament\Notifications\Notification;
 
@@ -15,15 +16,34 @@ class TagForm extends Component
 
     public ?array $tag = null;
 
-    #[Validate(
-        'required_if:modal_open,true|string',
-        message: 'The name field is required.'
-    )]
     public string $name = '';
 
-    public function mount(): void
+    protected function rules(): array
     {
-        if ($this->tag) {
+        return [
+            'name' => [
+                'required_if:modal_open,true',
+                'string',
+                'unique:tags,name,NULL,id,user_id,' . auth()->id()
+            ],
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'name.required_if' => 'The name field is required.',
+            'name.unique' => 'The provided name has already been taken.'
+        ];
+    }
+
+    #[On('open-tag-edit-form')]
+    public function loadTag(?array $tag = null): void
+    {
+        $this->resetValidation();
+
+        if ($tag) {
+            $this->tag = $tag;
             $this->name = $this->tag['name'];
         }
     }
@@ -33,7 +53,9 @@ class TagForm extends Component
         $validated_data = $this->validate();
 
         if ($this->tag) {
-            auth()->user()->tags()->update($validated_data);
+            Tag::query()
+                ->where('id', $this->tag['id'])
+                ->update($validated_data);
         } else {
             auth()->user()->tags()->create($validated_data);
         }
