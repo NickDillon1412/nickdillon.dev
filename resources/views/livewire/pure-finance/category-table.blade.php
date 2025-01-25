@@ -16,8 +16,8 @@
         <div
             class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
             <div class="flex justify-between items-center px-5 py-3.5">
-                <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                    <div class="relative w-40 pr-2 sm:w-64">
+                <div class="flex items-center w-full sm:w-64 justify-between -mr-1.5 space-x-1">
+                    <div class="relative w-full pr-2">
                         <label for="search" class="sr-only">
                             Search
                         </label>

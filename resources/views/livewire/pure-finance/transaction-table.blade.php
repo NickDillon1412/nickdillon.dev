@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-3 pt-5">
-    <div class="flex items-center justify-between w-full">
-        <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
+<div class="flex flex-col gap-5 pt-5 sm:gap-3">
+    <div class="flex flex-col w-full gap-2 sm:justify-between sm:items-center sm:flex-row">
+        <h1 class="hidden text-2xl font-semibold sm:block text-slate-800 dark:text-slate-200">
             Transactions
         </h1>
 
@@ -12,11 +12,11 @@
 
     <div
         class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
-        <div class="flex justify-between items-center px-5 py-3.5">
+        <div class="flex gap-2 flex-col sm:flex-row justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
             <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                <div class="relative w-40 pr-2 sm:w-64">
+                <div class="relative w-full pr-2 sm:w-64">
                     <label for="search" class="sr-only">
                         Search
                     </label>
@@ -176,7 +176,7 @@
 
                             <td
                                 class="py-1 pr-5 text-sm font-medium whitespace-nowrap text-slate-800 dark:text-slate-200">
-                                <div class="flex items-center justify-end space-x-1">
+                                <div class="flex items-center justify-end">
                                     @if ($transaction->attachments)
                                         <x-pure-finance.attachments-modal :attachments="$transaction->attachments" />
                                     @endif
@@ -216,7 +216,5 @@
         </div>
     </div>
 
-    <div class="pt-4">
-        {{ $transactions->links() }}
-    </div>
+    {{ $transactions->links() }}
 </div>

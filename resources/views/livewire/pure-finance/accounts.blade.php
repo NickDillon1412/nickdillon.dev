@@ -1,8 +1,8 @@
-<div x-data="{ accountFormModalOpen: false }" class="w-full max-w-3xl pt-5 mx-auto overflow-y-hidden">
+<div x-data="{ accountFormModalOpen: false }" class="w-full max-w-3xl pt-5 mx-auto space-y-5 sm:space-y-3">
     <div class="flex flex-col justify-center sm:flex-row sm:items-center">
         <div>
-            <flux:button variant="indigo" icon="plus" class="w-full sm:w-auto" x-on:click="accountFormModalOpen = true"
-                aria-controls="accountFormModalOpen-modal">
+            <flux:button variant="indigo" icon="plus" class="w-full sm:w-auto" size="sm"
+                x-on:click="accountFormModalOpen = true" aria-controls="accountFormModalOpen-modal">
                 New Account
             </flux:button>
 
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="flex flex-col w-full pt-5">
+    <div class="flex flex-col w-full">
         <div class="flex flex-col space-y-3 sm:hidden">
             @forelse ($accounts as $account)
                 <a href="{{ route('pure-finance.account.overview', $account) }}" wire:navigate
