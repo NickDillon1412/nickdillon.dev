@@ -44,6 +44,7 @@
                     </label>
 
                     <input type="text" wire:model.live.debounce.300ms='search' name="search" id="search"
+                        autofocus
                         class="block w-full px-3 py-1.5 text-sm rounded-lg shadow-sm border-slate-300 ps-9 focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400 dark:placeholder-slate-500 dark:focus:ring-indigo-600"
                         placeholder="Search transactions..." />
 

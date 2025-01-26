@@ -18,7 +18,7 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <select wire:model='account_id' id="account_id" required
+                        <select wire:model='account_id' id="account_id" required autofocus
                             class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select an account</option>
 
@@ -40,7 +40,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <select wire:model='type' id="type" required
+                    <select wire:model='type' id="type" required autofocus
                         class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select a type</option>
 
@@ -69,7 +69,7 @@
                 <div>
                     <x-input-label for="notes" :value="__('Notes')" />
 
-                    <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes"
+                    <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes" autofocus
                         class="w-full rounded-lg mt-2 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 text-sm resize-none"></textarea>
 
                     <x-input-error :messages="$errors->get('notes')" class="mt-2" />
@@ -82,7 +82,7 @@
                         </p>
 
                         <div class="flex items-center cursor-pointer w-fit">
-                            <input type="checkbox" id="status" name="status" wire:model="status"
+                            <input type="checkbox" id="status" name="status" wire:model="status" autofocus
                                 class="sr-only peer" />
 
                             <div
@@ -105,7 +105,7 @@
                     </div>
 
                     <x-text-input wire:model="payee" id="payee" class="block !rounded-lg w-full mt-1 text-sm"
-                        type="text" name="payee" required autocomplete="payee" />
+                        type="text" name="payee" required autofocus autocomplete="payee" />
 
                     <x-input-error :messages="$errors->get('payee')" class="mt-2" />
                 </div>
@@ -118,7 +118,7 @@
                     </div>
 
                     <x-text-input wire:model="amount" id="amount" class="block !rounded-lg w-full mt-1 text-sm"
-                        type="number" name="amount" required autocomplete="amount" placeholder="100.00"
+                        type="number" name="amount" required autofocus autocomplete="amount" placeholder="100.00"
                         step="0.01" />
 
                     <x-input-error :messages="$errors->get('amount')" class="mt-2" />
@@ -145,7 +145,7 @@
 
                             <div class="flex items-center cursor-pointer w-fit">
                                 <input type="checkbox" id="is_recurring" name="is_recurring"
-                                    x-model="$wire.is_recurring" class="sr-only peer" />
+                                    x-model="$wire.is_recurring" class="sr-only peer" autofocus />
 
                                 <div
                                     class="relative w-11 h-6 bg-amber-500 dark:bg-amber-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-indigo-500 dark:peer-checked:bg-indigo-600">
@@ -165,7 +165,7 @@
                                 <span class="text-rose-500">*</span>
                             </div>
 
-                            <select wire:model='frequency' id="frequency"
+                            <select wire:model='frequency' id="frequency" autofocus
                                 class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                                 <option value="">Select a frequency</option>
 

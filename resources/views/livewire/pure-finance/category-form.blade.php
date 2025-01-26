@@ -55,7 +55,7 @@
                         </div>
 
                         <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-1 text-sm"
-                            type="text" name="name" autocomplete="name" />
+                            type="text" name="name" autofocus autocomplete="name" />
 
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
@@ -65,7 +65,7 @@
                             <x-input-label for="parent_id" :value="__('Parent')" />
                         </div>
 
-                        <select wire:model='parent_id' id="parent_id"
+                        <select wire:model='parent_id' id="parent_id" autofocus
                             class="flex w-full mt-1.5 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select a category</option>
 

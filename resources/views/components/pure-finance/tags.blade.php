@@ -56,7 +56,7 @@
                         Search
                     </label>
 
-                    <input type="text" x-model="search" name="tag-search" id="tag-search"
+                    <input type="text" x-model="search" name="tag-search" id="tag-search" autofocus
                         class="block w-full px-3 py-1.5 my-0.5 text-sm shadow-xs border-none ps-9 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:text-slate-400 dark:placeholder-slate-500 focus:ring-0"
                         placeholder="Search tags..." />
 

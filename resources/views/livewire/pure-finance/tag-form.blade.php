@@ -51,7 +51,7 @@
                     </div>
 
                     <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-1 text-sm"
-                        type="text" name="name" autocomplete="name" />
+                        type="text" name="name" autofocus autofocus autocomplete="name" />
 
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>

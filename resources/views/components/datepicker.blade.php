@@ -3,8 +3,8 @@
 <div class="relative w-full mt-1 flatpickr" wire:ignore x-ref="datepicker" x-data="datepicker">
     <input wire:model="{{ $field }}"
         class="w-full font-medium rounded-lg shadow-sm form-input datepicker pl-9 text-slate-500 hover:text-slate-600 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 place-items-start"
-        placeholder="Select a date" required autocomplete="{{ $field }}" type="text" id="{{ $field }}"
-        data-input />
+        placeholder="Select a date" required autofocus autocomplete="{{ $field }}" type="text"
+        id="{{ $field }}" data-input />
 
     <div class="absolute inset-0 right-auto flex items-center pointer-events-none" data-toggle>
         <svg class="w-4 h-4 ml-3 fill-current text-slate-500" viewBox="0 0 16 16">
