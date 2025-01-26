@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Actions\PureFinance\RecalculateAccountBalance;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Enums\PureFinance\RecurringFrequency;
 use App\Enums\PureFinance\TransactionType;
 use Illuminate\Database\Eloquent\Model;
@@ -31,6 +30,8 @@ class Transaction extends Model
         'recurring_end',
         'parent_id'
     ];
+
+    protected $with = ['category', 'category.parent', 'tags'];
 
     /**
      * Get the attributes that should be cast.
@@ -80,15 +81,5 @@ class Transaction extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
-    }
-
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Transaction::class, 'parent_id');
-    }
-
-    public function children(): HasMany
-    {
-        return $this->hasMany(Transaction::class, 'parent_id');
     }
 }

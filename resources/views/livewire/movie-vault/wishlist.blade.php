@@ -29,7 +29,7 @@
         <div class="flex items-center mt-4 space-x-2">
             <div class="relative w-full">
                 <x-text-input id="search" wire:model.live.debounce.300ms='search'
-                    class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
+                    class="w-full bg-white pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
                     placeholder="Search..." />
 
                 <button class="absolute inset-0 right-auto" type="submit" aria-label="Search">

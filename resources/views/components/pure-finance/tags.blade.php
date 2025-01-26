@@ -11,24 +11,25 @@
         }.bind(this));
     }
 }" wire:ignore>
-    <p class="block text-sm font-medium cursor-default text-slate-700 dark:text-slate-300">
+    <p class="block font-medium cursor-default sm:text-sm text-slate-700 dark:text-slate-300">
         Tags
     </p>
 
     <div class="relative inline-flex w-full">
-        <div class="flex items-stretch w-full mt-2">
-            <div class="flex items-center w-full text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-[9px] dark:text-slate-300 z-30"
+        <div class="flex items-stretch w-full mt-1 sm:mt-2">
+            <div class="flex items-center w-full text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-2.5 sm:py-[9px] dark:text-slate-300 z-30"
                 :class="{ '!border-indigo-500 dark:!border-indigo-600 ring-1 !ring-indigo-500 dark:!ring-indigo-600': showDropdown }">
                 <button type="button" class="flex items-center justify-between w-full py-0" aria-haspopup="true"
                     x-on:click="showDropdown = true" :aria-expanded="showDropdown" aria-expanded="false">
                     <div class="flex flex-wrap items-center gap-1">
-                        <p class="-my-[1px] text-slate-600 dark:text-slate-300" x-cloak x-show="tags.length === 0">
+                        <p class="-my-[2px] sm:-my-[1px] text-base sm:text-sm text-slate-600 dark:text-slate-300"
+                            x-cloak x-show="tags.length === 0">
                             Select tags
                         </p>
 
                         <template x-for="(value, index) in tags" :key="index">
                             <div
-                                class="rounded px-1.5 text-xs text-indigo-500 bg-indigo-100/75 dark:bg-indigo-900/50 border border-indigo-500 flex items-center justify-between space-x-0.5">
+                                class="rounded px-1.5 !-my-[1px] sm:!my-[0.1px] sm:text-xs text-indigo-500 bg-indigo-100/75 dark:bg-indigo-900/50 border border-indigo-500 flex items-center justify-between space-x-0.5">
                                 <p x-text="value.name"></p>
 
                                 <button type="button" x-on:click="tags.splice(index, 1); search = ''"
@@ -57,7 +58,7 @@
                     </label>
 
                     <input type="text" x-model="search" name="tag-search" id="tag-search" autofocus
-                        class="block w-full px-3 py-1.5 my-0.5 text-sm shadow-xs border-none ps-9 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:text-slate-400 dark:placeholder-slate-500 focus:ring-0"
+                        class="block w-full px-3 py-1.5 my-0.5 sm:text-sm shadow-xs border-none ps-9 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:text-slate-400 dark:placeholder-slate-500 focus:ring-0"
                         placeholder="Search tags..." />
 
                     <div class="absolute inset-y-0 -mt-0.5 flex items-center pointer-events-none start-0 ps-3">

@@ -40,7 +40,7 @@
                     </span>
                 </h3>
 
-                <ul class="mt-3">
+                <ul class="mt-3 space-y-2">
                     <x-sidebar-link title="Movie Vault" route="movie-vault.my-vault">
                         <x-heroicon-o-film />
                     </x-sidebar-link>

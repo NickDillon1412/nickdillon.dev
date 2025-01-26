@@ -18,7 +18,7 @@
 }" class="relative z-20 w-auto h-auto">
     <div class="relative inline-block">
         <button
-            class="p-2 duration-200 ease-in-out bg-white border rounded-md shadow-sm hover:bg-slate-200 dark:bg-slate-900 border-slate-300 dark:hover:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
+            class="p-2.5 duration-200 ease-in-out bg-white border rounded-md shadow-sm sm:p-2 hover:bg-slate-200 dark:bg-slate-900 border-slate-300 dark:hover:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
             x-on:click="slideOverOpen = true">
             <x-feathericon-filter class="!w-5 !h-5" />
         </button>

@@ -136,7 +136,7 @@ class TransactionTable extends Component
     public function render(): View
     {
         $transactions = Transaction::query()
-            ->with(['account:id,name,user_id', 'category:id,name', 'parent'])
+            ->with(['account:id,name,user_id', 'category:id,name,parent_id', 'category.parent:id,name'])
             ->whereRelation('account', 'user_id', auth()->id())
             ->when($this->account, function (Builder $query): void {
                 $query->whereRelation('account', 'name', $this->account->name);

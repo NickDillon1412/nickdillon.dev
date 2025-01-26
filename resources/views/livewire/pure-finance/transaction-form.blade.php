@@ -19,7 +19,7 @@
                         </div>
 
                         <select wire:model='account_id' id="account_id" required autofocus
-                            class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select an account</option>
 
                             @foreach ($accounts as $account)
@@ -41,7 +41,7 @@
                     </div>
 
                     <select wire:model='type' id="type" required autofocus
-                        class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                        class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select a type</option>
 
                         @foreach ($transaction_types as $transaction_type)
@@ -70,14 +70,14 @@
                     <x-input-label for="notes" :value="__('Notes')" />
 
                     <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes" autofocus
-                        class="w-full rounded-lg mt-2 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 text-sm resize-none"></textarea>
+                        class="w-full rounded-lg mt-2 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:text-sm resize-none"></textarea>
 
                     <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                 </div>
 
                 <div>
                     <label class="space-y-2" for="status">
-                        <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                        <p class="block font-medium sm:text-sm text-slate-700 dark:text-slate-300">
                             Status
                         </p>
 
@@ -104,7 +104,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="payee" id="payee" class="block !rounded-lg w-full mt-1 text-sm"
+                    <x-text-input wire:model="payee" id="payee" class="block !rounded-lg w-full mt-1 sm:text-sm"
                         type="text" name="payee" required autofocus autocomplete="payee" />
 
                     <x-input-error :messages="$errors->get('payee')" class="mt-2" />
@@ -117,7 +117,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="amount" id="amount" class="block !rounded-lg w-full mt-1 text-sm"
+                    <x-text-input wire:model="amount" id="amount" class="block !rounded-lg w-full mt-1 sm:text-sm"
                         type="number" name="amount" required autofocus autocomplete="amount" placeholder="100.00"
                         step="0.01" />
 
@@ -139,7 +139,7 @@
                 @if (!$transaction?->parent)
                     <div>
                         <label class="space-y-2" for="is_recurring">
-                            <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                            <p class="block font-medium sm:text-sm text-slate-700 dark:text-slate-300">
                                 Recurring?
                             </p>
 
@@ -166,7 +166,7 @@
                             </div>
 
                             <select wire:model='frequency' id="frequency" autofocus
-                                class="flex w-full mt-1 text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                                 <option value="">Select a frequency</option>
 
                                 @foreach (RecurringFrequency::cases() as $frequency)

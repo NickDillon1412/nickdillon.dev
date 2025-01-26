@@ -19,10 +19,10 @@
             </div>
         </div>
 
-        <div class="flex flex-col space-y-0.5 p-2">
+        <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
             @forelse ($accounts as $account)
                 <a href="{{ route('pure-finance.account.overview', $account) }}" wire:navigate
-                    class="flex items-center justify-between p-2 text-sm duration-200 ease-in-out rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                    class="flex items-center justify-between px-4 py-3 text-sm duration-200 ease-in-out last:rounded-b-xl hover:bg-slate-100 dark:hover:bg-slate-700">
                     <p class="font-medium">{{ $account->name }}</p>
 
                     <p>${{ Number::format($account->balance ?? 0, 2) }}</p>

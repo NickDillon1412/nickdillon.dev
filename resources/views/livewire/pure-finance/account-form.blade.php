@@ -37,20 +37,20 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <x-text-input wire:model="name" id="name" class="block w-full mt-1 text-sm" type="text"
-                            name="name" required autofocus autocomplete="name" />
+                        <x-text-input wire:model="name" id="name" class="block w-full mt-1 !rounded-lg sm:text-sm"
+                            type="text" name="name" required autofocus autocomplete="name" />
 
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     <div class="text-left">
-                        <label class="text-sm font-medium" for="type">
+                        <label class="font-medium sm:text-sm" for="type">
                             Account Type
 
                             <span class="text-rose-500">*</span>
 
                             <select wire:model='type' id="type" required autofocus
-                                class="flex w-full mt-1.5 text-sm rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                class="flex w-full mt-1.5 sm:text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                                 <option value="">-- Select a type --</option>
 
                                 @foreach (AccountType::cases() as $account_type)
@@ -70,9 +70,9 @@
                                 <x-input-label for="balance" :value="__('Balance')" />
                             </div>
 
-                            <x-text-input wire:model="balance" id="balance" class="block w-full mt-2 text-sm"
-                                type="number" name="balance" autofocus autocomplete="balance" placeholder="100.00"
-                                step="0.01" />
+                            <x-text-input wire:model="balance" id="balance"
+                                class="block !rounded-lg w-full mt-1 sm:mt-2 sm:text-sm" type="number" name="balance"
+                                autofocus autocomplete="balance" placeholder="100.00" step="0.01" />
 
                             <x-input-error :messages="$errors->get('balance')" class="mt-2" />
                         </div>

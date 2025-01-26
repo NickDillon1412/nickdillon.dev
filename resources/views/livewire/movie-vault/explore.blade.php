@@ -13,7 +13,7 @@
 
     <div class="relative mt-4">
         <x-text-input id="search" wire:model.live.debounce.300ms='search'
-            class="w-full bg-white form-input pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
+            class="w-full bg-white pl-9 dark:bg-slate-800 placeholder:text-slate-400" type="text"
             placeholder="Search..." />
 
         <button class="absolute inset-0 right-auto group" type="submit" aria-label="Search">
