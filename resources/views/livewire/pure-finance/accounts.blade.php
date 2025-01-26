@@ -1,4 +1,5 @@
-<div x-data="{ accountFormModalOpen: false }" class="pt-3 mx-auto space-y-5 sm:pt-5 sm:space-y-3">
+<div x-data="{ accountFormModalOpen: false }" x-on:transaction-deleted.window="$wire.$refresh"
+    class="pt-3 mx-auto space-y-5 sm:pt-5 sm:space-y-3">
     <div
         class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600 h-fit">
         <div class="flex items-center justify-between gap-2 px-4 py-2.5">

@@ -44,7 +44,7 @@ beforeEach(function () {
 it('can create a transaction', function () {
     livewire(TransactionForm::class)
         ->set('account_id', auth()->user()->accounts->first()->id)
-        ->set('description', 'Test description')
+        ->set('payee', 'Test payee')
         ->set('type', TransactionType::DEPOSIT)
         ->set('amount', 100)
         ->set('category_id', auth()->user()->categories->first()->id)
@@ -114,6 +114,14 @@ it('can push to attachments', function () {
 
 test('component can render with transaction', function () {
     livewire(TransactionForm::class, [
+        'transaction' => auth()->user()->transactions->first()
+    ])
+        ->assertHasNoErrors();
+});
+
+test('component can render with account and transaction', function () {
+    livewire(TransactionForm::class, [
+        'account' => auth()->user()->accounts->first(),
         'transaction' => auth()->user()->transactions->first()
     ])
         ->assertHasNoErrors();

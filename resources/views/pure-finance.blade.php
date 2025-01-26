@@ -7,12 +7,12 @@
             Pure Finance
         </h1>
 
-        <div class="flex flex-col gap-4 sm:grid-cols-8 sm:grid">
-            <div class="sm:col-span-2">
+        <div class="flex flex-col gap-4 md:grid-cols-8 lg:grid">
+            <div class="lg:col-span-2">
                 @livewire('pure-finance.accounts')
             </div>
 
-            <div class="sm:col-span-6">
+            <div class="lg:col-span-6">
                 @livewire('pure-finance.transaction-table')
             </div>
         </div>

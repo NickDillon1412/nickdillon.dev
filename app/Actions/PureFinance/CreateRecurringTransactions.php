@@ -28,7 +28,7 @@ class CreateRecurringTransactions
 		while ($start_date->lte($transaction->recurring_end)) {
 			Transaction::create([
 				'account_id' => $transaction->account->id,
-				'description' => $transaction->description,
+				'payee' => $transaction->payee,
 				'type' => $transaction->type,
 				'amount' => $transaction->amount,
 				'category_id' => $transaction->category_id,

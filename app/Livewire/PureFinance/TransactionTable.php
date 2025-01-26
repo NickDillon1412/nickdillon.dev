@@ -128,6 +128,8 @@ class TransactionTable extends Component
             ->success()
             ->send();
 
+        $this->dispatch('transaction-deleted');
+
         $this->dispatch('close-modal');
     }
 

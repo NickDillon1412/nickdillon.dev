@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Layout;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Collection;
+use App\Models\PureFinance\Account;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Models\PureFinance\Transaction;
@@ -22,13 +23,15 @@ use App\Actions\PureFinance\CreateRecurringTransactions;
 #[Layout('layouts.app')]
 class TransactionForm extends Component
 {
+    public ?Account $account = null;
+
     public ?Transaction $transaction = null;
 
     public Collection $accounts;
 
     public array $categories = [];
 
-    public int $account_id;
+    public ?int $account_id = null;
 
     public string $payee = '';
 
@@ -101,8 +104,12 @@ class TransactionForm extends Component
             ->getTransactionTypes()
             ->getUserTags();
 
+        if ($this->account) {
+            $this->account_id = $this->account->id;
+        }
+
         if ($this->transaction) {
-            $this->account_id = $this->transaction->account_id;
+            $this->account_id = $this->transaction->account->id;
             $this->payee = $this->transaction->payee;
             $this->type = $this->transaction->type;
             $this->amount = $this->transaction->amount;

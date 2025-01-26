@@ -1,6 +1,6 @@
 @use('App\Enums\PureFinance\AccountType', 'AccountType')
 
-<div x-data="{ accountFormModalOpen: false }" x-on:account-updated="$wire.$refresh"
+<div x-data="{ accountFormModalOpen: false }" x-on:account-updated="$wire.$refresh" x-on:transaction-deleted.window="$wire.$refresh"
     class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-screen-2xl">
     <div>
         <h1 class="text-2xl font-bold text-slate-800 md:text-3xl dark:text-slate-100">

@@ -10,7 +10,7 @@
         <div
             class="grid items-start grid-cols-1 gap-5 p-6 bg-white border shadow-xs rounded-xl dark:bg-slate-800 dark:border-slate-600 border-slate-200 sm:grid-cols-2">
             <div class="space-y-5">
-                @if (!$transaction)
+                @if (!$account && !$transaction)
                     <div>
                         <div class="flex space-x-1">
                             <x-input-label for="account_id" :value="__('Account')" />

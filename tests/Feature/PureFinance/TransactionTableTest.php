@@ -78,9 +78,9 @@ it('can sort by amount', function () {
         ->assertHasNoErrors();
 });
 
-it('can sort by description', function () {
+it('can sort by payee', function () {
     livewire(TransactionTable::class)
-        ->call('sortBy', 'description')
+        ->call('sortBy', 'payee')
         ->assertHasNoErrors();
 });
 

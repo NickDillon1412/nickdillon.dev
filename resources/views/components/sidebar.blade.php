@@ -1,4 +1,4 @@
-<div class="min-w-fit" x-cloak>
+<div class="min-w-fit">
     <div class="fixed inset-0 z-40 transition-opacity duration-200 bg-slate-900 bg-opacity-30 lg:hidden lg:z-auto"
         :class="sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" aria-hidden="true" x-cloak>
     </div>
@@ -58,7 +58,7 @@
                                 ]) />
 
                                 <span @class([
-                                    'text-slate-800 dark:text-slate-100 truncate transition ml-2 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100',
+                                    'text-slate-800 dark:text-slate-100 truncate transition ml-2 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 3xl:opacity-100',
                                     'hover:text-slate-900 dark:hover:text-white' => !request()->routeIs(
                                         'pure-finance.*'),
                                 ])">
@@ -69,7 +69,7 @@
                             <button x-on:click="showPureFinance = !showPureFinance">
                                 <svg :class="showPureFinance ? 'rotate-180' : 'rotate-0'"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="2" stroke="currentColor" @class([
+                                    stroke-width="2.5" stroke="currentColor" @class([
                                         'transition-transform duration-200 ease-in-out transform size-4',
                                         'hover:text-slate-900 dark:hover:text-white' => !request()->routeIs(
                                             'pure-finance.*'),

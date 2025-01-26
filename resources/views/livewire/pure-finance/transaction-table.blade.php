@@ -5,8 +5,9 @@
         </h1>
 
         @if (auth()->user()->accounts->count() > 0)
-            <flux:button href="{{ route('pure-finance.transaction-form') }}" variant="indigo" icon="plus" size="sm"
-                class="w-full sm:w-auto">
+            <flux:button
+                href="{{ $account ? route('pure-finance.account.transaction-form', $account->id) : route('pure-finance.transaction-form') }}"
+                variant="indigo" icon="plus" size="sm" class="w-full sm:w-auto">
                 New Transaction
             </flux:button>
         @endif
@@ -21,8 +22,9 @@
 
             @if (auth()->user()->accounts->count() > 0)
                 <div>
-                    <flux:button href="{{ route('pure-finance.transaction-form') }}" wire:navigate variant="indigo"
-                        size="sm" class="!h-7">
+                    <flux:button
+                        href="{{ $account ? route('pure-finance.account.transaction-form', $account->id) : route('pure-finance.transaction-form') }}"
+                        wire:navigate variant="indigo" size="sm" class="!h-7">
                         <x-heroicon-o-plus class="w-4 h-4" />
 
                         Add
@@ -36,7 +38,7 @@
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
             <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                <div class="relative hidden w-full pr-2 sm:flex sm:w-64">
+                <div class="relative hidden w-full pr-2 sm:block sm:w-64">
                     <label for="search" class="sr-only">
                         Search
                     </label>
