@@ -6,6 +6,7 @@ namespace App\Actions\PureFinance;
 
 use App\Models\User;
 use Illuminate\Support\Collection;
+use function Illuminate\Support\defer;
 use Illuminate\Database\Eloquent\Model;
 
 class CreateDefaultCategories
