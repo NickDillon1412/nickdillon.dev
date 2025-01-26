@@ -80,7 +80,7 @@
                             x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
                             x-transition:leave="transform duration-300" x-transition:leave-start="translate-x-0"
                             x-transition:leave-end="translate-x-full"
-                            class="absolute top-0 bottom-0 right-0 flex items-center px-2 space-x-2 text-white border border-red-500 bg-red-600/80">
+                            class="absolute top-0 bottom-0 right-0 flex items-center px-2 space-x-2 text-white bg-red-400 border border-red-500 dark:bg-red-600/80">
                             <x-modal icon="information-circle" delete variant="danger"
                                 wire:submit="delete({{ $transaction->id }})">
                                 <x-slot:button>
@@ -122,8 +122,8 @@
                                 <div class="flex items-center">
                                     <p class="max-w-[230px] truncate">
                                         @if ($transaction->category->parent)
-                                            {{ $transaction->category->name }} &rarr;
-                                            {{ $transaction->category->parent->name }}
+                                            {{ $transaction->category->parent->name }} &rarr;
+                                            {{ $transaction->category->name }}
                                         @else
                                             {{ $transaction->category->name }}
                                         @endif
