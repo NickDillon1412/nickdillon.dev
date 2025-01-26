@@ -1,7 +1,7 @@
 <div class="w-full p-4 mx-auto overflow-y-hidden sm:py-8 sm:px-6 lg:px-8 max-w-screen-2xl">
     <div class="flex flex-col space-y-3">
         <div class="flex items-center justify-between w-full">
-            <h1 class="text-3xl font-semibold text-slate-800 dark:text-slate-200">
+            <h1 class="text-2xl font-semibold md:text-3xl text-slate-800 dark:text-slate-200">
                 Categories
             </h1>
 
@@ -17,7 +17,7 @@
             class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
             <div class="flex justify-between items-center px-5 py-3.5">
                 <div class="flex items-center w-full sm:w-64 justify-between -mr-1.5 space-x-1">
-                    <div class="relative w-full pr-2">
+                    <div class="relative w-full sm:pr-2">
                         <label for="search" class="sr-only">
                             Search
                         </label>

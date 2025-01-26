@@ -18,7 +18,7 @@
 
         return total;
     },
-}" class="relative z-50 w-auto h-auto">
+}" class="relative z-50 hidden w-auto h-auto sm:flex">
     <div class="relative inline-block">
         <flux:button icon="funnel" variant="subtle" x-on:click="slideOverOpen = true"
             class="!h-8 !w-8 hover:!bg-white hover:!text-slate-500 dark:hover:!bg-slate-800 dark:hover:!text-slate-300" />

@@ -16,7 +16,7 @@ new class extends Component {
 }; ?>
 
 <nav
-    class="sticky top-0 z-30 w-full transition-all duration-200 ease-in-out bg-white border-b lg:rounded-br-2xl border-slate-200/60 dark:bg-slate-800 dark:border-slate-700/10">
+    class="sticky top-0 z-30 w-full transition-all duration-200 ease-in-out bg-white border-b border-slate-200 dark:bg-slate-800 dark:border-slate-700">
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -65,22 +65,6 @@ new class extends Component {
                     </x-slot>
 
                     <x-slot name="content">
-                        @if (request()->routeIs('pure-finance.*'))
-                        <x-dropdown-link :href="route('pure-finance.categories')" wire:navigate>
-                            <div class="flex items-center">
-                                <flux:icon.squares-2x2 class="mr-1.5 !-ml-0.5 !h-5 !w-5" />
-                                {{ __('Categories') }}
-                            </div>
-                        </x-dropdown-link>
-
-                        <x-dropdown-link :href="route('pure-finance.tags')" wire:navigate>
-                            <div class="flex items-center">
-                                <flux:icon.tags class="mr-1.5 !-ml-0.5 !h-5 !w-5 !stroke-[1.5px]" />
-                                {{ __('Tags') }}
-                            </div>
-                        </x-dropdown-link>
-                        @endif
-
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             <div class="flex items-center">
                                 <flux:icon.user-circle class="mr-1.5 !-ml-0.5 !h-5 !w-5" />

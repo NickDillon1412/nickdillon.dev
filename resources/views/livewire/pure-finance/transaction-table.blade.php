@@ -1,22 +1,42 @@
-<div class="flex flex-col gap-5 pt-5 pb-14 sm:pb-0 sm:gap-3">
-    <div class="flex flex-col w-full gap-2 sm:justify-between sm:items-center sm:flex-row">
-        <h1 class="hidden text-2xl font-semibold sm:block text-slate-800 dark:text-slate-200">
+<div x-on:account-saved.window="$wire.$refresh" class="flex flex-col gap-5 sm:pt-5 sm:gap-3">
+    <div class="flex-col hidden w-full gap-2 sm:flex sm:justify-between sm:items-center sm:flex-row">
+        <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
             Transactions
         </h1>
 
-        <flux:button href="{{ route('pure-finance.transaction-form') }}" variant="indigo" icon="plus" size="sm"
-            class="w-full sm:w-auto">
-            New Transaction
-        </flux:button>
+        @if (auth()->user()->accounts->count() > 0)
+            <flux:button href="{{ route('pure-finance.transaction-form') }}" variant="indigo" icon="plus" size="sm"
+                class="w-full sm:w-auto">
+                New Transaction
+            </flux:button>
+        @endif
     </div>
 
     <div
-        class="bg-white border divide-y shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 divide-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 dark:divide-slate-600">
-        <div class="flex gap-2 flex-col sm:flex-row justify-between items-center px-5 py-3.5">
+        class="bg-white border shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+        <div class="flex items-center justify-between px-4 py-2.5 sm:hidden">
+            <h1 class="text-xl font-semibold text-slate-800 dark:text-slate-200">
+                Transactions
+            </h1>
+
+            @if (auth()->user()->accounts->count() > 0)
+                <div>
+                    <flux:button href="{{ route('pure-finance.transaction-form') }}" wire:navigate variant="indigo"
+                        size="sm" class="!h-7">
+                        <x-heroicon-o-plus class="w-4 h-4" />
+
+                        Add
+                    </flux:button>
+                </div>
+            @endif
+        </div>
+
+        <div
+            class="hidden sm:flex gap-2 flex-col border-b border-slate-200 dark:border-slate-600 sm:flex-row justify-between items-center px-5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
             <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                <div class="relative w-full pr-2 sm:w-64">
+                <div class="relative hidden w-full pr-2 sm:flex sm:w-64">
                     <label for="search" class="sr-only">
                         Search
                     </label>
@@ -47,7 +67,54 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="border-t sm:hidden border-slate-200 dark:border-slate-600">
+            <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
+                @forelse ($transactions as $transaction)
+                    <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}" wire:navigate
+                        class="flex flex-col px-4 py-2.5 space-y-0.5 text-xs">
+                        <div class="flex items-center justify-between font-medium">
+                            <p>
+                                {{ $transaction->payee }}
+                            </p>
+
+                            <p>
+                                ${{ Number::format($transaction->amount ?? 0, 2) }}
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between text-slate-500 dark:text-slate-300">
+                            <div class="flex items-center gap-1">
+                                <p>
+                                    {{ $transaction->category->name }}
+                                </p>
+
+                                <div class="flex items-center">
+                                    <div @class([
+                                        'text-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
+                                            $transaction->status,
+                                        'text-amber-500 dark:text-amber-500 bg-amber-500/10 dark:bg-amber-500/10' => !$transaction->status,
+                                        'inline-flex items-center space-x-0.5 px-1 overflow-hidden text-xs font-medium rounded-md w-fit',
+                                    ])>
+                                        {{ $transaction->status ? 'Cleared' : 'Pending' }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>
+                                {{ Carbon\Carbon::parse($transaction->date)->format('M j, Y') }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    <div
+                        class="p-2.5 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">
+                        No transactions found...
+                    </div>
+                @endforelse
+            </div>
+        </div>
+
+        <div class="hidden overflow-x-auto sm:block">
             <table class="w-full divide-y table-auto divide-slate-200 dark:divide-slate-600">
                 <div x-cloak x-show="$wire.sort_col !== 'date'"
                     class="flex items-center px-5 py-2 space-x-2 text-sm border-b border-slate-200 dark:border-slate-600">

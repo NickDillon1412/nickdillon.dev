@@ -1,6 +1,6 @@
 @props(['columns'])
 
-<div x-data="{ columnsModalOpen: false }" wire:ignore>
+<div x-data="{ columnsModalOpen: false }" wire:ignore class="hidden sm:flex">
     <flux:button icon="view-columns" variant="subtle" x-on:click="columnsModalOpen = true"
         class="!h-8 !w-8 hover:!bg-white hover:!text-slate-500 dark:hover:!bg-slate-800 dark:hover:!text-slate-300"
         x-ref="columns" />
