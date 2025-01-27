@@ -73,75 +73,7 @@
         <div class="border-t sm:hidden border-slate-200 dark:border-slate-600">
             <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
                 @forelse ($transactions as $transaction)
-                    <div wire:key='{{ $transaction->id }}' x-data="{ swipe: false, startX: 0, currentX: 0 }"
-                        x-on:transaction-deleted.window="swipe = false" x-on:click.outside="swipe = false"
-                        class="relative overflow-hidden last:rounded-b-xl">
-                        <div x-show="swipe" x-transition:enter="transform duration-300"
-                            x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
-                            x-transition:leave="transform duration-300" x-transition:leave-start="translate-x-0"
-                            x-transition:leave-end="translate-x-full"
-                            class="absolute top-0 bottom-0 right-0 flex items-center px-2 space-x-2 text-white bg-red-400 border border-red-500 dark:bg-red-600/80">
-                            <x-modal icon="information-circle" delete variant="danger"
-                                wire:submit="delete({{ $transaction->id }})">
-                                <x-slot:button>
-                                    <x-heroicon-o-trash
-                                        class="p-1 text-red-500 duration-100 ease-in-out rounded-md w-7 h-7 hover:bg-slate-200 dark:hover:bg-slate-700" />
-                                </x-slot:button>
-
-                                <x-slot:title>
-                                    Delete Transaction
-                                </x-slot:title>
-
-                                <x-slot:body>
-                                    Are you sure you want to delete this transaction?
-                                </x-slot:body>
-                            </x-modal>
-                        </div>
-
-                        <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}" wire:navigate
-                            @class([
-                                'flex flex-col px-4 py-2.5 space-y-0.5 text-sm bg-white dark:bg-slate-800 transform transition-transform duration-300',
-                                'border-l-2 !border-l-emerald-500' => $transaction->status === true,
-                                'border-l-2 !border-l-amber-500' => $transaction->status === false,
-                            ])
-                            x-bind:style="`transform: translateX(${swipe ? '-100px' : '0px'})`"
-                            x-on:touchstart="startX = $event.touches[0].clientX"
-                            x-on:touchmove="currentX = $event.touches[0].clientX; swipe = startX - currentX > 50"
-                            x-on:touchend="if (startX - currentX <= 50) swipe = false">
-                            <div class="flex items-center justify-between font-medium">
-                                <p>
-                                    {{ $transaction->payee }}
-                                </p>
-
-                                <p>
-                                    ${{ Number::format($transaction->amount ?? 0, 2) }}
-                                </p>
-                            </div>
-
-                            <div class="flex items-center justify-between text-slate-500 dark:text-slate-300">
-                                <div class="flex items-center">
-                                    <p class="max-w-[230px] truncate">
-                                        @if ($transaction->category->parent)
-                                            {{ $transaction->category->parent->name }} &rarr;
-                                            {{ $transaction->category->name }}
-                                        @else
-                                            {{ $transaction->category->name }}
-                                        @endif
-                                    </p>
-                                </div>
-
-                                <p>
-                                    {{ Carbon\Carbon::parse($transaction->date)->format('M j, Y') }}
-                                </p>
-                            </div>
-
-                            @if ($transaction->tags)
-                                <div class="text-slate-500 dark:text-slate-300">
-                                    {{ $transaction->tags->pluck('name')->implode(', ') }}
-                                </div>
-                            @endif
-                        </a>
-                    </div>
+                    <x-pure-finance.swipeable-transaction :$transaction />
                 @empty
                     <div
                         class="p-2.5 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">

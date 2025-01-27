@@ -54,6 +54,12 @@ it('can update status', function () {
         ->assertHasNoErrors();
 });
 
+it('can toggle status', function () {
+    livewire(TransactionTable::class)
+        ->call('toggleStatus', Transaction::first()->id)
+        ->assertHasNoErrors();
+});
+
 it('can sort by account name', function () {
     livewire(TransactionTable::class)
         ->call('sortBy', 'account')

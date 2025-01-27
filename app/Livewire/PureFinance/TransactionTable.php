@@ -119,6 +119,16 @@ class TransactionTable extends Component
         };
     }
 
+    public function toggleStatus(Transaction $transaction): void
+    {
+        $transaction->update(['status' => !$transaction->status]);
+
+        Notification::make()
+            ->title("Successfully changed status")
+            ->success()
+            ->send();
+    }
+
     public function delete(Transaction $transaction): void
     {
         $transaction->delete();
