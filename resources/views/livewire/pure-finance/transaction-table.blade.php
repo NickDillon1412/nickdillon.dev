@@ -105,9 +105,9 @@
                                 'border-l-2 !border-l-amber-500' => $transaction->status === false,
                             ])
                             x-bind:style="`transform: translateX(${swipe ? '-100px' : '0px'})`"
-                            @touchstart="startX = $event.touches[0].clientX"
-                            @touchmove="currentX = $event.touches[0].clientX; swipe = startX - currentX > 50"
-                            @touchend="if (startX - currentX <= 50) swipe = false">
+                            x-on:touchstart="startX = $event.touches[0].clientX"
+                            x-on:touchmove="currentX = $event.touches[0].clientX; swipe = startX - currentX > 50"
+                            x-on:touchend="if (startX - currentX <= 50) swipe = false">
                             <div class="flex items-center justify-between font-medium">
                                 <p>
                                     {{ $transaction->payee }}

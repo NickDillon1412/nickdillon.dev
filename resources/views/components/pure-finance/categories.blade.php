@@ -68,9 +68,8 @@
                             <button type="button" x-on:click="category_id = category.id; search = ''"
                                 class="flex items-center justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                 :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
-                                <span class="text-sm capitalize"
-                                    :class="{ 'text-indigo-600 font-medium': category_id === category.id }"
-                                    x-text="category.name">
+                                <span class="text-sm font-bold capitalize"
+                                    :class="{ 'text-indigo-600': category_id === category.id }" x-text="category.name">
                                 </span>
 
                                 <div x-cloak x-show="category_id === category.id">
