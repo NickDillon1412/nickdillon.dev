@@ -4,8 +4,8 @@ namespace App\Models\PureFinance;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Actions\PureFinance\RecalculateAccountBalance;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Actions\PureFinance\UpdateAccountBalance;
 use App\Enums\PureFinance\RecurringFrequency;
 use App\Enums\PureFinance\TransactionType;
 use Illuminate\Database\Eloquent\Model;
@@ -53,18 +53,18 @@ class Transaction extends Model
 
     protected static function booted(): void
     {
-        $action = app(RecalculateAccountBalance::class);
+        $action = app(UpdateAccountBalance::class);
 
-        static::created(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction->account);
+        static::creating(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction, 'creating');
         });
 
-        static::updated(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction->account);
+        static::updating(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction, 'updating');
         });
 
-        static::deleted(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction->account);
+        static::deleting(function (Transaction $transaction) use ($action): void {
+            $action->handle($transaction, 'deleting');
         });
     }
 

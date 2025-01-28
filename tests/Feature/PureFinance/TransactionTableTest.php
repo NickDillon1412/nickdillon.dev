@@ -13,6 +13,8 @@ use App\Enums\PureFinance\TransactionType;
 use App\Livewire\PureFinance\TransactionTable;
 
 beforeEach(function () {
+    $this->withoutDefer();
+
     $user = User::factory()->create();
 
     if (Category::count() === 0) {

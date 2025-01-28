@@ -65,7 +65,8 @@
                 <div class="px-1 overflow-y-scroll max-h-[250px]">
                     <template x-for="category in filteredCategories" :key="category.id">
                         <div>
-                            <button type="button" x-on:click="category_id = category.id; search = ''"
+                            <button type="button"
+                                x-on:click="category_id = category.id; search = ''; showDropdown = false"
                                 class="flex items-center justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                 :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
                                 <span class="text-sm font-bold capitalize"
@@ -80,7 +81,8 @@
 
                             <div x-cloak x-show="category.children.length > 0" class="pl-4">
                                 <template x-for="child in category.children" :key="child.id">
-                                    <button type="button" x-on:click="category_id = child.id; search = ''"
+                                    <button type="button"
+                                        x-on:click="category_id = child.id; search = ''; showDropdown = false"
                                         class="flex items-center my-0.5 justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                         :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === child.id }">
                                         <span class="text-sm capitalize"

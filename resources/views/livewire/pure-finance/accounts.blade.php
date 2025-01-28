@@ -29,7 +29,7 @@
                 </a>
             @empty
                 <div
-                    class="p-0.5 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">
+                    class="p-2.5 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">
                     No accounts found...
                 </div>
             @endforelse
