@@ -127,6 +127,8 @@ class TransactionTable extends Component
             ->title("Successfully changed status")
             ->success()
             ->send();
+
+        $this->dispatch('status-changed');
     }
 
     public function delete(Transaction $transaction): void

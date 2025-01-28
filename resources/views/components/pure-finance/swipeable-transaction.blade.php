@@ -1,7 +1,8 @@
 @props(['transaction'])
 
 <div wire:key='{{ $transaction->id }}' x-data="swipeableItem" x-on:transaction-deleted.window="resetSwipe"
-    x-on:click.outside="resetSwipe" class="relative overflow-hidden last:rounded-b-xl">
+    x-on:status-changed.window="resetSwipe" x-on:click.outside="resetSwipe"
+    class="relative overflow-hidden last:rounded-b-xl">
     <div x-show="rightSwipe" x-transition:enter="transform duration-200" x-transition:enter-start="-translate-x-full"
         x-transition:enter-end="translate-x-0" x-transition:leave="transform duration-200"
         x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"

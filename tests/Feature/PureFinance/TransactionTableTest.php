@@ -59,6 +59,7 @@ it('can update status', function () {
 it('can toggle status', function () {
     livewire(TransactionTable::class)
         ->call('toggleStatus', Transaction::first()->id)
+        ->assertDispatched('status-changed')
         ->assertHasNoErrors();
 });
 
