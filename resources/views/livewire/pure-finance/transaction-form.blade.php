@@ -18,7 +18,7 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <select wire:model='account_id' id="account_id" required autofocus
+                        <select wire:model.live='account_id' id="account_id" required autofocus
                             class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select an account</option>
 
@@ -40,7 +40,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <select wire:model='type' id="type" required autofocus
+                    <select x-model="$wire.type" id="type" required autofocus
                         class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select a type</option>
 
@@ -48,6 +48,29 @@
                             <option value="{{ $transaction_type->value }}">
                                 {{ $transaction_type->label() }}
                             </option>
+                        @endforeach
+                    </select>
+
+                    <x-input-error :messages="$errors->get('type')" class="mt-2" />
+                </div>
+
+                <div x-cloak x-show="$wire.type === 'transfer'">
+                    <div class="flex space-x-1">
+                        <x-input-label for="transfer_to" :value="__('Transfer To')" />
+
+                        <span class="text-rose-500">*</span>
+                    </div>
+
+                    <select wire:model="transfer_to" id="transfer_to" required autofocus
+                        class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                        <option value="">Select an account</option>
+
+                        @foreach ($accounts as $account)
+                            @if ($account->id !== $account_id)
+                                <option value="{{ $account->id }}">
+                                    {{ $account->name }}
+                                </option>
+                            @endif
                         @endforeach
                     </select>
 

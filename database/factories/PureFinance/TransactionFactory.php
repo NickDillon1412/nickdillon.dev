@@ -34,6 +34,7 @@ class TransactionFactory extends Factory
                 ? Category::inRandomOrder()->first()->id
                 : Category::factory(),
             'type' => Arr::random(TransactionType::cases()),
+            'transfer_to' => null,
             'amount' => $this->faker->randomFloat(2, 0, 100),
             'payee' => $this->faker->text(30),
             'date' => $transaction_date->format('Y-m-d'),

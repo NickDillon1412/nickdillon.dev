@@ -112,6 +112,21 @@ it('can push to attachments', function () {
         ->assertHasNoErrors();
 });
 
+it('can transfer from one account to another', function () {
+    livewire(TransactionForm::class)
+        ->set('account_id', auth()->user()->accounts->first()->id)
+        ->set('payee', 'Test payee')
+        ->set('type', TransactionType::TRANSFER)
+        ->set('transfer_to', auth()->user()->accounts->last()->id)
+        ->set('amount', 100)
+        ->set('category_id', auth()->user()->categories->first()->id)
+        ->set('date', now())
+        ->set('notes', '')
+        ->set('status', true)
+        ->call('submit')
+        ->assertHasNoErrors();
+});
+
 test('component can render with transaction', function () {
     livewire(TransactionForm::class, [
         'transaction' => auth()->user()->transactions->first()

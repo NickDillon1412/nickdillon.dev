@@ -19,6 +19,7 @@ class Transaction extends Model
         'account_id',
         'category_id',
         'type',
+        'transfer_to',
         'amount',
         'payee',
         'date',

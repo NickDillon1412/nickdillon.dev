@@ -188,7 +188,8 @@ class TransactionTable extends Component
             })
             ->when($this->date, function (Builder $query): void {
                 $query->whereBetween('date', [Carbon::parse($this->date)->toDateString(), now()->toDateString()]);
-            });
+            })
+            ->latest('id');
 
         $this->cleared_total = (clone $transactions)->where('status', true)->count();
         $this->pending_total = (clone $transactions)->where('status', false)->count();

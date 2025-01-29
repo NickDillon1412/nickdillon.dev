@@ -33,6 +33,8 @@ class TransactionForm extends Component
 
     public ?int $account_id = null;
 
+    public ?int $transfer_to = null;
+
     public string $payee = '';
 
     public array $transaction_types = [];
@@ -67,6 +69,7 @@ class TransactionForm extends Component
             'account_id' => ['required', 'int'],
             'payee' => ['required', 'string'],
             'type' => ['required', Rule::enum(TransactionType::class)],
+            'transfer_to' => ['nullable', 'int'],
             'amount' => ['required', 'decimal:0,2', 'numeric'],
             'category_id' => ['required', 'int'],
             'date' => ['required', 'date'],
@@ -112,6 +115,7 @@ class TransactionForm extends Component
             $this->account_id = $this->transaction->account->id;
             $this->payee = $this->transaction->payee;
             $this->type = $this->transaction->type;
+            $this->transfer_to = $this->transaction->transfer_to;
             $this->amount = $this->transaction->amount;
             $this->category_id = $this->transaction->category_id;
             $this->date = $this->transaction->date->format('n/d/Y');
@@ -182,6 +186,11 @@ class TransactionForm extends Component
         $this->attachments[] = $file;
     }
 
+    private function handleTransfer(Account $account, int|float $amount): void
+    {
+        $account->increment('balance', $amount);
+    }
+
     public function submit(CreateRecurringTransactions $action): RedirectResponse|Redirector
     {
         $validated_data = $this->validate();
@@ -205,6 +214,10 @@ class TransactionForm extends Component
             $new_transaction = auth()->user()->transactions()->create($validated_data);
 
             $new_transaction->tags()->sync($current_tags);
+        }
+
+        if ($this->transfer_to) {
+            $this->handleTransfer(Account::find($this->transfer_to), $this->amount);
         }
 
         $action->handle($this->transaction ?: $new_transaction);
