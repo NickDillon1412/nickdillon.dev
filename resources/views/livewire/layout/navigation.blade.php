@@ -21,18 +21,16 @@ new class extends Component {
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <div class="flex">
-                    <!-- Hamburger button -->
-                    <button @click.stop="sidebarOpen = !sidebarOpen" :aria-expanded="sidebarOpen" aria-controls="sidebar"
-                        class="text-slate-500 hover:text-slate-600 lg:hidden">
-                        <span class="sr-only">Open sidebar</span>
-                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <rect height="2" width="16" x="4" y="5" />
-                            <rect height="2" width="16" x="4" y="11" />
-                            <rect height="2" width="16" x="4" y="17" />
-                        </svg>
-                    </button>
-                </div>
+                <!-- Hamburger button -->
+                <button @click.stop="sidebarOpen = !sidebarOpen" :aria-expanded="sidebarOpen" aria-controls="sidebar"
+                    class="text-slate-500 hover:text-slate-600 lg:hidden">
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <rect height="2" width="16" x="4" y="5" />
+                        <rect height="2" width="16" x="4" y="11" />
+                        <rect height="2" width="16" x="4" y="17" />
+                    </svg>
+                </button>
             </div>
 
             <!-- Settings Dropdown -->

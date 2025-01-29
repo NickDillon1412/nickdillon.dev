@@ -36,7 +36,7 @@
         }
     </script>
 
-    <div class="flex min-h-screen overflow-hidden sm:overflow-visible sm:h-screen">
+    <div class="flex h-screen overflow-hidden sm:overflow-visible">
         @if (!request()->routeIs('portfolio'))
             <x-sidebar :variant="$attributes['sidebarVariant']" />
         @endif
