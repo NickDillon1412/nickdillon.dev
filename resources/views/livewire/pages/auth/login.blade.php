@@ -38,7 +38,7 @@ new #[Layout('layouts.guest')] class extends Component {
             <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" />
-                <x-text-input wire:model="form.email" id="email" class="block w-full mt-1" type="email" name="email"
+                <x-text-input wire:model="form.email" id="email" class="block w-full mt-2" type="email" name="email"
                     required autofocus autocomplete="username" />
                 <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
             </div>
@@ -47,8 +47,8 @@ new #[Layout('layouts.guest')] class extends Component {
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
 
-                <div class="relative pt-0.5">
-                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="form.password" class="block w-full rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" required />
+                <div class="relative mt-2">
+                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="form.password" class="block w-full text-sm rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" required />
 
                     <button x-cloak x-on:click="showPassword = !showPassword" class="absolute inset-y-0 top-0 flex items-center end-4" type="button">
                         <flux:icon x-show="!showPassword && $wire.form.password.length" icon="eye" variant="outline" class="w-5 h-5 dark:text-slate-300" />

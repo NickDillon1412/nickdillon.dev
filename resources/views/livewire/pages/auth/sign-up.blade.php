@@ -42,7 +42,7 @@ new #[Layout('layouts.guest')] class extends Component
 <div x-data="{ showPassword: false, showPasswordConfirmation: false }">
     <x-auth-card submit="signup">
         <x-slot:header>
-            <h1 class="flex justify-center mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-100">
+            <h1 class="flex justify-center mb-6 text-2xl font-semibold text-slate-700 dark:text-slate-100">
                 Sign Up
             </h1>
         </x-slot:header>
@@ -51,14 +51,14 @@ new #[Layout('layouts.guest')] class extends Component
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Name')" />
-                <x-text-input wire:model="name" id="name" class="block w-full mt-1" type="text" name="name" required autofocus autocomplete="name" />
+                <x-text-input wire:model="name" id="name" class="block w-full mt-2" type="text" name="name" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />
-                <x-text-input wire:model="email" id="email" class="block w-full mt-1" type="email" name="email" required autocomplete="username" />
+                <x-text-input wire:model="email" id="email" class="block w-full mt-2" type="email" name="email" required autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
@@ -66,8 +66,8 @@ new #[Layout('layouts.guest')] class extends Component
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
 
-                <div class="relative pt-0.5">
-                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="password" class="block w-full rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" autocomplete="new-password" required />
+                <div class="relative mt-2">
+                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password" wire:model="password" class="block w-full rounded-md shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" autocomplete="new-password" required />
 
                     <button x-cloak x-on:click="showPassword = !showPassword" class="absolute inset-y-0 top-0 flex items-center end-4" type="button">
                         <flux:icon x-show="!showPassword && $wire.password.length" icon="eye" variant="outline" class="w-5 h-5 dark:text-slate-300" />
@@ -83,8 +83,8 @@ new #[Layout('layouts.guest')] class extends Component
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <div class="relative pt-0.5">
-                    <input :type="showPasswordConfirmation ? 'text' : 'password'" id="password_confirmation" name="password_confirmation" wire:model="password_confirmation" class="block w-full rounded-md shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" autocomplete="new-password" required />
+                <div class="relative mt-2">
+                    <input :type="showPasswordConfirmation ? 'text' : 'password'" id="password_confirmation" name="password_confirmation" wire:model="password_confirmation" class="block w-full rounded-md shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600" autocomplete="new-password" required />
 
                     <button x-cloak x-on:click="showPasswordConfirmation = !showPasswordConfirmation" class="absolute inset-y-0 top-0 flex items-center end-4" type="button">
                         <flux:icon x-show="!showPasswordConfirmation && $wire.password_confirmation.length" icon="eye" variant="outline" class="w-5 h-5 dark:stroke-slate-300" />

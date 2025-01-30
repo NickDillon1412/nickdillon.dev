@@ -37,7 +37,7 @@ new #[Layout('layouts.guest')] class extends Component {
 <div>
     <x-auth-card submit="confirmPassword">
         <x-slot:header>
-            <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+            <div class="mb-4 text-sm text-slate-600 dark:text-slate-400">
                 {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
             </div>
         </x-slot:header>
@@ -46,7 +46,7 @@ new #[Layout('layouts.guest')] class extends Component {
             <!-- Password -->
             <div>
                 <x-input-label for="password" :value="__('Password')" />
-                <x-text-input wire:model="password" id="password" class="block w-full mt-1" type="password" name="password"
+                <x-text-input wire:model="password" id="password" class="block w-full mt-2" type="password" name="password"
                     required autocomplete="current-password" />
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
