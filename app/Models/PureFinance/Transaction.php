@@ -5,10 +5,10 @@ namespace App\Models\PureFinance;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Actions\PureFinance\UpdateAccountBalance;
 use App\Enums\PureFinance\RecurringFrequency;
 use App\Enums\PureFinance\TransactionType;
 use Illuminate\Database\Eloquent\Model;
+use function Illuminate\Support\defer;
 
 class Transaction extends Model
 {
@@ -54,18 +54,18 @@ class Transaction extends Model
 
     protected static function booted(): void
     {
-        $action = app(UpdateAccountBalance::class);
-
-        static::creating(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction, 'creating');
+        static::created(function (Transaction $transaction): void {
+            $transaction->recalculateAccountBalance();
         });
 
-        static::updating(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction, 'updating');
+        static::updated(function (Transaction $transaction): void {
+            $transaction->recalculateAccountBalance();
         });
 
-        static::deleting(function (Transaction $transaction) use ($action): void {
-            $action->handle($transaction, 'deleting');
+        static::deleted(function (Transaction $transaction): void {
+            if ($transaction->account) {
+                $transaction->recalculateAccountBalance();
+            }
         });
     }
 
@@ -82,5 +82,20 @@ class Transaction extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    protected function recalculateAccountBalance(): void
+    {
+        defer(function (): void {
+            $total_credits = $this->account->transactions()
+                ->whereIn('type', [TransactionType::CREDIT, TransactionType::DEPOSIT])
+                ->sum('amount');
+
+            $total_debits = $this->account->transactions()
+                ->whereIn('type', [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL])
+                ->sum('amount');
+
+            $this->account->update(['balance' => $total_credits - $total_debits]);
+        });
     }
 }

@@ -102,6 +102,8 @@ class TransactionForm extends Component
 
     public function mount(): void
     {
+        $this->date = today()->format('n/d/Y');
+
         $this->getAccounts()
             ->getCategories()
             ->getTransactionTypes()
