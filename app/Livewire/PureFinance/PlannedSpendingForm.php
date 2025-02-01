@@ -19,7 +19,7 @@ class PlannedSpendingForm extends Component
     #[Validate(['required', 'int'])]
     public int $category_id;
 
-    #[Validate(['required', 'decimal:0,2', 'numeric'])]
+    #[Validate(['required', 'decimal:0,2', 'numeric', 'min:1'])]
     public float $monthly_amount;
 
     public ?PlannedExpense $expense = null;

@@ -92,7 +92,11 @@ class Transaction extends Model
                 ->sum('amount');
 
             $total_debits = $this->account->transactions()
-                ->whereIn('type', [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL])
+                ->whereIn('type', [
+                    TransactionType::DEBIT,
+                    TransactionType::TRANSFER,
+                    TransactionType::WITHDRAWAL
+                ])
                 ->sum('amount');
 
             $this->account->update(['balance' => $total_credits - $total_debits]);

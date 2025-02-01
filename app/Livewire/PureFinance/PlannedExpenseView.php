@@ -2,7 +2,6 @@
 
 namespace App\Livewire\PureFinance;
 
-use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Contracts\View\View;
@@ -42,9 +41,7 @@ class PlannedExpenseView extends Component
 
         $this->available = $this->expense->monthly_amount - $this->total_spent;
 
-        $this->percentage_spent = $this->expense->monthly_amount > 0
-            ? ($this->total_spent / $this->expense->monthly_amount) * 100
-            : 0;
+        $this->percentage_spent = ($this->total_spent / $this->expense->monthly_amount) * 100;
 
         return view('livewire.pure-finance.planned-expense-view');
     }

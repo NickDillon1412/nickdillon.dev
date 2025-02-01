@@ -1,7 +1,7 @@
 @props(['submit', 'header' => null, 'route' => null, 'link' => null])
 
 <div
-    class="w-full max-w-[30rem] p-2 flex flex-col gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-900">
+    class="w-full z-40 max-w-[30rem] p-2 flex flex-col gap-2 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100/50 dark:bg-slate-900">
     <div class="flex flex-col p-6 bg-white shadow-sm rounded-xl md:p-8 dark:bg-slate-800">
         {{ $header }}
 

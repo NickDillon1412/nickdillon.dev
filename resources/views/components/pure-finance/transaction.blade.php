@@ -1,6 +1,8 @@
 @props(['transaction'])
 
-<div wire:key='{{ $transaction->id }}' x-data="swipeableItem" x-on:transaction-deleted.window="resetSwipe"
+@use('App\Enums\PureFinance\TransactionType', 'TransactionType')
+
+<div wire:key='{{ $transaction->id }}' x-data="transaction" x-on:transaction-deleted.window="resetSwipe"
     x-on:status-changed.window="resetSwipe" x-on:click.outside="resetSwipe"
     class="relative overflow-hidden last:rounded-b-xl">
     <div x-show="rightSwipe" x-transition:enter="transform duration-200" x-transition:enter-start="-translate-x-full"
@@ -53,6 +55,10 @@
             </p>
 
             <p>
+                @if (in_array($transaction->type, [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL]))
+                    <span class="-mr-1">-</span>
+                @endif
+
                 ${{ Number::format($transaction->amount ?? 0, 2) }}
             </p>
         </div>
@@ -83,7 +89,7 @@
 
 @script
     <script>
-        Alpine.data('swipeableItem', () => {
+        Alpine.data('transaction', () => {
             return {
                 leftSwipe: false,
                 rightSwipe: false,

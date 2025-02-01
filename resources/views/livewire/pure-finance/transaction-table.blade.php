@@ -1,3 +1,5 @@
+@use('App\Enums\PureFinance\TransactionType', 'TransactionType')
+
 <div x-on:account-saved.window="$wire.$refresh" class="flex flex-col gap-5 sm:pt-5 sm:gap-3">
     <div class="flex-col hidden w-full gap-2 sm:flex sm:justify-between sm:items-center sm:flex-row">
         <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
@@ -73,7 +75,7 @@
         <div class="border-t sm:hidden border-slate-200 dark:border-slate-600">
             <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
                 @forelse ($transactions as $transaction)
-                    <x-pure-finance.swipeable-transaction :$transaction />
+                    <x-pure-finance.transaction :$transaction />
                 @empty
                     <div
                         class="p-2.5 text-sm italic font-medium text-center text-slate-800 whitespace-nowrap dark:text-slate-200">
@@ -176,7 +178,20 @@
                             @if (in_array('amount', $columns))
                                 <td
                                     class="py-3.5 first:pl-5 text-sm text-slate-800 whitespace-nowrap dark:text-slate-200">
-                                    ${{ Number::format($transaction->amount ?? 0, 2) }}
+                                    @if (in_array($transaction->type, [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL]))
+                                        <span class="-mr-1">-</span>
+                                    @else
+                                        <span class="-mr-1 text-emerald-500">+</span>
+                                    @endif
+
+                                    <span @class([
+                                        'text-emerald-500' => in_array($transaction->type, [
+                                            TransactionType::CREDIT,
+                                            TransactionType::DEPOSIT,
+                                        ]),
+                                    ])>
+                                        ${{ Number::format($transaction->amount ?? 0, 2) }}
+                                    </span>
                                 </td>
                             @endif
 
@@ -189,24 +204,29 @@
 
                             @if (in_array('status', $columns))
                                 <td class="py-3.5 first:pl-5 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div @class([
+                                    <button wire:click="toggleStatus({{ $transaction->id }})"
+                                        @class([
                                             'border-emerald-500 text-emerald-500 dark:border-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
                                                 $transaction->status,
                                             'border-amber-500 text-amber-500 dark:border-amber-500 dark:text-amber-500 bg-amber-500/10 dark:bg-amber-500/10' => !$transaction->status,
-                                            'inline-flex items-center space-x-0.5 px-2 py-1 overflow-hidden text-xs font-medium border rounded-md w-fit',
+                                            'inline-flex items-center space-x-0.5 px-2 py-1 overflow-hidden text-xs font-medium border rounded-md w-[84px] h-[26px] relative',
                                         ])>
+                                        <div wire:loading.remove wire:target="toggleStatus({{ $transaction->id }})">
                                             @if ($transaction->status)
                                                 <x-heroicon-s-check-badge class="w-[16px] h-[16px] text-emerald-500" />
                                             @else
                                                 <x-heroicon-s-arrow-path class="w-[16px] h-[16px] text-amber-500" />
                                             @endif
-
-                                            <span class="pl-0.5">
-                                                {{ $transaction->status ? 'Cleared' : 'Pending' }}
-                                            </span>
                                         </div>
-                                    </div>
+
+                                        <span wire:loading.remove wire:target="toggleStatus({{ $transaction->id }})"
+                                            class="pl-0.5">
+                                            {{ $transaction->status ? 'Cleared' : 'Pending' }}
+                                        </span>
+
+                                        <x-loading-spinner target="toggleStatus({{ $transaction->id }})"
+                                            class="pr-6" />
+                                    </button>
                                 </td>
                             @endif
 
