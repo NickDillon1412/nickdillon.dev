@@ -1,12 +1,12 @@
 <div x-data="categories" wire:ignore>
-    <p class="block font-medium cursor-default sm:text-sm text-slate-700 dark:text-slate-300">
+    <p class="block text-sm font-medium cursor-default text-slate-700 dark:text-slate-300">
         Category
 
         <span class="text-rose-500">*</span>
     </p>
 
     <div class="relative inline-flex w-full">
-        <div class="flex items-stretch w-full mt-1 sm:mt-2">
+        <div class="flex items-stretch w-full mt-2">
             <div class="flex items-center w-full sm:text-sm text-left rounded-lg ring-1 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 form-input py-2.5 sm:py-[9px] dark:text-slate-300 z-20"
                 :class="{ '!border-indigo-500 dark:!border-indigo-600 ring-1 !ring-indigo-500 dark:!ring-indigo-600': showDropdown }">
                 <button type="button" class="flex items-center justify-between w-full py-0" aria-haspopup="true"

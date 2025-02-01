@@ -61,7 +61,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <select wire:model="transfer_to" id="transfer_to" required autofocus
+                    <select wire:model="transfer_to" id="transfer_to" autofocus
                         class="flex w-full mt-1 rounded-lg shadow-sm sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                         <option value="">Select an account</option>
 
@@ -99,8 +99,8 @@
                 </div>
 
                 <div>
-                    <label class="space-y-1 sm:space-y-2" for="status">
-                        <p class="block font-medium sm:text-sm text-slate-700 dark:text-slate-300">
+                    <label class="space-y-2" for="status">
+                        <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
                             Status
                         </p>
 
@@ -161,8 +161,8 @@
 
                 @if (!$transaction?->parent)
                     <div>
-                        <label class="space-y-1 sm:space-y-2" for="is_recurring">
-                            <p class="block font-medium sm:text-sm text-slate-700 dark:text-slate-300">
+                        <label class="space-y-2" for="is_recurring">
+                            <p class="block text-sm font-medium text-slate-700 dark:text-slate-300">
                                 Recurring?
                             </p>
 
@@ -203,7 +203,7 @@
                         </div>
 
                         <div>
-                            <x-input-label for="recurring_end" :value="__('End Date')" class="sm:mb-2" />
+                            <x-input-label for="recurring_end" :value="__('End Date')" class="mb-2" />
 
                             <x-datepicker field="recurring_end" />
 

@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="text-left">
-                        <label class="font-medium sm:text-sm" for="type">
+                        <label class="text-sm font-medium" for="type">
                             Account Type
 
                             <span class="text-rose-500">*</span>
@@ -71,8 +71,8 @@
                             </div>
 
                             <x-text-input wire:model="balance" id="balance"
-                                class="block !rounded-lg w-full mt-1 sm:mt-2 sm:text-sm" type="number" name="balance"
-                                autofocus autocomplete="balance" placeholder="100.00" step="0.01" />
+                                class="block !rounded-lg w-full mt-2 sm:text-sm" type="number" name="balance" autofocus
+                                autocomplete="balance" placeholder="100.00" step="0.01" />
 
                             <x-input-error :messages="$errors->get('balance')" class="mt-2" />
                         </div>

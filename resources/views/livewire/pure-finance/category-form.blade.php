@@ -54,7 +54,7 @@
                             <span class="text-rose-500">*</span>
                         </div>
 
-                        <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-1 sm:text-sm"
+                        <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-2 sm:text-sm"
                             type="text" name="name" autofocus autocomplete="name" />
 
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -66,7 +66,7 @@
                         </div>
 
                         <select wire:model='parent_id' id="parent_id" autofocus
-                            class="flex w-full mt-1 sm:mt-1.5 sm:text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            class="flex w-full mt-2 sm:mt-1.5 sm:text-sm rounded-lg shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                             <option value="">Select a parent category</option>
 
                             @foreach ($this->parent_categories as $parent)

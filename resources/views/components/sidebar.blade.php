@@ -1,9 +1,9 @@
-<div class="min-w-fit">
+<div class="min-w-fit" x-cloak>
     <div class="fixed inset-0 z-40 transition-opacity duration-200 bg-slate-900 bg-opacity-30 lg:hidden lg:z-auto"
         :class="sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'" aria-hidden="true" x-cloak>
     </div>
 
-    <div id="sidebar"
+    <div id="sidebar" x-cloak
         class="flex fixed min-h-screen border-r border-slate-200 dark:border-slate-700 lg:!flex flex-col z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:sidebar-expanded:!w-64 shrink-0 bg-white dark:bg-slate-800 p-4 transition-all duration-200 ease-in-out
         {{ $variant === 'v2' ? 'border-r border-slate-200 dark:border-slate-700' : 'shadow-sm' }}"
         :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'" @click.outside="sidebarOpen = false"

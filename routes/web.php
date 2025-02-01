@@ -10,6 +10,7 @@ use App\Livewire\MovieVault\VaultDetails;
 use App\Livewire\PureFinance\CategoryTable;
 use App\Livewire\PureFinance\AccountOverview;
 use App\Livewire\PureFinance\TransactionForm;
+use App\Livewire\PureFinance\PlannedExpenseView;
 
 Route::view('/', 'portfolio')->name('portfolio');
 
@@ -49,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('categories', CategoryTable::class)->name('categories');
 
             Route::get('tags', TagTable::class)->name('tags');
+
+            Route::get('planned-expense/{expense}', PlannedExpenseView::class)
+                ->name('planned-expense-view');
         });
 });
 

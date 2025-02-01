@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             TransactionSeeder::class,
-            TagSeeder::class
+            TagSeeder::class,
+            PlannedExpenseSeeder::class
         ]);
     }
 }
