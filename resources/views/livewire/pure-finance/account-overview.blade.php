@@ -47,7 +47,11 @@
                             Balance:
                         </span>
 
-                        ${{ Number::format($account->initial_balance + $account->balance ?? 0, 2) }}
+                        @if ($account->transactions->count() === 0)
+                            ${{ Number::format($account->initial_balance ?? 0, 2) }}
+                        @else
+                            ${{ Number::format($account->balance ?? 0, 2) }}
+                        @endif
                     </p>
                 </div>
             </div>
