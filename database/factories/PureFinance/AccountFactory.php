@@ -24,6 +24,7 @@ class AccountFactory extends Factory
             'type' => Arr::random(AccountType::cases()),
             'name' => Arr::random(['Cash', 'Checking', 'Credit Card', 'Savings']),
             'balance' => $this->faker->randomFloat(2, 500, 50000),
+            'initial_balance' => 100000,
         ];
     }
 }

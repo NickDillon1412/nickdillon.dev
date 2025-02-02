@@ -47,7 +47,7 @@
                             Balance:
                         </span>
 
-                        ${{ Number::format($account->balance ?? 0) }}
+                        ${{ Number::format($account->initial_balance + $account->balance ?? 0, 2) }}
                     </p>
                 </div>
             </div>

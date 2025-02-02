@@ -25,7 +25,13 @@
                     class="flex items-center justify-between px-4 py-3 text-sm duration-200 ease-in-out last:rounded-b-xl hover:bg-slate-100 dark:hover:bg-slate-700">
                     <p class="font-medium">{{ $account->name }}</p>
 
-                    <p>${{ Number::format($account->balance ?? 0, 2) }}</p>
+                    <p>
+                        @if ($account->transactions->count() === 0)
+                            ${{ Number::format($account->initial_balance ?? 0, 2) }}
+                        @else
+                            ${{ Number::format($account->balance ?? 0, 2) }}
+                        @endif
+                    </p>
                 </a>
             @empty
                 <div

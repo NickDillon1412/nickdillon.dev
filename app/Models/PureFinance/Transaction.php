@@ -62,10 +62,8 @@ class Transaction extends Model
             $transaction->recalculateAccountBalance();
         });
 
-        static::deleted(function (Transaction $transaction): void {
-            if ($transaction->account) {
-                $transaction->recalculateAccountBalance();
-            }
+        static::deleting(function (Transaction $transaction): void {
+            $transaction->recalculateAccountBalance();
         });
     }
 
@@ -99,7 +97,11 @@ class Transaction extends Model
                 ])
                 ->sum('amount');
 
-            $this->account->update(['balance' => $total_credits - $total_debits]);
+            $initial_balance = $this->account->initial_balance;
+
+            $new_balance = $initial_balance + $total_credits - $total_debits;
+
+            $this->account->update(['balance' => $new_balance]);
         });
     }
 }

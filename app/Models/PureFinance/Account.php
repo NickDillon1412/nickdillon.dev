@@ -23,7 +23,8 @@ class Account extends Model
         'user_id',
         'type',
         'name',
-        'balance'
+        'balance',
+        'initial_balance'
     ];
 
     /**

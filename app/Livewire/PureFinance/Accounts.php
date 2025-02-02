@@ -18,7 +18,10 @@ class Accounts extends Component
         return view('livewire.pure-finance.accounts', [
             'accounts' => auth()
                 ->user()
-                ->accounts
+                ->accounts()
+                ->with('transactions')
+                ->orderBy('name')
+                ->get()
         ]);
     }
 }

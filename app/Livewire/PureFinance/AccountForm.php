@@ -19,14 +19,14 @@ class AccountForm extends Component
 
     public AccountType $type;
 
-    public ?float $balance = null;
+    public ?float $initial_balance = null;
 
     protected function rules(): array
     {
         return [
             'name' => ['required', 'string'],
             'type' => ['required', Rule::enum(AccountType::class)],
-            'balance' => ['nullable', 'decimal:0,2', 'numeric'],
+            'initial_balance' => ['nullable', 'decimal:0,2', 'numeric'],
         ];
     }
 
@@ -35,7 +35,7 @@ class AccountForm extends Component
         if ($this->account) {
             $this->name = $this->account->name;
             $this->type = $this->account->type;
-            $this->balance = $this->account->balance;
+            $this->initial_balance = $this->account->initial_balance;
         }
     }
 
