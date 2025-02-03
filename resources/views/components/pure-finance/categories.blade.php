@@ -69,7 +69,7 @@
                                 x-on:click="category_id = category.id; search = ''; showDropdown = false"
                                 class="flex items-center justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                 :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === category.id }">
-                                <span class="text-sm font-bold capitalize"
+                                <span class="text-sm font-bold"
                                     :class="{ 'text-indigo-600': category_id === category.id }" x-text="category.name">
                                 </span>
 
@@ -85,7 +85,7 @@
                                         x-on:click="category_id = child.id; search = ''; showDropdown = false"
                                         class="flex items-center my-0.5 justify-between w-full px-2.5 py-2 duration-200 ease-in-out rounded-md hover:bg-slate-100 dark:hover:bg-slate-800"
                                         :class="{ 'bg-slate-100 dark:bg-slate-800': category_id === child.id }">
-                                        <span class="text-sm capitalize"
+                                        <span class="text-sm"
                                             :class="{ 'text-indigo-600 font-medium': category_id === child.id }"
                                             x-text="child.name">
                                         </span>
