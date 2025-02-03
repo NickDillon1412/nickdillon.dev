@@ -102,7 +102,7 @@ class TransactionForm extends Component
 
     public function mount(): void
     {
-        $this->date = today()->timezone('America/Chicago')->format('n/d/Y');
+        $this->date = now()->timezone('America/Chicago')->format('n/d/Y');
 
         $this->getAccounts()
             ->getCategories()

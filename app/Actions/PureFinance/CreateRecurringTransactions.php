@@ -26,7 +26,9 @@ class CreateRecurringTransactions
 
 		$start_date->add($this->frequencyToInterval($transaction->frequency));
 
-		while ($start_date->lte($transaction->recurring_end)) {
+		while (
+			$start_date->lte($transaction->recurring_end ?? now()->timezone('America/Chicago')->addYear())
+		) {
 			Transaction::create([
 				'account_id' => $transaction->account->id,
 				'payee' => $transaction->payee,

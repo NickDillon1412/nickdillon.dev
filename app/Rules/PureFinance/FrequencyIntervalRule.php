@@ -13,7 +13,7 @@ class FrequencyIntervalRule implements ValidationRule
 {
     public function __construct(
         protected string $start_date,
-        protected string $end_date,
+        protected ?string $end_date = null,
         protected RecurringFrequency $frequency
     ) {}
 

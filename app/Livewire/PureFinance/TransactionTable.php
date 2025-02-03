@@ -189,6 +189,7 @@ class TransactionTable extends Component
             ->when($this->date, function (Builder $query): void {
                 $query->whereBetween('date', [Carbon::parse($this->date)->toDateString(), now()->toDateString()]);
             })
+            ->whereDate('date', '<=', now()->timezone('America/Chicago'))
             ->latest('id');
 
         $this->cleared_total = (clone $transactions)->where('status', true)->count();
