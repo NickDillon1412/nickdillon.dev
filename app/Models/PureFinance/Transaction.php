@@ -86,10 +86,12 @@ class Transaction extends Model
     {
         defer(function (): void {
             $total_credits = $this->account->transactions()
+                ->whereDate('date', '<=', now()->timezone('America/Chicago'))
                 ->whereIn('type', [TransactionType::CREDIT, TransactionType::DEPOSIT])
                 ->sum('amount');
 
             $total_debits = $this->account->transactions()
+                ->whereDate('date', '<=', now()->timezone('America/Chicago'))
                 ->whereIn('type', [
                     TransactionType::DEBIT,
                     TransactionType::TRANSFER,
