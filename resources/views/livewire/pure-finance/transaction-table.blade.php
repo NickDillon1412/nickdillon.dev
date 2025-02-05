@@ -234,7 +234,11 @@
                                 class="py-1 pr-5 text-sm font-medium whitespace-nowrap text-slate-800 dark:text-slate-200">
                                 <div class="flex items-center justify-end">
                                     @if ($transaction->attachments)
-                                        <x-pure-finance.attachments-modal :attachments="$transaction->attachments" />
+                                        <button
+                                            x-on:click="$dispatch('open-attachments', { attachments: @js($transaction->attachments) })">
+                                            <x-heroicon-o-photo
+                                                class="p-1 duration-100 mt-0.5 mr-0.5 ease-in-out rounded-md w-7 h-7 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" />
+                                        </button>
                                     @endif
 
                                     <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}">
@@ -273,4 +277,6 @@
     </div>
 
     {{ $transactions->links() }}
+
+    <livewire:pure-finance.attachments />
 </div>
