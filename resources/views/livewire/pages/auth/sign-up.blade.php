@@ -35,7 +35,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('apps', absolute: false), navigate: true);
+        $this->redirectIntended(navigate: true);
     }
 }; ?>
 

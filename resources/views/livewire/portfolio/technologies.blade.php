@@ -47,6 +47,11 @@ new class extends Component {
                         'image' => 'inertia.svg',
                         'title' => 'Inertia.js',
                     ],
+                    'docker' => [
+                        'url' => 'https://www.docker.com/',
+                        'image' => 'docker.svg',
+                        'title' => 'Docker',
+                    ],
                 ],
             ],
         ];

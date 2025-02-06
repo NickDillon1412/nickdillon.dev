@@ -9,17 +9,17 @@ new class extends Component {
     {
         return [
             'projects' => [
+                'pure-finance' => [
+                    'url' => route('pure-finance.index'),
+                    'image' => 'pure-finance.png',
+                    'title' => 'Pure Finance',
+                    'technologies' => ['Tailwind', 'Alpine.js', 'Laravel', 'Livewire'],
+                ],
                 'movie-vault' => [
                     'url' => route('movie-vault.my-vault'),
                     'image' => 'movie-vault.png',
                     'title' => 'Movie Vault',
                     'technologies' => ['Tailwind', 'Alpine.js', 'Laravel', 'Livewire'],
-                ],
-                'neovim' => [
-                    'url' => 'https://github.com/NickDillon1412/dotfiles',
-                    'image' => 'neovim.png',
-                    'title' => 'Neovim Config',
-                    'technologies' => ['Neovim', 'Lua'],
                 ],
             ],
         ];

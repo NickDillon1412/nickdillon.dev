@@ -204,29 +204,32 @@
 
                             @if (in_array('status', $columns))
                                 <td class="py-3.5 first:pl-5 whitespace-nowrap">
-                                    <button wire:click="toggleStatus({{ $transaction->id }})"
-                                        @class([
+                                    <form wire:submit="toggleStatus({{ $transaction->id }})">
+                                        <button type="submit" @class([
                                             'border-emerald-500 text-emerald-500 dark:border-emerald-500 dark:text-emerald-500 bg-emerald-500/10 dark:bg-emerald-500/10' =>
                                                 $transaction->status,
                                             'border-amber-500 text-amber-500 dark:border-amber-500 dark:text-amber-500 bg-amber-500/10 dark:bg-amber-500/10' => !$transaction->status,
                                             'inline-flex items-center space-x-0.5 px-2 py-1 overflow-hidden text-xs font-medium border rounded-md w-[84px] h-[26px] relative',
                                         ])>
-                                        <div wire:loading.remove wire:target="toggleStatus({{ $transaction->id }})">
-                                            @if ($transaction->status)
-                                                <x-heroicon-s-check-badge class="w-[16px] h-[16px] text-emerald-500" />
-                                            @else
-                                                <x-heroicon-s-arrow-path class="w-[16px] h-[16px] text-amber-500" />
-                                            @endif
-                                        </div>
+                                            <div wire:loading.remove
+                                                wire:target="toggleStatus({{ $transaction->id }})">
+                                                @if ($transaction->status)
+                                                    <x-heroicon-s-check-badge
+                                                        class="w-[16px] h-[16px] text-emerald-500" />
+                                                @else
+                                                    <x-heroicon-s-arrow-path class="w-[16px] h-[16px] text-amber-500" />
+                                                @endif
+                                            </div>
 
-                                        <span wire:loading.remove wire:target="toggleStatus({{ $transaction->id }})"
-                                            class="pl-0.5">
-                                            {{ $transaction->status ? 'Cleared' : 'Pending' }}
-                                        </span>
+                                            <span wire:loading.remove
+                                                wire:target="toggleStatus({{ $transaction->id }})" class="pl-0.5">
+                                                {{ $transaction->status ? 'Cleared' : 'Pending' }}
+                                            </span>
 
-                                        <x-loading-spinner target="toggleStatus({{ $transaction->id }})"
-                                            class="pr-6" />
-                                    </button>
+                                            <x-loading-spinner target="toggleStatus({{ $transaction->id }})"
+                                                class="pr-6" />
+                                        </button>
+                                    </form>
                                 </td>
                             @endif
 
