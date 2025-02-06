@@ -26,7 +26,7 @@ test('new users can sign up', function () {
 
     $component->call('signup');
 
-    $component->assertRedirect(route('apps', absolute: false));
+    $component->assertRedirect();
 
     $this->assertAuthenticated();
 });

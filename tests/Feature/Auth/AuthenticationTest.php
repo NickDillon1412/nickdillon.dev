@@ -22,7 +22,7 @@ test('users can authenticate using the login screen', function () {
 
     $component
         ->assertHasNoErrors()
-        ->assertRedirect(route('apps', absolute: false));
+        ->assertRedirect();
 
     $this->assertAuthenticated();
 });

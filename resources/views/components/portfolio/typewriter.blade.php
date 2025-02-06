@@ -3,7 +3,8 @@
         'the TALL Stack.',
         'Filament.',
         'Vue.js.',
-        'Inertia.js.'
+        'Inertia.js.',
+        'Docker.'
     ]
 }" class="w-9/12 text-xl font-semibold text-slate-50 sm:w-full">
     I'm a full stack developer, working with
