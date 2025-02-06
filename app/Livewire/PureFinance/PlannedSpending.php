@@ -8,7 +8,6 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Transaction;
-use Illuminate\Database\Eloquent\Builder;
 use App\Models\PureFinance\PlannedExpense;
 
 class PlannedSpending extends Component
@@ -25,20 +24,19 @@ class PlannedSpending extends Component
         $end_of_month = now()->timezone($timezone)->endOfMonth()->toDateString();
 
         $totals = Transaction::query()
-            ->whereIn('category_id', $expenses->pluck('category_id'))
-            ->orWhereRelation(
-                'category',
-                function (Builder $query) use ($expenses): void {
-                    $query->whereIn('parent_id', $expenses->pluck('category_id'));
-                }
+            ->selectRaw(
+                'COALESCE(categories.parent_id, transactions.category_id) as category_group,
+                SUM(transactions.amount) as total_spent'
             )
-            ->whereBetween('date', [$start_of_month, $end_of_month])
-            ->groupBy('category_id')
-            ->selectRaw('category_id, SUM(amount) as total_spent')
-            ->pluck('total_spent', 'category_id');
+            ->join('categories', 'transactions.category_id', '=', 'categories.id')
+            ->whereIn('transactions.category_id', $expenses->pluck('category_id'))
+            ->orWhereIn('categories.parent_id', $expenses->pluck('category_id'))
+            ->whereBetween('transactions.date', [$start_of_month, $end_of_month])
+            ->groupBy('category_group')
+            ->pluck('total_spent', 'category_group');
 
         $expenses->each(function (PlannedExpense $expense) use ($totals): int|float {
-            return $expense->total_spent = $totals[$expense->category_id] ?? 0;
+            return $expense->total_spent += $totals[$expense->category_id] ?? 0;
         });
 
         return view('livewire.pure-finance.planned-spending', ['expenses' => $expenses]);
