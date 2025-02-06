@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\PureFinance\PlannedExpense;
 
 class PlannedSpending extends Component
@@ -24,8 +25,13 @@ class PlannedSpending extends Component
         $end_of_month = now()->timezone($timezone)->endOfMonth()->toDateString();
 
         $totals = Transaction::query()
-            ->without(['category.parent', 'tags'])
             ->whereIn('category_id', $expenses->pluck('category_id'))
+            ->orWhereRelation(
+                'category',
+                function (Builder $query) use ($expenses): void {
+                    $query->whereIn('parent_id', $expenses->pluck('category_id'));
+                }
+            )
             ->whereBetween('date', [$start_of_month, $end_of_month])
             ->groupBy('category_id')
             ->selectRaw('category_id, SUM(amount) as total_spent')

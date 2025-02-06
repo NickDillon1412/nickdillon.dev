@@ -31,11 +31,13 @@ class PlannedExpenseView extends Component
 
         $this->total_spent = Transaction::query()
             ->whereCategoryId($this->expense->category_id)
+            ->orWhereRelation('category', 'parent_id', $this->expense->category_id)
             ->whereBetween('date', [$start_of_month, $end_of_month])
             ->sum('amount');
 
         $this->transaction_count = Transaction::query()
             ->whereCategoryId($this->expense->category_id)
+            ->orWhereRelation('category', 'parent_id', $this->expense->category_id)
             ->whereBetween('date', [$start_of_month, $end_of_month])
             ->count();
 

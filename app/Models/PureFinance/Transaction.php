@@ -32,8 +32,6 @@ class Transaction extends Model
         'parent_id'
     ];
 
-    protected $with = ['category', 'category.parent', 'tags'];
-
     /**
      * Get the attributes that should be cast.
      *

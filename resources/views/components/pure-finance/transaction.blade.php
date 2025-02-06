@@ -43,19 +43,20 @@
         </x-modal>
     </div>
 
-    <div @class([
+    <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}" @class([
         'flex flex-col px-4 py-2.5 space-y-0.5 text-sm bg-white dark:bg-slate-800 transform transition-transform duration-300',
         'border-l-2 !border-l-emerald-500' => $transaction->status === true,
         'border-l-2 !border-l-amber-500' => $transaction->status === false,
-    ]) x-bind:style="contentStyle">
+    ])
+        x-bind:style="contentStyle">
         <div class="flex items-center justify-between font-medium">
-            <a href="{{ route('pure-finance.transaction-form', $transaction->id) }}" wire:navigate>
+            <p>
                 {{ $transaction->payee }}
-            </a>
+            </p>
 
             <div class="flex items-center space-x-2">
                 @if ($transaction->attachments)
-                    <button x-on:click="$dispatch('open-attachments', { attachments: @js($transaction->attachments) })">
+                    <button x-on:click.prevent="$dispatch('open-attachments', { attachments: @js($transaction->attachments) })">
                         <x-heroicon-o-photo
                             class="w-5 h-5 duration-100 ease-in-out rounded-md text-slate-700 dark:text-slate-300 hover:bg-slate-200" />
                     </button>
@@ -92,7 +93,7 @@
                 {{ $transaction->tags->pluck('name')->implode(', ') }}
             </div>
         @endif
-    </div>
+    </a>
 </div>
 
 @script
