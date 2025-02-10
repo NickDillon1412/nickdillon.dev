@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('movie-vault')
         ->name('movie-vault.')
+        ->middleware('can:access-movie-vault')
         ->group(function () {
             Route::get('my-vault', MyVault::class)->name('my-vault');
 
