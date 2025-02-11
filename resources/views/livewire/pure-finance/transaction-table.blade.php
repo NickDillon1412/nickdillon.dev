@@ -265,7 +265,7 @@
         </div>
     </div>
 
-    {{ $transactions->links() }}
+    {{ $transactions->links(data: ['scrollTo' => false]) }}
 
     <livewire:pure-finance.attachments />
 </div>
