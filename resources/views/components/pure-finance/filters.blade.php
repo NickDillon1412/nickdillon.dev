@@ -18,10 +18,10 @@
 
         return total;
     },
-}" class="relative z-20 hidden w-auto h-auto sm:flex">
+}" class="relative z-20 flex w-auto h-auto">
     <div class="relative inline-block">
         <flux:button icon="funnel" variant="subtle" x-on:click="slideOverOpen = true"
-            class="!h-8 !w-8 hover:!bg-white hover:!text-slate-500 dark:hover:!bg-slate-800 dark:hover:!text-slate-300" />
+            class="!h-8 sm:!w-8 !w-4 hover:!bg-white hover:!text-slate-500 dark:hover:!bg-slate-800 dark:hover:!text-slate-300" />
 
         <span x-cloak x-show="totalFilters() > 0"
             class="absolute top-0 right-0 flex items-center justify-center w-fit min-w-[18px] -mt-2 -mr-3 text-xs rounded-md border border-indigo-500 text-indigo-500 dark:border-indigo-500 dark:text-indigo-500 bg-indigo-500/10 dark:bg-indigo-500/10"

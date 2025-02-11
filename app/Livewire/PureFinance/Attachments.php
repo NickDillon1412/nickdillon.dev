@@ -17,6 +17,8 @@ class Attachments extends Component
     {
         if ($attachments) {
             $this->attachments = $attachments;
+
+            $this->js('$wire.$refresh');
         }
     }
 

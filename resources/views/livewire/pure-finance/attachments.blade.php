@@ -22,7 +22,7 @@
         x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in-out duration-200" x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-4" style="display: none;">
-        <div class="w-full max-w-2xl max-h-[600px] xl:max-h-[800px] overflow-auto bg-white border rounded-lg shadow-lg dark:bg-slate-800 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-700"
+        <div class="w-full max-w-2xl min-h-[300px] max-h-[600px] xl:max-h-[800px] overflow-auto bg-white border rounded-lg shadow-lg dark:bg-slate-800 text-slate-800 dark:text-slate-100 border-slate-200 dark:border-slate-700"
             x-on:click.outside="attachmentsModalOpen = false; clearAttachments()"
             x-on:keydown.escape.window="attachmentsModalOpen = false; clearAttachments()"
             x-trap.inert.noscroll="attachmentsModalOpen">

@@ -1,7 +1,7 @@
 @use('App\Enums\PureFinance\TransactionType', 'TransactionType')
 
-<div x-on:account-saved.window="$wire.$refresh" class="flex flex-col gap-5 sm:pt-5 sm:gap-3">
-    <div class="flex-col hidden w-full gap-2 sm:flex sm:justify-between sm:items-center sm:flex-row">
+<div x-on:account-saved.window="$wire.$refresh" class="flex flex-col gap-2.5 sm:pt-5 sm:gap-3">
+    <div class="flex flex-row items-center justify-between w-full gap-2">
         <h1 class="text-2xl font-semibold text-slate-800 dark:text-slate-200">
             Transactions
         </h1>
@@ -9,38 +9,24 @@
         @if (auth()->user()->accounts->count() > 0)
             <flux:button
                 href="{{ $account ? route('pure-finance.account.transaction-form', $account->id) : route('pure-finance.transaction-form') }}"
-                variant="indigo" icon="plus" size="sm" class="w-full sm:w-auto">
-                New Transaction
+                wire:navigate variant="indigo" size="sm" class="!h-7 sm:!h-8">
+                <x-heroicon-o-plus class="w-4 h-4" />
+
+                <span class="hidden sm:block">New Transaction</span>
+
+                <span class="block sm:hidden">Add</span>
             </flux:button>
         @endif
     </div>
 
     <div
         class="bg-white border shadow-sm rounded-xl border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-slate-800 dark:text-slate-200">
-        <div class="flex items-center justify-between px-4 py-2.5 sm:hidden">
-            <h1 class="text-xl font-semibold text-slate-800 dark:text-slate-200">
-                Transactions
-            </h1>
-
-            @if (auth()->user()->accounts->count() > 0)
-                <div>
-                    <flux:button
-                        href="{{ $account ? route('pure-finance.account.transaction-form', $account->id) : route('pure-finance.transaction-form') }}"
-                        wire:navigate variant="indigo" size="sm" class="!h-7">
-                        <x-heroicon-o-plus class="w-4 h-4" />
-
-                        Add
-                    </flux:button>
-                </div>
-            @endif
-        </div>
-
         <div
-            class="hidden sm:flex gap-2 flex-col border-b border-slate-200 dark:border-slate-600 sm:flex-row justify-between items-center px-5 py-3.5">
+            class="flex gap-2 sm:border-b border-slate-200 dark:border-slate-600 sm:flex-row justify-between items-center sm:px-5 px-3.5 py-3.5">
             <x-pure-finance.status-tabs :$transactions :$cleared_total :$pending_total />
 
-            <div class="flex items-center justify-between -mr-1.5 space-x-1">
-                <div class="relative hidden w-full pr-2 sm:block sm:w-64">
+            <div class="flex items-center w-full sm:w-auto justify-between -mr-1.5 space-x-1">
+                <div class="relative block w-full pr-2 sm:w-64">
                     <label for="search" class="sr-only">
                         Search
                     </label>
