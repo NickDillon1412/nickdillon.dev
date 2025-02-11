@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Illuminate\Support\Collection;
-use App\Models\PureFinance\Category;
 use Illuminate\Support\Facades\Storage;
 
 class PureFinanceService
@@ -23,7 +22,9 @@ class PureFinanceService
 
 	public function getCategories(): Collection
 	{
-		return Category::query()
+		return auth()
+			->user()
+			->categories()
 			->select('name')
 			->distinct()
 			->pluck('name')
