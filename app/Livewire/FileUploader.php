@@ -91,7 +91,7 @@ class FileUploader extends Component
             ->reject(fn(array $file): bool => $file['name'] === $file_name)
             ->values();
 
-        $this->dispatch('file-deleted');
+        $this->dispatch('file-deleted', $file_name);
     }
 
     #[On('file-deleted')]

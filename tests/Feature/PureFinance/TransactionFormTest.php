@@ -112,6 +112,16 @@ it('can push to attachments', function () {
         ->assertHasNoErrors();
 });
 
+it('can delete an attachment', function () {
+    $file = UploadedFile::fake()->image('pure-finance/files/logo.png');
+
+    livewire(TransactionForm::class, [
+        'transaction' => auth()->user()->transactions->first()
+    ])
+        ->call('deleteAttachment', 'logo.png')
+        ->assertHasNoErrors();
+});
+
 it('can transfer from one account to another', function () {
     livewire(TransactionForm::class)
         ->set('account_id', auth()->user()->accounts->first()->id)

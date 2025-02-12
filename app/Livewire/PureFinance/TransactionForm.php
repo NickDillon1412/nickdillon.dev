@@ -188,6 +188,19 @@ class TransactionForm extends Component
         $this->attachments[] = $file;
     }
 
+    #[On('file-deleted')]
+    public function deleteAttachment(string $file_name): void
+    {
+        if ($this->transaction) {
+            $this->transaction->attachments = collect($this->transaction->attachments)
+                ->reject(fn(array $attachment): bool => $attachment['name'] === $file_name)
+                ->values()
+                ->all();
+
+            $this->transaction->save();
+        }
+    }
+
     private function handleTransfer(Account $account, int|float $amount): void
     {
         $account->increment('balance', $amount);
