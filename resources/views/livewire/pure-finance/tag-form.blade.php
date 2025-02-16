@@ -50,7 +50,7 @@
                         <span class="text-rose-500">*</span>
                     </div>
 
-                    <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-2 sm:text-sm"
+                    <x-text-input wire:model="name" id="name" class="block !rounded-lg w-full mt-1 sm:text-sm"
                         type="text" name="name" autofocus autofocus autocomplete="name" />
 
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />

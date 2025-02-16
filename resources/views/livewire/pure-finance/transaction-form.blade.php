@@ -93,7 +93,7 @@
                     <x-input-label for="notes" :value="__('Notes')" />
 
                     <textarea name="notes" id="notes" wire:model="notes" rows="5" autocomplete="notes" autofocus
-                        class="w-full rounded-lg mt-1 sm:mt-2 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:text-sm resize-none"></textarea>
+                        class="w-full rounded-lg mt-2 -mb-1.5 shadow-sm border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 sm:text-sm resize-none"></textarea>
 
                     <x-input-error :messages="$errors->get('notes')" class="mt-2" />
                 </div>
