@@ -96,30 +96,30 @@
                             Last 6 Months
                         </h3>
 
-                        <div class="relative flex flex-col my-8 text-sm">
+                        <div wire:ignore class="relative flex flex-col my-8 text-sm">
                             <div class="flex items-end mb-2">
-                                <template x-for="month in $wire.monthly_totals.reverse()">
-                                    <div class="w-[45px] mx-2 sm:mx-3">
-                                        <div :style="`height: ${month.total_spent}px`"
+                                @foreach ($monthly_totals->reverse() as $month)
+                                    <div class="w-[45px] mx-2 sm:mx-3" wire:key="{{ $month['total_spent'] }}">
+                                        <div style="height: {{ $month['total_spent'] }}px"
                                             class="relative bg-indigo-500 shadow-sm rounded-t-md">
-                                            <div x-text="`$${month.total_spent}`"
-                                                class="absolute top-0 left-0 right-0 -mt-6 text-sm text-center">
+                                            <div class="absolute top-0 left-0 right-0 -mt-6 text-sm text-center">
+                                                {{ $month['total_spent'] }}
                                             </div>
                                         </div>
                                     </div>
-                                </template>
+                                @endforeach
                             </div>
 
                             <div class="flex items-end">
-                                <template x-for="month in $wire.monthly_totals">
-                                    <div class="w-[45px] mx-2 sm:mx-3">
+                                @foreach ($monthly_totals->reverse() as $month)
+                                    <div class="w-[45px] mx-2 sm:mx-3" wire:key="{{ $month['month'] }}">
                                         <div class="relative">
-                                            <div x-text="month.month"
-                                                class="absolute top-0 left-0 right-0 mt-1 text-sm text-center">
+                                            <div class="absolute top-0 left-0 right-0 mt-1 text-sm text-center">
+                                                {{ $month['month'] }}
                                             </div>
                                         </div>
                                     </div>
-                                </template>
+                                @endforeach
                             </div>
                         </div>
                     </div>

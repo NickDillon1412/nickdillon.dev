@@ -22,16 +22,30 @@
         <div class="flex flex-col divide-y divide-slate-200 dark:divide-slate-600">
             @forelse ($accounts as $account)
                 <a href="{{ route('pure-finance.account.overview', $account) }}" wire:navigate
-                    class="flex items-center justify-between px-4 py-3 text-sm duration-200 ease-in-out last:rounded-b-xl hover:bg-slate-100 dark:hover:bg-slate-700">
-                    <p class="font-medium">{{ $account->name }}</p>
+                    class="flex flex-col px-4 py-3 text-sm duration-200 ease-in-out last:rounded-b-xl hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <p class="font-medium">
+                        {{ $account->name }}
+                    </p>
 
-                    <p>
+                    <div class="w-full">
                         @if ($account->transactions->count() === 0)
                             ${{ Number::format($account->initial_balance ?? 0, 2) }}
                         @else
-                            ${{ Number::format($account->balance ?? 0, 2) }}
+                            <div class="flex items-center justify-between">
+                                <span>
+                                    Available:
+
+                                    ${{ Number::format($account->balance ?? 0, 2) }}
+                                </span>
+
+                                <span>
+                                    Cleared:
+
+                                    ${{ Number::format($account->cleared_balance ?? 0, 2) }}
+                                </span>
+                            </div>
                         @endif
-                    </p>
+                    </div>
                 </a>
             @empty
                 <div

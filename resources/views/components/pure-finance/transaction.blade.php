@@ -65,9 +65,18 @@
                 <div class="flex items-center">
                     @if (in_array($transaction->type, [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL]))
                         <span>-</span>
+                    @else
+                        <span class="text-emerald-500">+</span>
                     @endif
 
-                    ${{ Number::format($transaction->amount ?? 0, 2) }}
+                    <span @class([
+                        'text-emerald-500' => in_array($transaction->type, [
+                            TransactionType::CREDIT,
+                            TransactionType::DEPOSIT,
+                        ]),
+                    ])>
+                        ${{ Number::format($transaction->amount ?? 0, 2) }}
+                    </span>
                 </div>
             </div>
         </div>

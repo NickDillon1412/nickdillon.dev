@@ -4,6 +4,7 @@ namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Transaction;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,11 +25,13 @@ class PlannedExpenseView extends Component
 
     public float $percentage_spent = 0;
 
-    public array $monthly_totals = [];
+    public Collection $monthly_totals;
 
     public function mount(): void
     {
         $this->timezone = 'America/Chicago';
+
+        $this->monthly_totals = collect();
     }
 
     private function getCurrentMonthData(): void
@@ -76,10 +79,10 @@ class PlannedExpenseView extends Component
                 ->whereBetween('date', [$start_of_month, $end_of_month])
                 ->sum('amount');
 
-            $this->monthly_totals[] = [
+            $this->monthly_totals->push([
                 'month' => $month->format('M'),
                 'total_spent' => ceil($total_for_month),
-            ];
+            ]);
         }
     }
 

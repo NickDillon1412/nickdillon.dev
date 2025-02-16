@@ -8,6 +8,7 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Layout;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 
 #[Layout('layouts.app')]
 class Accounts extends Component
@@ -19,7 +20,10 @@ class Accounts extends Component
             'accounts' => auth()
                 ->user()
                 ->accounts()
-                ->with('transactions')
+                ->withCount('transactions')
+                ->withSum(['transactions as cleared_balance' => function (Builder $query): void {
+                    $query->where('status', true);
+                }], 'amount')
                 ->orderBy('name')
                 ->get()
         ]);
