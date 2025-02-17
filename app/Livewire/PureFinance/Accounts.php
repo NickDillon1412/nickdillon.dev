@@ -7,8 +7,8 @@ namespace App\Livewire\PureFinance;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Layout;
-use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Account;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use App\Enums\PureFinance\TransactionType;
 
@@ -33,7 +33,8 @@ class Accounts extends Component
                 }], 'amount')
                 ->get()
                 ->map(function (Account $account): Account {
-                    $account->cleared_balance = ($account->cleared_deposits ?? 0) - ($account->cleared_debits ?? 0);
+                    $account->cleared_balance = $account->initial_balance +
+                        ($account->cleared_deposits ?? 0) - ($account->cleared_debits ?? 0);
 
                     return $account;
                 })
