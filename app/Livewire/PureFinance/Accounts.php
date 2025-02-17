@@ -8,7 +8,9 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Layout;
 use Illuminate\Contracts\View\View;
+use App\Models\PureFinance\Account;
 use Illuminate\Database\Eloquent\Builder;
+use App\Enums\PureFinance\TransactionType;
 
 #[Layout('layouts.app')]
 class Accounts extends Component
@@ -21,11 +23,20 @@ class Accounts extends Component
                 ->user()
                 ->accounts()
                 ->withCount('transactions')
-                ->withSum(['transactions as cleared_balance' => function (Builder $query): void {
-                    $query->where('status', true);
+                ->withSum(['transactions as cleared_deposits' => function (Builder $query): void {
+                    $query->whereIn('type', [TransactionType::CREDIT, TransactionType::DEPOSIT])
+                        ->where('status', true);
                 }], 'amount')
-                ->orderBy('name')
+                ->withSum(['transactions as cleared_debits' => function (Builder $query): void {
+                    $query->whereIn('type', [TransactionType::DEBIT, TransactionType::TRANSFER, TransactionType::WITHDRAWAL])
+                        ->where('status', true);
+                }], 'amount')
                 ->get()
+                ->map(function (Account $account): Account {
+                    $account->cleared_balance = ($account->cleared_deposits ?? 0) - ($account->cleared_debits ?? 0);
+
+                    return $account;
+                })
         ]);
     }
 }
