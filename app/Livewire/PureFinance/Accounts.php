@@ -15,7 +15,7 @@ use App\Enums\PureFinance\TransactionType;
 #[Layout('layouts.app')]
 class Accounts extends Component
 {
-    #[On('account-saved')]
+    #[On('account-saved'), On('status-changed')]
     public function render(): View
     {
         return view('livewire.pure-finance.accounts', [

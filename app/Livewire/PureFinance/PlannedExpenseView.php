@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\PureFinance;
 
 use Livewire\Component;
@@ -8,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use App\Models\PureFinance\Transaction;
 use Illuminate\Database\Eloquent\Builder;
+use App\Enums\PureFinance\TransactionType;
 use App\Models\PureFinance\PlannedExpense;
 
 #[Layout('layouts.app')]
@@ -15,13 +18,13 @@ class PlannedExpenseView extends Component
 {
     public PlannedExpense $expense;
 
-    public string $timezone = '';
+    public string $timezone = 'America/Chicago';
 
-    public int|float $total_spent = 0;
+    public float $total_spent = 0;
 
     public int $transaction_count = 0;
 
-    public int|float $available = 0;
+    public float $available = 0;
 
     public float $percentage_spent = 0;
 
@@ -29,27 +32,44 @@ class PlannedExpenseView extends Component
 
     public function mount(): void
     {
-        $this->timezone = 'America/Chicago';
-
         $this->monthly_totals = collect();
+    }
+
+    private function applyCategoryFilter(Builder $query): void
+    {
+        $query->where('category_id', $this->expense->category_id)
+            ->orWhereRelation('category', 'parent_id', $this->expense->category_id);
+    }
+
+    private function getTransactionData(string $start, string $end): Transaction
+    {
+        return Transaction::query()
+            ->whereBetween('date', [$start, $end])
+            ->where(fn(Builder $query) => $this->applyCategoryFilter($query))
+            ->selectRaw("
+                SUM(CASE WHEN type IN (?, ?) THEN amount ELSE 0 END) as total_deposits,
+                SUM(CASE WHEN type IN (?, ?, ?) THEN amount ELSE 0 END) as total_debits,
+                COUNT(*) as transaction_count
+            ", [
+                TransactionType::CREDIT,
+                TransactionType::DEPOSIT,
+                TransactionType::DEBIT,
+                TransactionType::TRANSFER,
+                TransactionType::WITHDRAWAL
+            ])
+            ->first();
     }
 
     private function getCurrentMonthData(): void
     {
-        $start_of_month = now()->timezone($this->timezone)->startOfMonth()->toDateString();
+        $data = $this->getTransactionData(
+            start: now()->timezone($this->timezone)->startOfMonth()->toDateString(),
+            end: now()->timezone($this->timezone)->endOfMonth()->toDateString()
+        );
 
-        $end_of_month = now()->timezone($this->timezone)->endOfMonth()->toDateString();
+        $this->total_spent = abs(($data->total_deposits ?? 0) - ($data->total_debits ?? 0));
 
-        $transactions_query = Transaction::query()
-            ->where(function (Builder $query): void {
-                $query->where('category_id', $this->expense->category_id)
-                    ->orWhereRelation('category', 'parent_id', $this->expense->category_id);
-            })
-            ->whereBetween('date', [$start_of_month, $end_of_month]);
-
-        $this->total_spent = $transactions_query->sum('amount');
-
-        $this->transaction_count = $transactions_query->count();
+        $this->transaction_count = $data->transaction_count;
 
         $this->available = $this->expense->monthly_amount - $this->total_spent;
 
@@ -58,32 +78,37 @@ class PlannedExpenseView extends Component
 
     private function getTotalSpentLastSixMonths(): void
     {
-        $now = now()->timezone($this->timezone);
+        $start_of_oldest_month = now()->timezone($this->timezone)->subMonths(6)->startOfMonth()->toDateString();
 
-        $months = collect();
+        $transactions = Transaction::query()
+            ->where('date', '>=', $start_of_oldest_month)
+            ->where(fn(Builder $query) => $this->applyCategoryFilter($query))
+            ->selectRaw("
+                SUBSTR(date, 1, 7) as month,
+                SUM(CASE WHEN type IN (?, ?) THEN amount ELSE 0 END) as total_deposits,
+                SUM(CASE WHEN type IN (?, ?, ?) THEN amount ELSE 0 END) as total_debits
+            ", [
+                TransactionType::CREDIT,
+                TransactionType::DEPOSIT,
+                TransactionType::DEBIT,
+                TransactionType::TRANSFER,
+                TransactionType::WITHDRAWAL
+            ])
+            ->groupBy('month')
+            ->orderBy('month', 'desc')
+            ->get()
+            ->keyBy('month');
 
-        for ($i = 1; $i < 7; $i++) {
-            $months->push($now->copy()->subMonths($i));
-        }
+        $this->monthly_totals = collect(range(1, 6))->mapWithKeys(function (int $i) use ($transactions): array {
+            $month = now()->subMonths($i)->format('Y-m');
 
-        foreach ($months as $month) {
-            $start_of_month = $month->startOfMonth()->toDateString();
-            $end_of_month = $month->endOfMonth()->toDateString();
+            $data = $transactions[$month] ?? (object) ['total_deposits' => 0, 'total_debits' => 0];
 
-            // Sum the amount for transactions in the selected category and month
-            $total_for_month = Transaction::query()
-                ->where(function (Builder $query): void {
-                    $query->where('category_id', $this->expense->category_id)
-                        ->orWhereRelation('category', 'parent_id', $this->expense->category_id);
-                })
-                ->whereBetween('date', [$start_of_month, $end_of_month])
-                ->sum('amount');
-
-            $this->monthly_totals->push([
-                'month' => $month->format('M'),
-                'total_spent' => ceil($total_for_month),
-            ]);
-        }
+            return [$month => [
+                'month' => now()->subMonths($i)->format('M'),
+                'total_spent' => ceil(abs(($data->total_deposits ?? 0) - ($data->total_debits ?? 0))),
+            ]];
+        });
     }
 
     public function render(): View
